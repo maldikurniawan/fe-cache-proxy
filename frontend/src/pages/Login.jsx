@@ -4,7 +4,7 @@ import { AiOutlineUnlock } from "react-icons/ai"
 
 const Login = () => {
     return (
-        <div>
+        <div className="text-white h-[100vh] flex justify-center items-center bg-cover" style={{ "background": "url('../src/assets/bg.jpg')" }}>
             <div className="bg-slate-800 border border-slate-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative">
                 <h1 className="text-4xl text-white font-bold text-center mb-6">Login</h1>
                 <form action="">
