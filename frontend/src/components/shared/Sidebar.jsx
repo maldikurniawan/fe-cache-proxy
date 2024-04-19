@@ -1,7 +1,7 @@
 import classNames from 'classname'
 import React from 'react'
 import { FcBullish } from "react-icons/fc"
-import { DASHBOARD_SIDEBAR_BOTTOM_LINKS, DASHBOARD_SIDEBAR_LINKS } from '../lib/consts/navigation'
+import { DASHBOARD_SIDEBAR_BOTTOM_LINKS, DASHBOARD_SIDEBAR_LINKS } from '../../lib/consts/navigation'
 import { Link, useLocation } from 'react-router-dom'
 import { HiOutlineLogout } from 'react-icons/hi'
 import { useNavigate } from 'react-router-dom'

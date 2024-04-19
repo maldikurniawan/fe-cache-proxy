@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import Layout from "./components/Layout";
+import Layout from "./components/shared/Layout";
 import Monitoring from "./pages/Monitoring";
 
 export default function App() {
