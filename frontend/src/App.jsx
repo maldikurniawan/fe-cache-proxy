@@ -4,6 +4,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Layout from "./components/shared/Layout";
 import Monitoring from "./pages/Monitoring";
+import UserAccount from "./pages/UserAccount";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Dashboard />} />
         <Route path="/monitoring" element={<Monitoring />} />
+        <Route path="/userAccount" element={<UserAccount />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />

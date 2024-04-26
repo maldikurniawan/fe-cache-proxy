@@ -28,12 +28,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     //     path: '#',
     //     icon: <HiOutlineShoppingCart />
     // },
-    // {
-    //     key: 'customers',
-    //     label: 'Customers',
-    //     path: '#',
-    //     icon: <HiOutlineUsers />
-    // },
+    {
+        key: 'userAccount',
+        label: 'User Account',
+        path: '/userAccount',
+        icon: <HiOutlineUsers />
+    },
     // {
     //     key: 'transactions',
     //     label: 'Transactions',
