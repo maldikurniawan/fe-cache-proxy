@@ -34,18 +34,18 @@ export const DASHBOARD_SIDEBAR_LINKS = [
         path: '/userAccount',
         icon: <HiOutlineUsers />
     },
-    // {
-    //     key: 'transactions',
-    //     label: 'Transactions',
-    //     path: '#',
-    //     icon: <HiOutlineDocumentText />
-    // },
-    // {
-    //     key: 'messages',
-    //     label: 'Messages',
-    //     path: '#',
-    //     icon: <HiOutlineAnnotation />
-    // }
+    {
+        key: 'transactions',
+        label: 'Transactions',
+        path: '#',
+        icon: <HiOutlineDocumentText />
+    },
+    {
+        key: 'messages',
+        label: 'Messages',
+        path: '#',
+        icon: <HiOutlineAnnotation />
+    }
 ]
 
 export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [

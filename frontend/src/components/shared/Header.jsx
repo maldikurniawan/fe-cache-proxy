@@ -1,11 +1,23 @@
 import React, { Fragment } from 'react'
 import { Menu, Popover, Transition } from '@headlessui/react'
 import { HiOutlineBell, HiOutlineSearch, HiOutlineChatAlt } from 'react-icons/hi'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import classNames from 'classname'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout, reset } from '../../features/auth/authSlice'
+import { toast } from 'react-toastify'
 
 const Header = () => {
+
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    dispatch(logout())
+    dispatch(reset())
+    navigate("/")
+  }
+
   return (
     <div className='bg-white h-16 px-4 flex items-center border-b border-gray-200 justify-between'>
       <div className="relative">
@@ -124,7 +136,7 @@ const Header = () => {
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    onClick={() => navigate('#')}
+                    onClick={handleLogout}
                     className={classNames(
                       active && 'bg-gray-100',
                       'active:bg-gray-200 rounded-sm px-4 py-2 text-red-700 cursor-pointer focus:bg-gray-200'
