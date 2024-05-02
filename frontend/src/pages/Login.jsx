@@ -77,7 +77,7 @@ const Login = () => {
                     </div>
                     <button className="w-full mb-4 text-[18px] mt-6 rounded-full bg-white text-fuchsia-800 hover:bg-fuchsia-600 hover:text-white py-2 transition-colors duration-300" type="Submit" onClick={handleSubmit}>Login</button>
                     <div>
-                        <span className="m-4">New Here? <Link className="text-blue-500" to="/register">Create an Account</Link></span>
+                        <span className="m-4">New Here? <Link className="text-blue-500" to="#">Create an Account</Link></span>
                     </div>
                 </form>
             </div>

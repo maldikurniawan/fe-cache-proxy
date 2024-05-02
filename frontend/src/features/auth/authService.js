@@ -35,9 +35,10 @@ const login = async (userData) => {
     }
 
     const response = await axios.post(LOGIN_URL, userData, config)
-
+    // console.log(response)
     if (response.data) {
-        localStorage.setItem("user", JSON.stringify(response.data))
+        localStorage.setItem("access", response.data.access)
+        localStorage.setItem("refresh", response.data.refresh)
     }
 
     return response.data
@@ -46,7 +47,8 @@ const login = async (userData) => {
 // Logout 
 
 const logout = () => {
-    return localStorage.removeItem("user")
+    localStorage.removeItem("refresh")
+    localStorage.removeItem("access")
 }
 
 // Activate user
