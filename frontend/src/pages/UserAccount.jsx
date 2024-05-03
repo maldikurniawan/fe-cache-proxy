@@ -9,11 +9,11 @@ const UserAccount = () => {
           <thead>
             <tr>
               <th className='border border-slate-300'>No</th>
-              <th className='border border-slate-300'>Customer Name</th>
-              <th className='border border-slate-300'>Order Date</th>
-              <th className='border border-slate-300'>Order Total</th>
-              <th className='border border-slate-300'>Shipping Address</th>
-              <th className='border border-slate-300'>Order Status</th>
+              <th className='border border-slate-300'>Nama</th>
+              <th className='border border-slate-300'>Email</th>
+              <th className='border border-slate-300'>Password</th>
+              <th className='border border-slate-300'>Status</th>
+              <th className='border border-slate-300'>Aksi</th>
             </tr>
           </thead>
           <tbody>

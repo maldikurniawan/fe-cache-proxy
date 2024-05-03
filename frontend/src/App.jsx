@@ -10,7 +10,7 @@ import IsLogin from "./features/auth/isLogin";
 export default function App() {
   return (
     <Routes>
-      <Route element={<IsLogin/>}>
+      <Route element={<IsLogin />}>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />

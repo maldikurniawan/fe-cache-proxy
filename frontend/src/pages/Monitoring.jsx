@@ -9,11 +9,11 @@ const Monitoring = () => {
           <thead>
             <tr>
               <th className='border border-slate-300'>No</th>
-              <th className='border border-slate-300'>Customer Name</th>
-              <th className='border border-slate-300'>Order Date</th>
-              <th className='border border-slate-300'>Order Total</th>
-              <th className='border border-slate-300'>Shipping Address</th>
-              <th className='border border-slate-300'>Order Status</th>
+              <th className='border border-slate-300'>Name Klien</th>
+              <th className='border border-slate-300'>URL</th>
+              <th className='border border-slate-300'>Waktu Kunjungan</th>
+              <th className='border border-slate-300'>Status</th>
+              <th className='border border-slate-300'>Aksi</th>
             </tr>
           </thead>
           <tbody>
