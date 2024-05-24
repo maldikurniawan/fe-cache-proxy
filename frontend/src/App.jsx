@@ -6,6 +6,7 @@ import Layout from "./components/shared/Layout";
 import Monitoring from "./pages/Monitoring";
 import UserAccount from "./pages/UserAccount";
 import IsLogin from "./features/auth/isLogin";
+import IsAuth from "./features/auth/IsAuth";
 
 export default function App() {
   return (
@@ -18,9 +19,10 @@ export default function App() {
           <Route path="/userAccount" element={<UserAccount />} />
         </Route>
       </Route>
-
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route element={<IsAuth />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Route>
     </Routes>
   )
 }

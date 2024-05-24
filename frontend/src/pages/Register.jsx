@@ -1,69 +1,8 @@
-import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { BiLogoGmail, BiUser } from "react-icons/bi"
 import { AiOutlineUnlock } from "react-icons/ai"
-import { useDispatch, useSelector } from 'react-redux'
-import { register, reset } from '../features/auth/authSlice'
-import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
-
-  const [formData, setFormData] = useState({
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "password": "",
-    "re_password": "",
-  })
-
-  const { first_name, last_name, email, password, re_password } = formData
-
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
-  const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    })
-    )
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-
-    if (password !== re_password) {
-      toast.error("Passwords do not match")
-    } else {
-      const userData = {
-        first_name,
-        last_name,
-        email,
-        password,
-        re_password
-      }
-      dispatch(register(userData))
-    }
-  }
-
-
-  useEffect(() => {
-    if (isError) {
-      toast.error(message)
-    }
-
-    if (isSuccess || user) {
-      navigate("/")
-      toast.success("An activation email has been sent to your email. Please check your email")
-    }
-
-    dispatch(reset())
-
-  }, [isError, isSuccess, user, navigate, dispatch])
-
   return (
     <div className="text-white h-[100vh] flex justify-center items-center bg-cover" style={{ "background": "url('../src/assets/bg.jpg')" }}>
       <div className="bg-slate-800 border border-slate-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative">
