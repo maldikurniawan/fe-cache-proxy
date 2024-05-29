@@ -16,9 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from users.acceslog import getcache
+from users.logten import getlog
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/v1/auth/", include('djoser.urls')),
     path("api/v1/auth/", include('djoser.urls.jwt')),
+    path('cachereq/', getcache, name="Get"),
+    path('cachelog/', getlog, name="Get"),
 ]

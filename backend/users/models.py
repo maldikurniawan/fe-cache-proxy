@@ -29,3 +29,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
+    
+class cache (models.Model) :
+    idlog = models.IntegerField(primary_key= True)
+    timestamp = models.CharField(_("Waktu"), max_length=50)
+    ip = models.CharField(_("ip"), max_length=50) 
+    url = models.CharField(_("url"), max_length=50)

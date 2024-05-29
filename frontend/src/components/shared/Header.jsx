@@ -129,7 +129,7 @@ const Header = () => {
                       'active:bg-gray-200 rounded-sm px-4 py-2 text-gray-700 cursor-pointer focus:bg-gray-200'
                     )}
                   >
-                    Settings
+                    Change Password
                   </div>
                 )}
               </Menu.Item>
@@ -142,7 +142,7 @@ const Header = () => {
                       'active:bg-gray-200 rounded-sm px-4 py-2 text-red-700 cursor-pointer focus:bg-gray-200'
                     )}
                   >
-                    Sign out
+                    Logout
                   </div>
                 )}
               </Menu.Item>

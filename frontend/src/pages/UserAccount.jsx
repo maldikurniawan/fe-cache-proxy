@@ -9,17 +9,15 @@ const UserAccount = () => {
           <thead>
             <tr>
               <th className='border border-slate-300'>No</th>
-              <th className='border border-slate-300'>Nama</th>
+              <th className='border border-slate-300'>Firstname</th>
+              <th className='border border-slate-300'>Lastname</th>
               <th className='border border-slate-300'>Email</th>
-              <th className='border border-slate-300'>Password</th>
-              <th className='border border-slate-300'>Status</th>
               <th className='border border-slate-300'>Aksi</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td className='border border-slate-300'>1</td>
-              <td className='border border-slate-300'>-</td>
               <td className='border border-slate-300'>-</td>
               <td className='border border-slate-300'>-</td>
               <td className='border border-slate-300'>-</td>
