@@ -55,7 +55,7 @@ const PopularProducts = () => {
                 {popularProducts.map((product) => (
                     <Link
                         key={product.id}
-                        to={`/product/${product.id}`}
+                        to={`#`}
                         className="flex items-start hover:no-underline"
                     >
                         <div className="w-10 h-10 min-w-[2.5rem] bg-gray-200 rounded-sm">
