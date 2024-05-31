@@ -65,7 +65,7 @@ export default function Cache() {
                 {
                   data.map((item, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <td className='border border-slate-300'>{index + 1}</td>
                         <td className='border border-slate-300'>{item.ip_address}</td>
                         <td className='border border-slate-300'>{item.url}</td>
