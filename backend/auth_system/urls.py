@@ -25,4 +25,5 @@ urlpatterns = [
     path("api/v1/auth/", include('djoser.urls.jwt')),
     path('cachereq/', getcache, name="Get"),
     path('cachelog/', getlog, name="Get"),
+    path('', include('users.urls'))
 ]
