@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from users.acceslog import getcache
 from users.logten import getlog
+from users.limit import short
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +26,6 @@ urlpatterns = [
     path("api/v1/auth/", include('djoser.urls.jwt')),
     path('cachereq/', getcache, name="Get"),
     path('cachelog/', getlog, name="Get"),
+    path('cache/<int:batas>/<int:limit>', short, name="Get"),
     path('', include('users.urls'))
 ]

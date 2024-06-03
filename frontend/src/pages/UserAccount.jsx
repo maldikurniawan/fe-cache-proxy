@@ -3,29 +3,57 @@ import axios from 'axios'
 import { FaPen, FaTrash } from "react-icons/fa";
 import Modal from "../components/Modal"
 import { Navigate } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 const UserAccount = () => {
 
-  const [data, setItems] = useState([]);
   const [open, setOpen] = useState(false);
   const [showModal, setShowModal] = React.useState(false);
 
+  const [items, setItems] = useState([]);
+
+  const [pageCount, setpageCount] = useState(0);
+
+  let limit = 5;
+
   useEffect(() => {
-    axios.get('http://localhost:8000/users')
-      .then(response => {
-        setItems(response.data);
-      })
-      .catch(error => {
-        console.error('Ada kesalahan!', error);
-      });
-  }, []);
+    const getComments = async () => {
+      const res = await fetch(
+        `http://localhost:8000/json?_offset=0&_limit=${limit}`
+      );
+      const data = await res.json();
+      const total = res.headers.get("x-total-count");
+      setpageCount(Math.ceil(total / limit));
+      setItems(data);
+    };
+
+    getComments();
+  }, [limit]);
+
+  const fetchComments = async (currentPage) => {
+    const res = await fetch(
+      `http://localhost:8000/json?_offset=${currentPage}&_limit=${limit}`
+    );
+    const data = await res.json();
+    return data;
+  };
+
+  const handlePageClick = async (data) => {
+    console.log(data.selected);
+
+    let currentPage = data.selected + 1;
+
+    const commentsFormServer = await fetchComments(currentPage);
+
+    setItems(commentsFormServer);
+  };
 
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <strong className="text-gray-700 font-medium">Kelola Akun User</strong><br />
       <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onClick={() => setShowModal(true)}>Tambah Data</button>
       <div className="border-x border-gray-200 rounded-sm mt-3">
-        <table className="w-full text-gray-700">
+        <table className="w-full text-gray-700 mb-2">
           <thead>
             <tr>
               <th className='border border-slate-300'>No</th>
@@ -37,7 +65,7 @@ const UserAccount = () => {
           </thead>
           <tbody>
             {
-              data.map((item, index) => {
+              items.map((item, index) => {
                 return (
                   <tr key={index}>
                     <td className='border border-slate-300'>{index + 1}</td>
@@ -55,6 +83,25 @@ const UserAccount = () => {
           </tbody>
         </table>
       </div>
+      <ReactPaginate
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        breakLabel={"..."}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={2}
+        onPageChange={handlePageClick}
+        containerClassName={"flex items-center justify-center -space-x-px h-10 text-base"}
+        pageClassName={"flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"}
+        pageLinkClassName={""}
+        previousClassName={"flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"}
+        previousLinkClassName={""}
+        nextClassName={"flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"}
+        nextLinkClassName={""}
+        breakClassName={"flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"}
+        breakLinkClassName={""}
+        activeClassName={"flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-100 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"}
+      />
       <Modal open={open} onClose={() => setOpen(false)}>
         <div className="text-center w-56">
           <FaTrash size={56} className="mx-auto text-red-500" />
