@@ -19,7 +19,7 @@ const UserAccount = () => {
   useEffect(() => {
     const getComments = async () => {
       const res = await fetch(
-        `http://localhost:8000/json?_offset=0&_limit=${limit}`
+        `https://jsonplaceholder.typicode.com/users?_page=1&_limit=${limit}`
       );
       const data = await res.json();
       const total = res.headers.get("x-total-count");
@@ -32,7 +32,7 @@ const UserAccount = () => {
 
   const fetchComments = async (currentPage) => {
     const res = await fetch(
-      `http://localhost:8000/json?_offset=${currentPage}&_limit=${limit}`
+      `https://jsonplaceholder.typicode.com/users?_page=${currentPage}&_limit=${limit}`
     );
     const data = await res.json();
     return data;
@@ -57,20 +57,20 @@ const UserAccount = () => {
           <thead>
             <tr>
               <th className='border border-slate-300'>No</th>
-              <th className='border border-slate-300'>Firstname</th>
-              <th className='border border-slate-300'>Lastname</th>
+              <th className='border border-slate-300'>Nama</th>
+              <th className='border border-slate-300'>Username</th>
               <th className='border border-slate-300'>Email</th>
               <th className='border border-slate-300'>Aksi</th>
             </tr>
           </thead>
           <tbody>
-            {
+            {Array.isArray(items) &&
               items.map((item, index) => {
                 return (
                   <tr key={index}>
                     <td className='border border-slate-300'>{index + 1}</td>
-                    <td className='border border-slate-300'>{item.first_name}</td>
-                    <td className='border border-slate-300'>{item.last_name}</td>
+                    <td className='border border-slate-300'>{item.name}</td>
+                    <td className='border border-slate-300'>{item.username}</td>
                     <td className='border border-slate-300'>{item.email}</td>
                     <td className='border border-slate-300'>
                       <button type="button" className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:focus:ring-yellow-900"><FaPen /></button>
@@ -92,7 +92,7 @@ const UserAccount = () => {
         pageRangeDisplayed={2}
         onPageChange={handlePageClick}
         containerClassName={"flex items-center justify-center -space-x-px h-10 text-base"}
-        pageClassName={"flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"}
+        pageClassName={"flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"}
         pageLinkClassName={""}
         previousClassName={"flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"}
         previousLinkClassName={""}
@@ -100,7 +100,7 @@ const UserAccount = () => {
         nextLinkClassName={""}
         breakClassName={"flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"}
         breakLinkClassName={""}
-        activeClassName={"flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-100 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"}
+        activeClassName={"flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-200 hover:bg-blue-200 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"}
       />
       <Modal open={open} onClose={() => setOpen(false)}>
         <div className="text-center w-56">
