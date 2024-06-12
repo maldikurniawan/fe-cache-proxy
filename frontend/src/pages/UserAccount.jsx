@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import { FaPen, FaTrash } from "react-icons/fa";
-import Modal from "../components/Modal"
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const UserAccount = () => {
 
@@ -20,7 +21,7 @@ const UserAccount = () => {
   useEffect(() => {
     const getComments = async () => {
       const res = await fetch(
-        `http://127.0.0.1:8000/json?limit=5&offset=0`
+        `http://127.0.0.1:8000/json?limit=${limit}`
         // `https://jsonplaceholder.typicode.com/users?_page=1&_limit=${limit}`
       );
       const data = await res.json();
@@ -67,6 +68,39 @@ const UserAccount = () => {
   }
 
   //Edit
+  // const { id } = useParams();
+  const [perItem, setPerItem] = useState([])
+
+  const handleView = (item) => {
+    setPerItem(item)
+    setShowEdit(true)
+  }
+
+  const data = {
+    first_name: 'apip',
+    last_name: 'yulis',
+    email: 'apip@gmail.com',
+    password: 'apip2002',
+  };
+
+  function handleEdit(event) {
+    event.preventDefault()
+    axios.put('http://127.0.0.1:8000/user/' + perItem.id + '/', data)
+      .then(res => {
+        alert("Data Berhasil Diupdate!");
+        navigate('/userAccount');
+      }).catch(err => console.log(err));
+  }
+
+  // Delete
+  function handleDelete(id) {
+    const conf = window.confirm('Anda Yakin Ingin Menghapus Data?')
+    axios.delete('http://127.0.0.1:8000/user/' + id + '/')
+      .then(res => {
+        alert("Data Berhasil Dihapus!");
+        navigate('/userAccount');
+      }).catch(err => console.log(err));
+  }
 
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
@@ -119,7 +153,7 @@ const UserAccount = () => {
             {Array.isArray(items) &&
               items.map((item, index) => {
                 return (
-                  <tr key={item.id}>
+                  <tr key={index}>
                     <td className='border border-slate-300'>{index + 1}</td>
                     <td className='border border-slate-300'>{item.first_name}</td>
                     <td className='border border-slate-300'>{item.last_name}</td>
@@ -127,8 +161,8 @@ const UserAccount = () => {
                     <td className='border border-slate-300'>{item.username}</td> */}
                     <td className='border border-slate-300'>{item.email}</td>
                     <td className='border border-slate-300'>
-                      <button type="button" className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:focus:ring-yellow-900" onClick={() => setShowEdit(true)}><FaPen /></button>
-                      <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={() => setOpen(true)}><FaTrash /></button>
+                      <button type="button" className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:focus:ring-yellow-900" onClick={() => handleView(item)}><FaPen /></button>
+                      <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={e => handleDelete(item.id)}><FaTrash /></button>
                     </td>
                   </tr>
                 )
@@ -155,26 +189,6 @@ const UserAccount = () => {
         nextLinkClassName={"px-3 py-1.5 border dark:border-neutral-600 border-gray-300 text-blue-600 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-500"}
         activeLinkClassName="bg-sky-500 text-white cursor-default"
       />
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <div className="text-center w-56">
-          <FaTrash size={56} className="mx-auto text-red-500" />
-          <div className="mx-auto my-4 w-48">
-            <h3 className="text-lg font-black text-gray-800">Confirm Delete</h3>
-            <p className="text-sm text-gray-500">
-              Are you sure you want to delete this item?
-            </p>
-          </div>
-          <div className="flex gap-4">
-            <button className="btn btn-danger w-full text-red-500 active:text-red-900" onClick={() => Navigate('#')}>Delete</button>
-            <button
-              className="btn btn-light w-full"
-              onClick={() => setOpen(false)}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      </Modal>
       {showModal ? (
         <>
           <div
@@ -225,7 +239,7 @@ const UserAccount = () => {
                     </button>
                     <button
                       className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
+                      type="button" onClick={handleSubmit}
                     >
                       Tambah Data
                     </button>
@@ -263,19 +277,19 @@ const UserAccount = () => {
                   <div className="grid gap-4 mb-4 grid-cols-2">
                     <div className="col-span-2 sm:col-span-1">
                       <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
-                      <input type="text" name='first_name' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' />
+                      <input type="text" name='first_name' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' value={perItem.first_name} onChange={e => setPerItem({ ...perItem, first_name: e.target.value })} />
                     </div>
                     <div className="col-span-2 sm:col-span-1">
                       <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
-                      <input type="text" name='last_name' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' />
+                      <input type="text" name='last_name' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' value={perItem.last_name} onChange={e => setPerItem({ ...perItem, last_name: e.target.value })} />
                     </div>
                     <div className="col-span-2">
                       <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email Address</label>
-                      <input type="email" name='email' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' />
+                      <input type="email" name='email' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' value={perItem.email} onChange={e => setPerItem({ ...perItem, email: e.target.value })} />
                     </div>
                     <div className="col-span-2">
                       <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                      <input type="password" name='password' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' />
+                      <input type="password" name='password' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' value={""} />
                     </div>
                     <button
                       className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -286,7 +300,7 @@ const UserAccount = () => {
                     </button>
                     <button
                       className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button" onClick={handleSubmit}
+                      type="button" onClick={handleEdit}
                     >
                       Update
                     </button>
