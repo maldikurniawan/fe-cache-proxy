@@ -4,8 +4,7 @@ import { FaPen, FaTrash } from "react-icons/fa";
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import Swal from 'sweetalert2'
 
 const UserAccount = () => {
 
@@ -62,7 +61,11 @@ const UserAccount = () => {
     event.preventDefault()
     axios.post('http://127.0.0.1:8000/users', inputData)
       .then(res => {
-        alert("Data Berhasil Ditambah!");
+        Swal.fire({
+          title: "Berhasil!",
+          text: "Berhasil Menambah Data Baru!",
+          icon: "success"
+        });
         navigate('/userAccount');
       }).catch(err => console.log(err));
   }
@@ -87,7 +90,11 @@ const UserAccount = () => {
     event.preventDefault()
     axios.put('http://127.0.0.1:8000/user/' + perItem.id + '/', data)
       .then(res => {
-        alert("Data Berhasil Diupdate!");
+        Swal.fire({
+          title: "Berhasil!",
+          text: "Berhasil Menyimpan Data!",
+          icon: "success"
+        });
         navigate('/userAccount');
       }).catch(err => console.log(err));
   }
@@ -97,7 +104,11 @@ const UserAccount = () => {
     const conf = window.confirm('Anda Yakin Ingin Menghapus Data?')
     axios.delete('http://127.0.0.1:8000/user/' + id + '/')
       .then(res => {
-        alert("Data Berhasil Dihapus!");
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
         navigate('/userAccount');
       }).catch(err => console.log(err));
   }

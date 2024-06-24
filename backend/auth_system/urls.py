@@ -19,6 +19,7 @@ from django.urls import path, include
 from users.acceslog import getcache
 from users.logten import getlog
 from users.limit import short
+from users.paginate import paginates
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,5 +28,6 @@ urlpatterns = [
     path('cachereq/', getcache, name="Get"),
     path('cachelog/', getlog, name="Get"),
     path('cache/<int:batas>/<int:limit>', short, name="Get"),
-    path('', include('users.urls'))
+    path('', include('users.urls')),
+    path('api/cache/', paginates.as_view(), name="Get"),
 ]

@@ -23,28 +23,7 @@ export default function Cache() {
     } catch (error) {
       setError('Error submitting form: ' + error.message);
     }
-    // return () => {
-    //   console.log('Cleanup function called');
-    // };
-
   }, []);
-
-  // start with a Unix timestamp
-  // const myUnixTimestamp = 1713496554.172; 
-
-  // convert timestamp to milliseconds and construct Date object
-  // const myDate = new Date(myUnixTimestamp * 1000); 
-  
-  // will print "Thu Aug 10 2023 01:13:20" followed by the local timezone on browser console
-  // console.log(myDate); 
-
-  // will print "Thu Aug 10 2023"
-  // console.log(myDate.toDateString());
-
-  // will print "01:13:20" followed by the local timezone
-  // console.log(myDate.toTimeString()); 
-
-  // Moment.globalFormat = 'D MMM YYYY';
 
   return (
     <div>
