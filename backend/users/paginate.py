@@ -11,26 +11,15 @@ from users.serializers import paginate
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
+from users.serializers import paginate
 
-
-class paginates (generics.ListCreateAPIView):
+class paginates (generics.ListAPIView):
     queryset = cache.objects.all()
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     pagination_class = pagination.LimitOffsetPagination
     serializer_class = paginate
-
-    def list(self, request):
-        # try:
-            objects = self.get_queryset()
-            serelizer = self.get_serializer(data=objects, many=True)
-            page = self.paginate_queryset(objects)
-            if page is not None:
-                serializer = self.get_serializer(page, many=True)
-                return self.get_paginated_response(serializer.data)
-            serializer = self.get_serializer(objects, many=True)
-            return Response(serializer.data)
-        # except Exception as e:
-        #     return JsonResponse({'Error': 'No Data Matches'})
+    filterset_fields = ['idlog', 'timestamp', 'ip', 'url']
+    search_fields = ['idlog', 'timestamp', 'ip', 'url']
 
     def create(self, request, *args, **kwargs):
         try:

@@ -36,7 +36,7 @@ const MonitoringPage = () => {
 
   const onSearch = (value) => {
     setSearch(value);
-    const params = `?limit=${""}&offset=${""}&search=${value}`;
+    const params = `?limit=${limit}&offset=${""}&search=${value}`;
     get(params);
   };
 
@@ -60,7 +60,6 @@ const MonitoringPage = () => {
 
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -124,7 +123,7 @@ const MonitoringPage = () => {
               )}
 
               {/* Result = 0 */}
-              {getMonitoringResult && getMonitoringResult.length === 0 && (
+              {getMonitoringResult && getMonitoringResult.results.length === 0 && (
                 <tr>
                   <td className="text-center" colSpan={tableHead.length + 1}>
                     <div className="pt-20 pb-12 flex justify-center items-center text-xs text-slate-600">
@@ -151,17 +150,6 @@ const MonitoringPage = () => {
                         {item.timestamp}
                       </Moment>
                     </td>
-                    {/* <td className="p-2 text-center whitespace-nowrap">
-                      {action.map((action, actionIdx) => (
-                        <button
-                          key={actionIdx}
-                          className={`mx-1 ${action.color}`}
-                          onClick={() => action.func(item)}
-                        >
-                          {action.icon}
-                        </button>
-                      ))}
-                    </td> */}
                   </tr>
                 ))}
             </tbody>
