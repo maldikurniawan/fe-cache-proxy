@@ -8,11 +8,17 @@ import { deleteData, getData } from "../../actions/index";
 import { API_URL_cache } from "../../constants";
 import { monitoringReducers } from "../../redux/monitoringSlice";
 import Moment from "react-moment";
+import { BiSortDown, BiSortUp } from "react-icons/bi";
 
 const MonitoringPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const tableHead = ["No", "Ip Address", "URL", "Tanggal Akses"];
+  const tableHead = [
+    { title: "No", field: "idlog" },
+    { title: "Ip Address", field: "ip" },
+    { title: "URL", field: "url" },
+    { title: "Tanggal Akses", field: "timestamp" },
+  ];
   const {
     getMonitoringResult,
     getMonitoringLoading,
@@ -21,6 +27,8 @@ const MonitoringPage = () => {
   const [limit, setLimit] = useState(10);
   const [offset, setOffset] = useState(0);
   const [search, setSearch] = useState("");
+  const [sortColumn, setSortColumn] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
 
   const get = useCallback(
     async (params) => {
@@ -36,31 +44,55 @@ const MonitoringPage = () => {
 
   const onSearch = (value) => {
     setSearch(value);
-    const params = `?limit=${limit}&offset=${""}&search=${value}`;
+    const params = `?limit=${limit}&offset=${""}&ordering=${""}&search=${value}`;
     get(params);
+  };
+
+  const handleSort = (column) => {
+    //RESET PAGINATE KE 1
+    // setOffset(0);
+
+    if (column === sortColumn) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortColumn(column);
+      setSortOrder("asc");
+    }
+  };
+
+  // Sort icons
+  const renderSortIcon = (field) => {
+    if (field === sortColumn) {
+      return sortOrder === "asc" ? (
+        <BiSortUp />
+      ) : (
+        <BiSortDown />
+      );
+    }
+    return <BiSortUp className="text-gray-300" />;
   };
 
   const handlePageClick = (e) => {
     const offset = e.selected * limit;
-    const params = `?limit=${limit}&offset=${offset}&search=${search}`;
+    const params = `?limit=${limit}&offset=${offset}&ordering=${sortOrder === "desc" ? "-" : ""}${sortColumn}&search=${search}`;
     get(params);
     setOffset(offset);
   };
 
   const handleSelect = (limit) => {
-    const params = `?limit=${limit}&offset=${offset}&search=${search}`;
+    const params = `?limit=${limit}&offset=${offset}&ordering=${sortOrder === "desc" ? "-" : ""}${sortColumn}&search=${search}`;
     get(params);
     setLimit(limit);
   };
 
   const fetchData = useCallback(() => {
-    const params = `?limit=${limit}&offset=${""}&search=${""}`;
+    const params = `?limit=${limit}&offset=${""}&ordering=${sortOrder === "desc" ? "-" : ""}${sortColumn}&search=${""}`;
     get(params);
-  }, [get]);
+  }, [get, sortColumn, sortOrder]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [sortColumn, sortOrder]);
 
   return (
     <Fragment>
@@ -90,8 +122,17 @@ const MonitoringPage = () => {
             <thead>
               <tr className="border-b-2 border-gray-200">
                 {tableHead.map((item, itemIdx) => (
-                  <th key={itemIdx} className="p-2 text-sm whitespace-nowrap">
-                    {item}
+                  <th
+                    key={itemIdx}
+                    className="p-2 text-sm whitespace-nowrap"
+                    onClick={() => {
+                      item.field && handleSort(item.field);
+                    }}
+                  >
+                    <span className="flex text-center items-center gap-2 justify-center">
+                      {item.title}
+                      {item.field && renderSortIcon(item.field)}
+                    </span>
                   </th>
                 ))}
               </tr>
@@ -134,24 +175,24 @@ const MonitoringPage = () => {
               )}
 
               {getMonitoringResult && getMonitoringResult.results.map((item, itemIdx) => (
-                  <tr
-                    key={itemIdx}
-                    className="border-b border-gray-200 text-sm hover:bg-white/60 transition-all"
-                  >
-                    <td className="p-2 text-center whitespace-nowrap">
-                      {itemIdx + offset + 1}
-                    </td>
-                    <td className="p-2 text-center">{item.ip}</td>
-                    <td className="p-2 text-center whitespace-nowrap">
-                      {item.url}
-                    </td>
-                    <td className="p-2 text-center whitespace-nowrap">
-                      <Moment unix>
-                        {item.timestamp}
-                      </Moment>
-                    </td>
-                  </tr>
-                ))}
+                <tr
+                  key={itemIdx}
+                  className="border-b border-gray-200 text-sm hover:bg-white/60 transition-all"
+                >
+                  <td className="p-2 text-center whitespace-nowrap">
+                    {itemIdx + offset + 1}
+                  </td>
+                  <td className="p-2 text-center">{item.ip}</td>
+                  <td className="p-2 text-center whitespace-nowrap">
+                    {item.url}
+                  </td>
+                  <td className="p-2 text-center whitespace-nowrap">
+                    <Moment unix>
+                      {item.timestamp}
+                    </Moment>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
