@@ -42,11 +42,11 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
       >
         {/* Logo */}
         <div className="w-full flex justify-center">
-          <img className="w-32" src={logo} alt="logo" />
+          <img className="w-40" src={logo} alt="logo" />
         </div>
 
         {/* Menu */}
-        <div className="px-2 pt-1 pb-5 text-sm overflow-y-auto max-h-[80vh] hidden-scroll">
+        <div className="px-2 pb-5 text-sm overflow-y-auto max-h-[80vh] hidden-scroll">
           {menuItem.map((menu, menuIdx) => {
             if (menu.subMenu.length === 0) {
               return (

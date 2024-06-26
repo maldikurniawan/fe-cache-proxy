@@ -1,36 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const articlesSlice = createSlice({
+export const monitoringSlice = createSlice({
   name: "monitoring",
   initialState: {
-    getArticlesResult: false,
-    getArticlesLoading: false,
-    getArticlesError: false,
-    addArticlesResult: false,
-    addArticlesLoading: false,
-    deleteArticlesResult: false,
+    getMonitoringResult: false,
+    getMonitoringLoading: false,
+    getMonitoringError: false,
+    addMonitoringResult: false,
+    addMonitoringLoading: false,
+    deleteMonitoringResult: false,
   },
   reducers: {
     monitoringReducers: (state, action) => {
       const { type, payload } = action.payload;
       switch (type) {
-        case "GET_ARTICLES":
+        case "GET_MONITORING":
           return {
             ...state,
-            getArticlesResult: payload.data,
-            getArticlesLoading: payload.loading,
-            getArticlesError: payload.error,
+            getMonitoringResult: payload.data,
+            getMonitoringLoading: payload.loading,
+            getMonitoringError: payload.error,
           };
-        case "ADD_ARTICLES":
+        case "ADD_MONITORING":
           return {
             ...state,
-            addArticlesResult: payload.data,
-            addArticlesLoading: payload.loading,
+            addMonitoringResult: payload.data,
+            addMonitoringLoading: payload.loading,
           };
-        case "DELETE_ARTICLES":
+        case "DELETE_MONITORING":
           return {
             ...state,
-            deleteArticlesResult: payload.data,
+            deleteMonitoringResult: payload.data,
           };
         default:
           return state;
@@ -39,6 +39,6 @@ export const articlesSlice = createSlice({
   },
 });
 
-export const { monitoringReducers } = articlesSlice.actions;
+export const { monitoringReducers } = monitoringSlice.actions;
 
-export default articlesSlice.reducer;
+export default monitoringSlice.reducer;

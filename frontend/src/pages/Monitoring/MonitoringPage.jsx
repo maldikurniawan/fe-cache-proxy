@@ -5,18 +5,18 @@ import { SyncLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteData, getData } from "../../actions/index";
-import { API_URL_articles } from "../../constants";
+import { API_URL_cache } from "../../constants";
 import { monitoringReducers } from "../../redux/monitoringSlice";
 import Moment from "react-moment";
 
-const ArticlesPage = () => {
+const MonitoringPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const tableHead = ["No", "Ip Address", "URL", "Tanggal Akses"];
   const {
-    getArticlesResult,
-    getArticlesLoading,
-    getArticlesError,
+    getMonitoringResult,
+    getMonitoringLoading,
+    getMonitoringError,
   } = useSelector((state) => state.monitoring);
   const [limit, setLimit] = useState(10);
   const [offset, setOffset] = useState(0);
@@ -25,30 +25,14 @@ const ArticlesPage = () => {
   const get = useCallback(
     async (params) => {
       getData(
-        API_URL_articles,
+        API_URL_cache,
         params,
         { dispatch, redux: monitoringReducers },
-        "GET_ARTICLES"
+        "GET_MONITORING"
       );
     },
     [dispatch]
   );
-
-  const onDelete = (item) => {
-    deleteData(
-      API_URL_articles + item.slug,
-      { dispatch, redux: monitoringReducers },
-      "DELETE_ARTICLES"
-    );
-  };
-
-  const onEdit = (item) => {
-    navigate(`/articles/form`, {
-      state: {
-        item,
-      },
-    });
-  };
 
   const onSearch = (value) => {
     setSearch(value);
@@ -68,21 +52,6 @@ const ArticlesPage = () => {
     get(params);
     setLimit(limit);
   };
-
-  const action = [
-    {
-      name: "edit",
-      icon: icons.fiedit,
-      color: "text-blue-500",
-      func: onEdit,
-    },
-    {
-      name: "hapus",
-      icon: icons.rideletebin6line,
-      color: "text-red-500",
-      func: onDelete,
-    },
-  ];
 
   const fetchData = useCallback(() => {
     const params = `?limit=${limit}&offset=${""}&search=${""}`;
@@ -130,7 +99,7 @@ const ArticlesPage = () => {
             </thead>
             <tbody>
               {/* Loading */}
-              {getArticlesLoading && (
+              {getMonitoringLoading && (
                 <tr>
                   <td
                     className="text-center py-12"
@@ -144,18 +113,18 @@ const ArticlesPage = () => {
               )}
 
               {/* Error */}
-              {getArticlesError && (
+              {getMonitoringError && (
                 <tr>
                   <td className="text-center" colSpan={tableHead.length + 1}>
                     <div className="pt-20 pb-12 flex justify-center items-center text-xs text-red-500">
-                      {getArticlesError}
+                      {getMonitoringError}
                     </div>
                   </td>
                 </tr>
               )}
 
               {/* Result = 0 */}
-              {getArticlesResult && getArticlesResult.length === 0 && (
+              {getMonitoringResult && getMonitoringResult.length === 0 && (
                 <tr>
                   <td className="text-center" colSpan={tableHead.length + 1}>
                     <div className="pt-20 pb-12 flex justify-center items-center text-xs text-slate-600">
@@ -165,7 +134,7 @@ const ArticlesPage = () => {
                 </tr>
               )}
 
-              {getArticlesResult && getArticlesResult.results.map((item, itemIdx) => (
+              {getMonitoringResult && getMonitoringResult.results.map((item, itemIdx) => (
                   <tr
                     key={itemIdx}
                     className="border-b border-gray-200 text-sm hover:bg-white/60 transition-all"
@@ -200,7 +169,7 @@ const ArticlesPage = () => {
         </div>
         <CompPagination
           handlePageClick={handlePageClick}
-          pageCount={getArticlesResult.count > 0 ? getArticlesResult.count : 0}
+          pageCount={getMonitoringResult.count > 0 ? getMonitoringResult.count : 0}
           limit={limit}
           setLimit={handleSelect}
         />
@@ -209,4 +178,4 @@ const ArticlesPage = () => {
   );
 };
 
-export default ArticlesPage;
+export default MonitoringPage;
