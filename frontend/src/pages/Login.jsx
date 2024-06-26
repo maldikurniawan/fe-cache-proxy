@@ -5,6 +5,7 @@ import { AiOutlineUnlock } from "react-icons/ai"
 import { useDispatch, useSelector } from 'react-redux'
 import { login, reset, getUserInfo } from '../features/auth/authSlice'
 import { toast } from 'react-toastify'
+import logo from "../assets/images/logo-cache.png";
 
 const Login = () => {
 
@@ -45,7 +46,7 @@ const Login = () => {
         }
 
         if (isSuccess || user) {
-            navigate("/dashboard")
+            navigate("/")
         }
 
         dispatch(reset())
@@ -56,10 +57,12 @@ const Login = () => {
     return (
         <div className="text-white h-[100vh] flex justify-center items-center bg-cover" style={{ "background": "url('../src/assets/bg.jpg')" }}>
             <div className="bg-slate-800 border border-slate-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative">
-                <h1 className="text-4xl text-white font-bold text-center mb-6">Login</h1>
+                <div className="flex justify-center">
+                    <img src={logo} alt="logo" className="w-48 drop-shadow-lg" />
+                </div>
                 <form action="">
                     <div className="relative my-4">
-                        <input type="email" name="email" onChange={handleChange} value={email} required className="block w-72 py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer" placeholder="" />
+                        <input type="email" name="email" onChange={handleChange} value={email} required className="block w-72 py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer" placeholder="" autoComplete="off" />
                         <label htmlFor="" className="absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Your Email</label>
                         <BiUser className="absolute top-4 right-4" />
                     </div>
@@ -68,17 +71,17 @@ const Login = () => {
                         <label htmlFor="" className="absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Your Password</label>
                         <AiOutlineUnlock className="absolute top-4 right-4" />
                     </div>
-                    <div className="flex justify-between items-center">
+                    {/* <div className="flex justify-between items-center">
                         <div className="flex gap-2 items-center">
                             <input type="checkbox" name="" id="" />
                             <label htmlFor="Remember Me">Remember Me</label>
                         </div>
                         <Link to="" className="text-blue-500">Forgot Password?</Link>
-                    </div>
+                    </div> */}
                     <button className="w-full mb-4 text-[18px] mt-6 rounded-full bg-white text-fuchsia-800 hover:bg-fuchsia-600 hover:text-white py-2 transition-colors duration-300" type="Submit" onClick={handleSubmit}>Login</button>
-                    <div>
+                    {/* <div>
                         <span className="m-4">New Here? <Link className="text-blue-500" to="#">Create an Account</Link></span>
-                    </div>
+                    </div> */}
                 </form>
             </div>
         </div>

@@ -1,31 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-    html {
-        font-family: 'Inter', sans-serif;
-        line-height: 1.3;
-    }
+  *:focus {
+    @apply outline-0;
+  }
+  html {
+    @apply text-gray-800
+  }
+}
 
-    table {}
+@layer components {
+  /* Custom Scroll */
+  .custom-scroll::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+  .custom-scroll::-webkit-scrollbar-thumb {
+    @apply bg-[#babac0] rounded-full;
+  }
+  .custom-scroll::-webkit-scrollbar-button {
+    @apply hidden;
+  }
 
-    th,
-    td {
-        @apply py-3 px-2.5 text-sm text-left border-y border-gray-200;
-    }
+  .hidden-scroll::-webkit-scrollbar {
+    @apply hidden;
+  }
+}
 
-    thead {
-        @apply bg-neutral-100;
-    }
-
-    th {
-        @apply font-semibold;
-    }
-
-    a {
-        @apply text-sky-500 hover:underline;
-    }
+@layer utilities {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }

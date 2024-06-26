@@ -6,7 +6,7 @@ const IsAuth = () => {
     const access = localStorage.getItem("access")
     // console.log(access)
     if (access) {
-        return <Navigate to={"/dashboard"} />
+        return <Navigate to={"/"} />
     } else {
         return <Login/>
     }
