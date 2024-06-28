@@ -1,19 +1,15 @@
 import React, { Fragment } from "react";
 import { icons } from "../assets/icons";
 import { Popover, Transition } from "@headlessui/react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux'
-import { logout, reset } from "../features/auth/authSlice"
+import { useNavigate } from "react-router-dom";
 
 const CompHeader = ({ sideOpen, setSideOpen }) => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-
+  const navigate = useNavigate();
   const handleLogout = () => {
-    dispatch(logout())
-    dispatch(reset())
-    navigate("/login")
-  }
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+    navigate("/login");
+  };
 
   return (
     <Fragment>
@@ -42,7 +38,7 @@ const CompHeader = ({ sideOpen, setSideOpen }) => {
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <Popover.Panel className="absolute w-max min-w-[170px] flex flex-col right-3 top-14 rounded-lg shadow-lg bg-slate-600 pt-3 pb-1 px-1 text-white">
+            <Popover.Panel className="absolute w-max min-w-[170px] flex flex-col right-3 top-14 rounded-lg shadow-lg bg-[#0F172A] pt-3 pb-1 px-1 text-white">
               <div className="px-2 pb-2">
                 <div className="text-xs font-medium">
                   M. Aldi Kurniawan

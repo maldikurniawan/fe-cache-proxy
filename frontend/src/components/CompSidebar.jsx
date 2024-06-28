@@ -38,7 +38,7 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
       <div
         className={`${
           sideOpen ? "w-48 sm:w-60 left-0" : "w-14 -left-96 sm:left-0 sm:block"
-        } z-10 fixed sm:relative h-screen flex flex-col bg-slate-600 shadow-lg shadow-slate-400 sm:shadow-none text-white transition-all rounded-r-3xl sm:rounded-none`}
+        } z-10 fixed sm:relative h-screen flex flex-col bg-[#0F172A] shadow-lg shadow-slate-400 sm:shadow-none text-white transition-all rounded-r-3xl sm:rounded-none`}
       >
         {/* Logo */}
         <div className="w-full flex justify-center">
@@ -197,7 +197,7 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
                   >
                     <Popover.Panel
                       ref={ref}
-                      className="bg-slate-600 w-36 p-1 rounded-lg shadow-md gap-1 flex flex-col"
+                      className="bg-[#0F172A] w-36 p-1 rounded-lg shadow-md gap-1 flex flex-col"
                     >
                       {menu.subMenu.map((subMenu, subMenuIdx) => (
                         <NavLink key={subMenuIdx} to={subMenu.subMenuLink}>
