@@ -1,5 +1,6 @@
 import { CompCardContainer } from "../../components/index";
 import React, { useEffect, useState } from "react";
+import ApiCacheUpdate from "../../components/ApiCacheUpdate";
 
 const DashboardPage = () => {
   const [time, setTime] = useState(new Date())
@@ -10,6 +11,7 @@ const DashboardPage = () => {
 
   return (
     <div className="grid md:grid-cols-4 gap-4">
+      <ApiCacheUpdate />
       <CompCardContainer>
         <div>Jumlah Log: 188</div>
       </CompCardContainer>
