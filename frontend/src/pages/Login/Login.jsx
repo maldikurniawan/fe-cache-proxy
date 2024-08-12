@@ -37,7 +37,7 @@ const Login = () => {
                 Swal.fire({
                     icon: "error",
                     title: "Email/Password Salah!",
-                    text: "Periksa lagi Email dan Password Anda",
+                    text: "Periksa lagi Email dan Password anda",
                 });
             });
     };

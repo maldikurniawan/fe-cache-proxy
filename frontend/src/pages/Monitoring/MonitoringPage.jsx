@@ -2,16 +2,14 @@ import React, { useState, Fragment, useCallback, useEffect } from "react";
 import { CompCardContainer, CompPagination } from "../../components/index";
 import { icons } from "../../assets/icons";
 import { SyncLoader } from "react-spinners";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteData, getData } from "../../actions/index";
+import { getData } from "../../actions/index";
 import { API_URL_cache } from "../../constants";
 import { monitoringReducers } from "../../redux/monitoringSlice";
 import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
 
 const MonitoringPage = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const tableHead = [
     { title: "No", field: "idlog" },
@@ -49,9 +47,6 @@ const MonitoringPage = () => {
   };
 
   const handleSort = (column) => {
-    //RESET PAGINATE KE 1
-    // setOffset(0);
-
     if (column === sortColumn) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
@@ -98,7 +93,7 @@ const MonitoringPage = () => {
     <Fragment>
       <div className="flex justify-between items-center">
         <h1 className="text-lg md:text-3xl font-bold transition-all">
-          Monitoring Cache Server
+          Monitoring Access Log
         </h1>
       </div>
       <br />

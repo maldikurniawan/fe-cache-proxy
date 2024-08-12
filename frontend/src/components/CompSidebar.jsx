@@ -29,16 +29,14 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
     <Fragment>
       <div
         onClick={() => setSideOpen(!sideOpen)}
-        className={`fixed w-screen h-screen sm:hidden ${
-          sideOpen ? "" : "hidden"
-        }`}
+        className={`fixed w-screen h-screen md:hidden ${sideOpen ? "" : "hidden"
+          }`}
       ></div>
 
       {/* Sidebar */}
       <div
-        className={`${
-          sideOpen ? "w-48 sm:w-60 left-0" : "w-14 -left-96 sm:left-0 sm:block"
-        } z-10 fixed sm:relative h-screen flex flex-col bg-[#0F172A] shadow-lg shadow-slate-400 sm:shadow-none text-white transition-all rounded-r-3xl sm:rounded-none`}
+        className={`${sideOpen ? "w-48 md:w-60 left-0" : "w-14 -left-96 md:left-0 md:block"
+          } z-10 fixed md:relative h-screen flex flex-col bg-[#0F172A] shadow-lg shadow-slate-400 md:shadow-none text-white transition-all rounded-r-3xl md:rounded-none`}
       >
         {/* Logo */}
         <div className="w-full flex justify-center">
@@ -57,21 +55,18 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
                 >
                   {({ isActive }) => (
                     <div
-                      className={`${
-                        sideOpen
-                          ? "flex px-3 py-2 rounded-lg"
-                          : "block p-2 rounded-full shadow-md hover:shadow-xl"
-                      } ${
-                        isActive
+                      className={`${sideOpen
+                        ? "flex px-3 py-2 rounded-lg"
+                        : "block p-2 rounded-full shadow-md hover:shadow-xl"
+                        } ${isActive
                           ? "bg-white text-slate-600 shadow-md"
                           : "shadow-none"
-                      } my-1 justify-between items-center w-full transition-all duration-150 hover:bg-white hover:text-slate-600 focus:outline-none`}
+                        } my-1 justify-between items-center w-full transition-all duration-150 hover:bg-white hover:text-slate-600 focus:outline-none`}
                     >
                       <span className={`${sideOpen ? "flex" : "block"}`}>
                         <span
-                          className={` ${
-                            sideOpen ? "text-lg" : "text-2xl"
-                          } flex justify-center items-center`}
+                          className={` ${sideOpen ? "text-lg" : "text-2xl"
+                            } flex justify-center items-center`}
                         >
                           {menu.menuIcon}
                         </span>
@@ -91,22 +86,19 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
                   <>
                     <Disclosure.Button
                       onClick={() => navOpen(menu.menuLink)}
-                      className={`${
-                        navopen[menu.menuLink]
-                          ? "bg-white text-slate-600 shadow-md"
-                          : ""
-                      } ${
-                        sideOpen
+                      className={`${navopen[menu.menuLink]
+                        ? "bg-white text-slate-600 shadow-md"
+                        : ""
+                        } ${sideOpen
                           ? "flex px-3 py-2 rounded-lg"
                           : "block p-2 rounded-full hover:shadow-xl"
-                      }
+                        }
                       }  justify-between items-center w-full transition-all duration-150 hover:bg-white hover:text-slate-600`}
                     >
                       <span className={`${sideOpen ? "flex" : "block"}`}>
                         <span
-                          className={` ${
-                            sideOpen ? "text-lg" : "text-2xl"
-                          } flex justify-center items-center`}
+                          className={` ${sideOpen ? "text-lg" : "text-2xl"
+                            } flex justify-center items-center`}
                         >
                           {menu.menuIcon}
                         </span>
@@ -115,9 +107,8 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
                         </span>
                       </span>
                       <BiChevronRight
-                        className={`${sideOpen ? "" : "hidden"} ${
-                          navopen[menu.menuLink] ? "rotate-90" : ""
-                        } transition-all`}
+                        className={`${sideOpen ? "" : "hidden"} ${navopen[menu.menuLink] ? "rotate-90" : ""
+                          } transition-all`}
                       />
                     </Disclosure.Button>
                     <Transition
@@ -135,9 +126,8 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
                           <NavLink key={subMenuIdx} to={subMenu.subMenuLink}>
                             {({ isActive }) => (
                               <div
-                                className={`${
-                                  isActive ? "bg-white text-slate-600" : ""
-                                } px-3 py-2 rounded-lg mt-1 ml-[26px] transition hover:bg-white hover:text-slate-600`}
+                                className={`${isActive ? "bg-white text-slate-600" : ""
+                                  } px-3 py-2 rounded-lg mt-1 ml-[26px] transition hover:bg-white hover:text-slate-600`}
                               >
                                 {subMenu.subMenuName}
                               </div>
@@ -156,22 +146,19 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
                 <Popover key={menuIdx} as={"div"} className="my-1">
                   <Popover.Button
                     onClick={() => navOpen(menu.menuLink)}
-                    className={`${
-                      navopen[menu.menuLink]
-                        ? "bg-white text-slate-600 shadow-md"
-                        : ""
-                    } ${
-                      sideOpen
+                    className={`${navopen[menu.menuLink]
+                      ? "bg-white text-slate-600 shadow-md"
+                      : ""
+                      } ${sideOpen
                         ? "flex px-3 py-2 rounded-lg"
                         : "block p-2 rounded-full hover:shadow-xl"
-                    }
+                      }
                       }  justify-between items-center w-full transition-all duration-150 hover:bg-white hover:text-slate-600`}
                   >
                     <span className={`${sideOpen ? "flex" : "block"}`}>
                       <span
-                        className={` ${
-                          sideOpen ? "text-lg" : "text-2xl"
-                        } flex justify-center items-center`}
+                        className={` ${sideOpen ? "text-lg" : "text-2xl"
+                          } flex justify-center items-center`}
                       >
                         {menu.menuIcon}
                       </span>
@@ -180,14 +167,13 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
                       </span>
                     </span>
                     <BiChevronRight
-                      className={`${sideOpen ? "" : "hidden"} ${
-                        navopen[menu.menuLink] ? "rotate-90" : ""
-                      } transition-all`}
+                      className={`${sideOpen ? "" : "hidden"} ${navopen[menu.menuLink] ? "rotate-90" : ""
+                        } transition-all`}
                     />
                   </Popover.Button>
                   <Transition
                     show={navopen[menu.menuLink]}
-                    className="absolute left-16 hidden sm:block"
+                    className="absolute left-16 hidden md:block"
                     enter="transition duration-100 ease-out"
                     enterFrom="transform scale-95 opacity-0"
                     enterTo="transform scale-100 opacity-100"
@@ -203,11 +189,10 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
                         <NavLink key={subMenuIdx} to={subMenu.subMenuLink}>
                           {({ isActive }) => (
                             <div
-                              className={`${
-                                isActive
-                                  ? "bg-white text-slate-600"
-                                  : "hover:bg-white hover:text-slate-600"
-                              } px-3 py-2 transition rounded-lg`}
+                              className={`${isActive
+                                ? "bg-white text-slate-600"
+                                : "hover:bg-white hover:text-slate-600"
+                                } px-3 py-2 transition rounded-lg`}
                             >
                               {subMenu.subMenuName}
                             </div>

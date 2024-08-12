@@ -7,9 +7,21 @@ export const menuItem = [
     menuLink: "/",
     subMenu: [],
   },
+  // {
+  //   menuIcon: icons.iobarchartoutline,
+  //   menuName: "Cache Log",
+  //   menuLink: "/monitoring",
+  //   subMenu: [],
+  // },
+  // {
+  //   menuIcon: icons.iobarchartoutline,
+  //   menuName: "Store Log",
+  //   menuLink: "/monitoring",
+  //   subMenu: [],
+  // },
   {
     menuIcon: icons.iobarchartoutline,
-    menuName: "Monitoring",
+    menuName: "Access Log",
     menuLink: "/monitoring",
     subMenu: [],
   },
