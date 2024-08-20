@@ -1,4 +1,4 @@
-import { icons } from "../assets/icons";
+import { icons } from "../../public/assets/icons";
 
 export const menuItem = [
   {

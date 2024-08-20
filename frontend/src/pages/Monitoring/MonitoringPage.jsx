@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useCallback, useEffect } from "react";
 import { CompCardContainer, CompPagination } from "../../components/index";
-import { icons } from "../../assets/icons";
+import { icons } from "../../../public/assets/icons";
 import { SyncLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../../actions/index";

@@ -10,7 +10,6 @@ import { Disclosure, Popover, Transition } from "@headlessui/react";
 // Assets
 import { BiChevronRight } from "react-icons/bi";
 import { menuItem } from "../atoms/menutItem";
-import logo from "../assets/images/logo-cache.png";
 import { useRef } from "react";
 
 const CompSidebar = ({ sideOpen, setSideOpen }) => {
@@ -40,7 +39,7 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
       >
         {/* Logo */}
         <div className="w-full flex justify-center">
-          <img className="w-40" src={logo} alt="logo" />
+          <img className="w-40" src="/assets/images/logo-cache.png" alt="logo" />
         </div>
 
         {/* Menu */}

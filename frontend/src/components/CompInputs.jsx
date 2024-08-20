@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { icons } from "../assets/icons";
+import { icons } from "../../public/assets/icons";
 
 const CompInputs = ({ inputs, setInputs, handleInput }) => {
   const handleInputGroup = (e, index, index2, index3) => {

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { icons } from "../assets/icons";
+import { icons } from "../../public/assets/icons";
 import { Popover, Transition } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 
