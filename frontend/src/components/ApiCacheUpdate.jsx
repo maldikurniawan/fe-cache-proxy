@@ -6,7 +6,7 @@ const ApiCacheUpdate = () => {
     useEffect(() => {
         const fetchAndUpdateCache = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/cacheupdate/', { method: 'GET' });
+                const response = await fetch('http://127.0.0.1:8000/api/acceslogupdate/', { method: 'GET' });
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

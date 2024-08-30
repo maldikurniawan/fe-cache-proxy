@@ -4,7 +4,7 @@ import { icons } from "../../../public/assets/icons";
 import { SyncLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../../actions/index";
-import { API_URL_cache } from "../../constants";
+import { API_URL_access } from "../../constants";
 import { monitoringReducers } from "../../redux/monitoringSlice";
 import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
@@ -31,7 +31,7 @@ const MonitoringPage = () => {
   const get = useCallback(
     async (params) => {
       getData(
-        API_URL_cache,
+        API_URL_access,
         params,
         { dispatch, redux: monitoringReducers },
         "GET_MONITORING"
