@@ -4,6 +4,8 @@ import {
   MdKeyboardArrowRight,
   MdKeyboardArrowLeft,
   MdCheckCircle,
+  MdOutlineDevices,
+  MdOutlineWifiTetheringError,
 } from "react-icons/md";
 import { GoOrganization, GoPerson, GoGear, GoSignOut } from "react-icons/go";
 import {
@@ -71,6 +73,7 @@ import {
   AiFillEyeInvisible,
   AiFillCamera,
 } from "react-icons/ai";
+import { GrStorage } from "react-icons/gr";
 
 export const icons = {
   riclosecirclefill: <RiCloseCircleFill />,
@@ -135,4 +138,7 @@ export const icons = {
   aifilleyeinvisible: <AiFillEyeInvisible />,
   aifillcamera: <AiFillCamera />,
   iobarchartoutline: <IoBarChartOutline />,
+  mdoutlinedevices: <MdOutlineDevices />,
+  grstorage: <GrStorage />,
+  mdoutlinewifitetheringerror: <MdOutlineWifiTetheringError />,
 };

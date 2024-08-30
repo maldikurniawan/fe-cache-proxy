@@ -3,8 +3,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import { Fragment } from "react";
 import DashboardPage from "./pages/Dashboard/DashboardPage";
-import MonitoringPage from "./pages/Monitoring/MonitoringPage";
+import AccessLog from "./pages/Monitoring/AccessLog";
 import PrivateRoute from "./pages/Login/PrivateRoute";
+import StoreLog from "./pages/Monitoring/StoreLog";
+import UserAgentLog from "./pages/Monitoring/UserAgentLog";
+import CacheLog from "./pages/Monitoring/CacheLog";
 
 export default function App() {
   return (
@@ -15,7 +18,10 @@ export default function App() {
           <Route path="/" element={<PrivateRoute />}>
             <Route element={<CompLayout />}>
               <Route index element={<DashboardPage />} />
-              <Route path="monitoring" element={<MonitoringPage />} />
+              <Route path="/access" element={<AccessLog />} />
+              <Route path="/store" element={<StoreLog />} />
+              <Route path="/useragent" element={<UserAgentLog />} />
+              <Route path="/cache" element={<CacheLog />} />
             </Route>
           </Route>
         </Routes>

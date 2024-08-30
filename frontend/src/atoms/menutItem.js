@@ -7,22 +7,28 @@ export const menuItem = [
     menuLink: "/",
     subMenu: [],
   },
-  // {
-  //   menuIcon: icons.iobarchartoutline,
-  //   menuName: "Cache Log",
-  //   menuLink: "/monitoring",
-  //   subMenu: [],
-  // },
-  // {
-  //   menuIcon: icons.iobarchartoutline,
-  //   menuName: "Store Log",
-  //   menuLink: "/monitoring",
-  //   subMenu: [],
-  // },
   {
     menuIcon: icons.iobarchartoutline,
     menuName: "Access Log",
-    menuLink: "/monitoring",
+    menuLink: "/access",
+    subMenu: [],
+  },
+  {
+    menuIcon: icons.grstorage,
+    menuName: "Store Log",
+    menuLink: "/store",
+    subMenu: [],
+  },
+  {
+    menuIcon: icons.mdoutlinedevices,
+    menuName: "User Agent Log",
+    menuLink: "/useragent",
+    subMenu: [],
+  },
+  {
+    menuIcon: icons.mdoutlinewifitetheringerror,
+    menuName: "Cache Log",
+    menuLink: "/cache",
     subMenu: [],
   },
 ];

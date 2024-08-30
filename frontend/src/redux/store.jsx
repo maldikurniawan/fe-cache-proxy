@@ -1,9 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit"
-import monitoringSlice from "./monitoringSlice";
+import accessSlice from "./accessSlice";
+import storeSlice from "./storeSlice";
+import useragentSlice from "./useragentSlice";
+import cacheSlice from "./cacheSlice";
 
 
 export const store = configureStore({
     reducer: {
-        monitoring: monitoringSlice,
+        access: accessSlice,
+        store: storeSlice,
+        useragent: useragentSlice,
+        cache: cacheSlice,
     },
 })

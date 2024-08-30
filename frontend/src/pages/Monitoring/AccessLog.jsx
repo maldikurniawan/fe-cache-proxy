@@ -5,11 +5,11 @@ import { SyncLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../../actions/index";
 import { API_URL_access } from "../../constants";
-import { monitoringReducers } from "../../redux/monitoringSlice";
+import { accessReducers } from "../../redux/accessSlice";
 import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
 
-const MonitoringPage = () => {
+const AccessLog = () => {
   const dispatch = useDispatch();
   const tableHead = [
     { title: "No", field: "idlog" },
@@ -18,10 +18,10 @@ const MonitoringPage = () => {
     { title: "Tanggal Akses", field: "timestamp" },
   ];
   const {
-    getMonitoringResult,
-    getMonitoringLoading,
-    getMonitoringError,
-  } = useSelector((state) => state.monitoring);
+    getAccessResult,
+    getAccessLoading,
+    getAccessError,
+  } = useSelector((state) => state.access);
   const [limit, setLimit] = useState(10);
   const [offset, setOffset] = useState(0);
   const [search, setSearch] = useState("");
@@ -33,8 +33,8 @@ const MonitoringPage = () => {
       getData(
         API_URL_access,
         params,
-        { dispatch, redux: monitoringReducers },
-        "GET_MONITORING"
+        { dispatch, redux: accessReducers },
+        "GET_ACCESS"
       );
     },
     [dispatch]
@@ -134,7 +134,7 @@ const MonitoringPage = () => {
             </thead>
             <tbody>
               {/* Loading */}
-              {getMonitoringLoading && (
+              {getAccessLoading && (
                 <tr>
                   <td
                     className="text-center py-12"
@@ -148,18 +148,18 @@ const MonitoringPage = () => {
               )}
 
               {/* Error */}
-              {getMonitoringError && (
+              {getAccessError && (
                 <tr>
                   <td className="text-center" colSpan={tableHead.length + 1}>
                     <div className="pt-20 pb-12 flex justify-center items-center text-xs text-red-500">
-                      {getMonitoringError}
+                      {getAccessError}
                     </div>
                   </td>
                 </tr>
               )}
 
               {/* Result = 0 */}
-              {getMonitoringResult && getMonitoringResult.results.length === 0 && (
+              {getAccessResult && getAccessResult.results.length === 0 && (
                 <tr>
                   <td className="text-center" colSpan={tableHead.length + 1}>
                     <div className="pt-20 pb-12 flex justify-center items-center text-xs text-slate-600">
@@ -169,7 +169,7 @@ const MonitoringPage = () => {
                 </tr>
               )}
 
-              {getMonitoringResult && getMonitoringResult.results.map((item, itemIdx) => (
+              {getAccessResult && getAccessResult.results.map((item, itemIdx) => (
                 <tr
                   key={itemIdx}
                   className="border-b border-gray-200 text-sm hover:bg-white/60 transition-all"
@@ -193,7 +193,7 @@ const MonitoringPage = () => {
         </div>
         <CompPagination
           handlePageClick={handlePageClick}
-          pageCount={getMonitoringResult.count > 0 ? getMonitoringResult.count : 0}
+          pageCount={getAccessResult.count > 0 ? getAccessResult.count : 0}
           limit={limit}
           setLimit={handleSelect}
         />
@@ -202,4 +202,4 @@ const MonitoringPage = () => {
   );
 };
 
-export default MonitoringPage;
+export default AccessLog;
