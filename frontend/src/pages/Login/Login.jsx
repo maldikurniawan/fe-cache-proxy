@@ -58,7 +58,7 @@ const Login = () => {
                 >
                     <div className="overflow-hidden w-96">
                         <img
-                            src="/assets/images/logo-cache.png"
+                            src="/assets/images/cache-proxy.png"
                             alt="pengguna"
                             className="h-full w-full object-contain"
                         />
