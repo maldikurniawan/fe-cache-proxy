@@ -113,7 +113,7 @@ const Login = () => {
                         onClick={(e) => doSubmit(e)}
                         disabled={loading ? true : false}
                     >
-                        {loading ? <PulseLoader color="#fff" size={11} /> : "Masuk"} <BsChevronRight />
+                        {loading ? <PulseLoader color="#FFF" size={11} /> : "Masuk"} <BsChevronRight />
                     </button>
                 </form>
             </div>
