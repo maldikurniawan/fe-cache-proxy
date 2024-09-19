@@ -1,6 +1,6 @@
 import React from "react";
 
-const CompCardContainer = ({ children, icon, title }) => {
+const CardContainer = ({ children, icon, title }) => {
   return (
     <div className="bg-white w-full shadow p-3 rounded-lg">
       <div className="flex items-center mb-2 gap-2 font-bold">
@@ -12,4 +12,4 @@ const CompCardContainer = ({ children, icon, title }) => {
   );
 };
 
-export default CompCardContainer;
+export default CardContainer;

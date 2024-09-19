@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { MdDonutLarge } from "react-icons/md";
 import { FaChartLine } from "react-icons/fa";
-import { API_URL_access } from "../../constants";
-import DonutChart from "../../components/DonutChart";
-import LineChart from "../../components/LineChart";
+import { API_URL_access } from "@/constants";
+import {
+  DonutChart,
+  LineChart,
+} from "@/components";
 import ClipLoader from "react-spinners/ClipLoader"; // Import spinner component
 
 const DashboardPage = () => {
   const [totalStatus, setTotalStatus] = useState([0, 0, 0, 0]);
+  const [monthlyLogCounts, setMonthlyLogCounts] = useState(new Array(12).fill(0)); // Initial state for monthly log counts
   const [loading, setLoading] = useState(true); // State to manage loading
 
   useEffect(() => {
@@ -27,9 +30,20 @@ const DashboardPage = () => {
           "TCP_DENIED/403": 0
         };
 
+        const monthlyCounts = new Array(12).fill(0); // Initialize array for 12 months (Jan-Dec)
+
         data.forEach((entry) => {
+          // Count based on status
           if (statusCounts.hasOwnProperty(entry.http_status)) {
             statusCounts[entry.http_status]++;
+          }
+
+          // Parse timestamp (Unix timestamp, multiply by 1000 to convert to milliseconds)
+          const entryDate = new Date(parseFloat(entry.timestamp) * 1000); // Convert timestamp to JS Date
+          const month = entryDate.getMonth(); // Get the month (0-11)
+
+          if (!isNaN(month)) {
+            monthlyCounts[month]++;
           }
         });
 
@@ -39,6 +53,8 @@ const DashboardPage = () => {
           statusCounts["TCP_TUNNEL/200"],
           statusCounts["TCP_DENIED/403"]
         ]);
+
+        setMonthlyLogCounts(monthlyCounts); // Set monthly log counts
         setLoading(false); // Set loading to false after data is fetched
       })
       .catch((error) => {
@@ -95,7 +111,7 @@ const DashboardPage = () => {
               icon={<FaChartLine />}
               dataSeries={[{
                 name: 'Requests',
-                data: [20, 10, 15, 25, 30, 50, 40, 10, 20, 30, 25, 15], // Example static data
+                data: monthlyLogCounts, // Use dynamically calculated monthly data
               }]}
               dataLabels={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"]}
               dataColor="#4361EE"

@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
-import { icons } from "../../public/assets/icons";
+import { icons } from "../../../public/assets/icons";
 import { Popover, Transition } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 
-const CompHeader = ({ sideOpen, setSideOpen }) => {
+const Header = ({ sideOpen, setSideOpen }) => {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("access");
@@ -61,4 +61,4 @@ const CompHeader = ({ sideOpen, setSideOpen }) => {
   );
 };
 
-export default CompHeader;
+export default Header;

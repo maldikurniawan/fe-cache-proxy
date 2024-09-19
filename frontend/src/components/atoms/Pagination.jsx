@@ -5,7 +5,7 @@ import ReactPaginate from "react-paginate";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 
-const CompPagination = ({ handlePageClick, pageCount, limit, setLimit }) => {
+const Pagination = ({ handlePageClick, pageCount, limit, setLimit }) => {
   return (
     <Fragment>
       <div className="sm:flex justify-between items-center mt-4">
@@ -44,4 +44,4 @@ const CompPagination = ({ handlePageClick, pageCount, limit, setLimit }) => {
   );
 };
 
-export default CompPagination;
+export default Pagination;

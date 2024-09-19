@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
-import { icons } from "../../public/assets/icons";
+import { icons } from "../../../public/assets/icons";
 
-const CompInputs = ({ inputs, setInputs, handleInput }) => {
+const Inputs = ({ inputs, setInputs, handleInput }) => {
   const handleInputGroup = (e, index, index2, index3) => {
     const newInputs = [...inputs];
     if (e.target.type === "file") {
@@ -187,4 +187,4 @@ const CompInputs = ({ inputs, setInputs, handleInput }) => {
   );
 };
 
-export default CompInputs;
+export default Inputs;

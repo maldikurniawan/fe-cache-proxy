@@ -2,17 +2,17 @@ import React, { Fragment, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 // Hooks
-import { useOnClickOutside } from "../hooks/useOnClickOutside";
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 
 // Components
 import { Disclosure, Popover, Transition } from "@headlessui/react";
 
 // Assets
 import { BiChevronRight } from "react-icons/bi";
-import { menuItem } from "../atoms/menutItem";
+import { menuItem } from "@/constants/menutItem";
 import { useRef } from "react";
 
-const CompSidebar = ({ sideOpen, setSideOpen }) => {
+const Sidebar = ({ sideOpen, setSideOpen }) => {
   const initNav = {
     pricelist: false,
   };
@@ -219,4 +219,4 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
   );
 };
 
-export default CompSidebar;
+export default Sidebar;

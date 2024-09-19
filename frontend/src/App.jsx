@@ -1,4 +1,4 @@
-import { CompLayout } from "./components/index";
+import { Layout } from "./components/index";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import { Fragment } from "react";
@@ -16,7 +16,7 @@ export default function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<PrivateRoute />}>
-            <Route element={<CompLayout />}>
+            <Route element={<Layout />}>
               <Route index element={<DashboardPage />} />
               <Route path="/access" element={<AccessLog />} />
               <Route path="/store" element={<StoreLog />} />

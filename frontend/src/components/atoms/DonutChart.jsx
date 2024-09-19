@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import Chart from "react-apexcharts";
-import CompCardContainer from "./CompCardContainer"; // Adjust the import path as needed
+import CompCardContainer from "./CardContainer"; // Adjust the import path as needed
 
 const DonutChart = ({
 	title,

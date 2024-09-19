@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { API_URL_login } from "../../constants/index";
+import { API_URL_login } from "@/constants";
 import { BsChevronRight } from 'react-icons/bs'
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"
 import { PulseLoader } from "react-spinners"

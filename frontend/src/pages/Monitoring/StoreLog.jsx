@@ -1,11 +1,11 @@
 import React, { useState, Fragment, useCallback, useEffect } from "react";
-import { CompCardContainer, CompPagination } from "../../components/index";
+import { CardContainer, Pagination } from "@/components";
 import { icons } from "../../../public/assets/icons";
 import { SyncLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "../../actions/index";
-import { API_URL_store } from "../../constants";
-import { storeReducers } from "../../redux/storeSlice";
+import { getData } from "@/actions";
+import { API_URL_store } from "@/constants";
+import { storeReducers } from "@/redux/storeSlice";
 import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
 
@@ -106,7 +106,7 @@ const StoreLog = () => {
         </h1>
       </div>
       <br />
-      <CompCardContainer>
+      <CardContainer>
         <div className="w-full flex text-gray-600">
           <div className="p-1 text-lg mr-3">{icons.fisearch}</div>
           <input
@@ -116,11 +116,11 @@ const StoreLog = () => {
             onChange={(e) => onSearch(e.target.value)}
           />
         </div>
-      </CompCardContainer>
+      </CardContainer>
       <br />
 
       {/* Content */}
-      <CompCardContainer>
+      <CardContainer>
         <div className="overflow-y-auto custom-scroll">
           <table className="w-full">
             <thead>
@@ -233,13 +233,13 @@ const StoreLog = () => {
             </tbody>
           </table>
         </div>
-        <CompPagination
+        <Pagination
           handlePageClick={handlePageClick}
           pageCount={getStoreResult.count > 0 ? getStoreResult.count : 0}
           limit={limit}
           setLimit={handleSelect}
         />
-      </CompCardContainer>
+      </CardContainer>
     </Fragment>
   );
 };
