@@ -12,10 +12,15 @@ import { BiSortDown, BiSortUp } from "react-icons/bi";
 const AccessLog = () => {
   const dispatch = useDispatch();
   const tableHead = [
-    { title: "No", field: "idlog" },
-    { title: "Ip Address", field: "ip" },
-    { title: "URL", field: "url" },
-    { title: "Tanggal Akses", field: "timestamp" },
+    { title: "No", field: "id" },
+    { title: "Tanggal", field: "timestamp" },
+    { title: "Durasi", field: "elapsed_time" },
+    { title: "Client Address", field: "client_address" },
+    { title: "Result Codes", field: "http_status" },
+    { title: "Bytes", field: "bytes" },
+    { title: "Request Method ", field: "request_method" },
+    { title: "URL", field: "request_url" },
+    { title: "Hierarchy Code", field: "host" },
   ];
   const {
     getAccessResult,
@@ -27,6 +32,28 @@ const AccessLog = () => {
   const [search, setSearch] = useState("");
   const [sortColumn, setSortColumn] = useState("");
   const [sortOrder, setSortOrder] = useState("");
+
+  // Format Durasi
+  const formatDuration = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    return [
+      hours.toString().padStart(2, '0'),
+      minutes.toString().padStart(2, '0'),
+      secs.toString().padStart(2, '0'),
+    ].join(':');
+  };
+
+  // Format Bytes
+  const formatBytes = (bytes) => {
+    if (bytes === 0) return '0 Byte';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
 
   const get = useCallback(
     async (params) => {
@@ -177,14 +204,29 @@ const AccessLog = () => {
                   <td className="p-2 text-center whitespace-nowrap">
                     {itemIdx + offset + 1}
                   </td>
-                  <td className="p-2 text-center">{item.ip}</td>
-                  <td className="p-2 text-center whitespace-nowrap">
-                    {item.url}
+                  <td className="p-2 whitespace-nowrap">
+                    <Moment unix>{item.timestamp}</Moment>
                   </td>
-                  <td className="p-2 text-center whitespace-nowrap">
-                    <Moment unix>
-                      {item.timestamp}
-                    </Moment>
+                  <td className="p-2 whitespace-nowrap">
+                    {formatDuration(item.elapsed_time)}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.client_address}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.http_status}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {formatBytes(item.bytes)}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.request_method}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.request_url}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.host}
                   </td>
                 </tr>
               ))}

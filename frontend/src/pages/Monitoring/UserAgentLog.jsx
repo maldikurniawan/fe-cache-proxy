@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../../actions/index";
 import { API_URL_useragent } from "../../constants";
 import { useragentReducers } from "../../redux/useragentSlice";
-import Moment from "react-moment";
+// import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
 
 const UserAgentLog = () => {
@@ -181,11 +181,11 @@ const UserAgentLog = () => {
                   <td className="p-2 text-center whitespace-nowrap">
                     {item.url}
                   </td>
-                  <td className="p-2 text-center whitespace-nowrap">
+                  {/* <td className="p-2 text-center whitespace-nowrap">
                     <Moment unix>
                       {item.timestamp}
                     </Moment>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>

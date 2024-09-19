@@ -60,7 +60,7 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
                         } ${isActive
                           ? "bg-white text-slate-600 shadow-md"
                           : "shadow-none"
-                        } my-1 justify-between items-center w-full transition-all duration-150 hover:bg-white hover:text-slate-600 focus:outline-none`}
+                        } my-1 justify-between items-center w-full whitespace-nowrap transition-all duration-150 hover:bg-white hover:text-slate-600 focus:outline-none`}
                     >
                       <span className={`${sideOpen ? "flex" : "block"}`}>
                         <span
@@ -69,7 +69,7 @@ const CompSidebar = ({ sideOpen, setSideOpen }) => {
                         >
                           {menu.menuIcon}
                         </span>
-                        <span className={`${sideOpen ? "ml-2" : "hidden"}`}>
+                        <span className={`${sideOpen ? "ml-2 mr-12" : "hidden"}`}>
                           {menu.menuName}
                         </span>
                       </span>

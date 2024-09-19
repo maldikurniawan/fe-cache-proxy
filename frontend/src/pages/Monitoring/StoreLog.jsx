@@ -12,10 +12,19 @@ import { BiSortDown, BiSortUp } from "react-icons/bi";
 const StoreLog = () => {
   const dispatch = useDispatch();
   const tableHead = [
-    { title: "No", field: "idlog" },
-    { title: "Ip Address", field: "ip" },
+    { title: "No", field: "id" },
+    { title: "Waktu", field: "timestamp" },
+    { title: "Aksi", field: "realese" },
+    { title: "Dir Number", field: "flag" },
+    { title: "File Number", field: "object_number" },
+    { title: "Hash", field: "hash" },
+    { title: "Sizes", field: "size" },
+    { title: "Expires", field: "timestamp_expire" },
     { title: "URL", field: "url" },
-    { title: "Tanggal Akses", field: "timestamp" },
+    { title: "Lastmod", field: "last_modified" },
+    { title: "Status", field: "http" },
+    { title: "Type", field: "mime_type" },
+    { title: "Method", field: "methode" },
   ];
   const {
     getStoreResult,
@@ -177,14 +186,47 @@ const StoreLog = () => {
                   <td className="p-2 text-center whitespace-nowrap">
                     {itemIdx + offset + 1}
                   </td>
-                  <td className="p-2 text-center">{item.ip}</td>
-                  <td className="p-2 text-center whitespace-nowrap">
-                    {item.url}
-                  </td>
-                  <td className="p-2 text-center whitespace-nowrap">
+                  <td className="p-2 whitespace-nowrap">
                     <Moment unix>
                       {item.timestamp}
                     </Moment>
+                  </td>
+                  <td className="p-2 whitespace-nowrap text-center">
+                    -
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.flag}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.object_number}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.hash}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.size}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    <Moment unix>
+                      {item.timestamp_expire}
+                    </Moment>
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.url}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    <Moment unix>
+                      {item.last_modified}
+                    </Moment>
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.http}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.mime_type}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.methode}
                   </td>
                 </tr>
               ))}

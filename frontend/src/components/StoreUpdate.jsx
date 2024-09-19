@@ -1,12 +1,12 @@
-// src/components/ApiCacheUpdate.jsx
+// src/components/StoreUpdate.jsx
 import React, { useEffect, useRef } from 'react';
 
-const ApiCacheUpdate = () => {
+const StoreUpdate = () => {
 
     useEffect(() => {
         const fetchAndUpdateCache = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/acceslogupdate/', { method: 'GET' });
+                const response = await fetch('http://127.0.0.1:8000/api/storelogupdate/', { method: 'GET' });
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -19,7 +19,7 @@ const ApiCacheUpdate = () => {
 
         // Fetch data immediately and then every 10 seconds
         fetchAndUpdateCache();
-        const intervalId = setInterval(fetchAndUpdateCache, 10 * 1000);
+        const intervalId = setInterval(fetchAndUpdateCache, 60 * 1000);
 
         // Cleanup interval on component unmount
         return () => clearInterval(intervalId);
@@ -27,4 +27,4 @@ const ApiCacheUpdate = () => {
 
 };
 
-export default ApiCacheUpdate;
+export default StoreUpdate;

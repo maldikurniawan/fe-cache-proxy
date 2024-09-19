@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../../actions/index";
 import { API_URL_cache } from "../../constants";
 import { cacheReducers } from "../../redux/cacheSlice";
-import Moment from "react-moment";
+// import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
 
 const CacheLog = () => {
@@ -181,11 +181,11 @@ const CacheLog = () => {
                   <td className="p-2 text-center whitespace-nowrap">
                     {item.url}
                   </td>
-                  <td className="p-2 text-center whitespace-nowrap">
+                  {/* <td className="p-2 text-center whitespace-nowrap">
                     <Moment unix>
                       {item.timestamp}
                     </Moment>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>
