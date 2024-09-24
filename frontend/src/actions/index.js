@@ -45,7 +45,7 @@ export const getData = (url, params, reducers, type) => {
 };
 
 // Request post
-export const postData = (url, data, reducers, type) => {
+export const postData = (reducers, data, url, type) => {
   const { dispatch, redux } = reducers;
   dispatch(
     redux({
@@ -53,7 +53,6 @@ export const postData = (url, data, reducers, type) => {
       payload: {
         loading: true,
         data: false,
-        error: false,
       },
     })
   );
@@ -84,7 +83,6 @@ export const postData = (url, data, reducers, type) => {
           payload: {
             loading: false,
             data: response.data,
-            error: false,
           },
         })
       );
@@ -104,7 +102,6 @@ export const postData = (url, data, reducers, type) => {
           payload: {
             loading: false,
             data: false,
-            error: error.message,
           },
         })
       );
@@ -112,7 +109,7 @@ export const postData = (url, data, reducers, type) => {
 };
 
 // Request put
-export const putData = (url, data, reducers, type) => {
+export const putData = (reducers, data, url, type) => {
   const { dispatch, redux } = reducers;
   dispatch(
     redux({
@@ -120,7 +117,6 @@ export const putData = (url, data, reducers, type) => {
       payload: {
         loading: true,
         data: false,
-        error: false,
       },
     })
   );
@@ -130,7 +126,7 @@ export const putData = (url, data, reducers, type) => {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("jwt_access")}`,
     },
-    url: url,
+    url: `${url}${data.id}/`,
     timeout: 120000,
     data: data,
   })
@@ -151,7 +147,6 @@ export const putData = (url, data, reducers, type) => {
           payload: {
             loading: false,
             data: response.data,
-            error: false,
           },
         })
       );
@@ -171,7 +166,6 @@ export const putData = (url, data, reducers, type) => {
           payload: {
             loading: false,
             data: false,
-            error: error.message,
           },
         })
       );

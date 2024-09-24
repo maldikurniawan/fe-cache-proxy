@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const serverSlice = createSlice({
-    name: "cache",
+    name: "server",
     initialState: {
         getServerResult: false,
         getServerLoading: false,
