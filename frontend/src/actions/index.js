@@ -61,7 +61,7 @@ export const postData = (url, data, reducers, type) => {
   axios({
     method: "POST",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("access")}`,
+      Authorization: `Bearer ${localStorage.getItem("jwt_access")}`,
     },
     url: url,
     timeout: 120000,
@@ -128,7 +128,7 @@ export const putData = (url, data, reducers, type) => {
   axios({
     method: "PUT",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("access")}`,
+      Authorization: `Bearer ${localStorage.getItem("jwt_access")}`,
     },
     url: url,
     timeout: 120000,
@@ -208,7 +208,7 @@ export const deleteData = (url, reducers, type) => {
       axios({
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("access")}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt_access")}`,
         },
         url: url,
         timeout: 120000,

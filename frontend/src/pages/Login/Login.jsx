@@ -27,8 +27,10 @@ const Login = () => {
             .then((res) => {
                 setLoading(false);
                 if (res.data) {
-                    localStorage.setItem("refresh", res.data.refresh);
-                    localStorage.setItem("access", res.data.access);
+                    localStorage.setItem("jwt_refresh", res.data.jwt_refresh);
+                    localStorage.setItem("jwt_access", res.data.jwt_access);
+                    localStorage.setItem("key", res.data.key);
+                    localStorage.setItem("user_id", res.data.user_id);
                     navigate("/");
                 }
             })
@@ -43,8 +45,8 @@ const Login = () => {
     };
 
     useEffect(() => {
-        const access = localStorage.getItem("access");
-        if (access) {
+        const jwt_access = localStorage.getItem("jwt_access");
+        if (jwt_access) {
             navigate("/");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

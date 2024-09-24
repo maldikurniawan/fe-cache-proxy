@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import Chart from "react-apexcharts";
-import CompCardContainer from "./CardContainer"; // Adjust the import path as needed
+import CardContainer from "./CardContainer"; // Adjust the import path as needed
 
 const DonutChart = ({
 	title,
@@ -61,7 +61,7 @@ const DonutChart = ({
 
 	return (
 		<Fragment>
-			<CompCardContainer
+			<CardContainer
 				cardColor={cardColor}
 				icon={icon}
 				title={title}
@@ -76,7 +76,7 @@ const DonutChart = ({
 						className="text-black" // Ensure the chart text color adapts to dark mode
 					/>
 				</div>
-			</CompCardContainer>
+			</CardContainer>
 		</Fragment>
 	);
 };

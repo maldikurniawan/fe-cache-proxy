@@ -8,6 +8,7 @@ import PrivateRoute from "./pages/Login/PrivateRoute";
 import StoreLog from "./pages/Monitoring/StoreLog";
 import UserAgentLog from "./pages/Monitoring/UserAgentLog";
 import CacheLog from "./pages/Monitoring/CacheLog";
+import ProfilePage from "./pages/Profile/ProfilePage";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
               <Route path="/store" element={<StoreLog />} />
               <Route path="/useragent" element={<UserAgentLog />} />
               <Route path="/cache" element={<CacheLog />} />
+              <Route path="/profile" element={<ProfilePage />} />
             </Route>
           </Route>
         </Routes>

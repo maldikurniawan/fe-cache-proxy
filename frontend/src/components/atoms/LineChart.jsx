@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import Chart from "react-apexcharts";
-import CompCardContainer from "./CardContainer"; // Adjust the import path as needed
+import CardContainer from "./CardContainer"; // Adjust the import path as needed
 
 const LineChart = ({
     title,
@@ -61,7 +61,7 @@ const LineChart = ({
 
     return (
         <Fragment>
-            <CompCardContainer
+            <CardContainer
                 cardColor={cardColor}
                 icon={icon}
                 title={title}
@@ -76,7 +76,7 @@ const LineChart = ({
                         className="text-black w-full"
                     />
                 </div>
-            </CompCardContainer>
+            </CardContainer>
         </Fragment>
     );
 };

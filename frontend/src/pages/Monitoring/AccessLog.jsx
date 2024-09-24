@@ -21,6 +21,7 @@ const AccessLog = () => {
     { title: "Request Method ", field: "request_method" },
     { title: "URL", field: "request_url" },
     { title: "Hierarchy Code", field: "host" },
+    { title: "Server", field: "server" },
   ];
   const {
     getAccessResult,
@@ -227,6 +228,9 @@ const AccessLog = () => {
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {item.host}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.server}
                   </td>
                 </tr>
               ))}

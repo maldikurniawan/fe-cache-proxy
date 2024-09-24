@@ -1,13 +1,13 @@
 import React, { Fragment } from "react";
 import { icons } from "../../../public/assets/icons";
 import { Popover, Transition } from "@headlessui/react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = ({ sideOpen, setSideOpen }) => {
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem("access");
-    localStorage.removeItem("refresh");
+    localStorage.removeItem("jwt_access");
+    localStorage.removeItem("jwt_refresh");
     navigate("/login");
   };
 
@@ -46,6 +46,12 @@ const Header = ({ sideOpen, setSideOpen }) => {
                 <div className="text-[10px]">Admin</div>
               </div>
               <div className="flex flex-col">
+                <Link
+                  to="/profile"
+                  className="text-xs py-2 px-2 rounded-lg text-left hover:bg-white hover:text-slate-600 transition-all"
+                >
+                  Edit Profile
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="text-xs py-2 px-2 rounded-lg text-left hover:bg-white hover:text-slate-600 transition-all"
