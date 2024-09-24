@@ -8,3 +8,5 @@ export const API_URL_store = `${baseurl}/storelogview/`;
 export const API_URL_useragent = `${baseurl}/agentlogview/`;
 export const API_URL_access = `${baseurl}/acceslogview/`;
 export const API_URL_updatesuperuser = `${baseurl}/update_data_super_user_id/`;
+export const API_URL_getserver = `${baseurl}/servercreate/`;
+export const API_URL_edelserver = `${baseurl}/serverupdatedelete/`;

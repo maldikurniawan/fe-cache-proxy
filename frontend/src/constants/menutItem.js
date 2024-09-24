@@ -31,4 +31,10 @@ export const menuItem = [
     menuLink: "/cache",
     subMenu: [],
   },
+  {
+    menuIcon: icons.ciserver,
+    menuName: "Server",
+    menuLink: "/server",
+    subMenu: [],
+  },
 ];

@@ -3,6 +3,7 @@ import accessSlice from "./accessSlice";
 import storeSlice from "./storeSlice";
 import useragentSlice from "./useragentSlice";
 import cacheSlice from "./cacheSlice";
+import serverSlice from "./serverSlice";
 
 
 export const store = configureStore({
@@ -11,5 +12,6 @@ export const store = configureStore({
         store: storeSlice,
         useragent: useragentSlice,
         cache: cacheSlice,
+        server: serverSlice,
     },
 })

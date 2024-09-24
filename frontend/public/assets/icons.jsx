@@ -48,6 +48,7 @@ import {
   FaKey,
   FaFileExport,
   FaCheck,
+  FaServer,
 } from "react-icons/fa";
 import {
   IoDocumentText,
@@ -74,6 +75,7 @@ import {
   AiFillCamera,
 } from "react-icons/ai";
 import { GrStorage } from "react-icons/gr";
+import { CiServer } from "react-icons/ci";
 
 export const icons = {
   riclosecirclefill: <RiCloseCircleFill />,
@@ -141,4 +143,6 @@ export const icons = {
   mdoutlinedevices: <MdOutlineDevices />,
   grstorage: <GrStorage />,
   mdoutlinewifitetheringerror: <MdOutlineWifiTetheringError />,
+  ciserver: <CiServer />,
+  faserver: <FaServer />,
 };
