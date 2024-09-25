@@ -27,6 +27,7 @@ const StoreLog = () => {
     { title: "Status", field: "http" },
     { title: "Type", field: "mime_type" },
     { title: "Method", field: "methode" },
+    { title: "Server", field: "server" },
   ];
   const {
     getStoreResult,
@@ -200,7 +201,7 @@ const StoreLog = () => {
                     </Moment>
                   </td>
                   <td className="p-2 whitespace-nowrap text-center">
-                    -
+                    {item.realese}
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {item.flag}
@@ -235,6 +236,9 @@ const StoreLog = () => {
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {item.methode}
+                  </td>
+                  <td className="p-2 text-center whitespace-nowrap">
+                    {item.server}
                   </td>
                 </tr>
               ))}

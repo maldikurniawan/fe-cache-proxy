@@ -9,6 +9,7 @@ export const accessSlice = createSlice({
     addAccessResult: false,
     addAccessLoading: false,
     deleteAccessResult: false,
+    id_server : 1,
   },
   reducers: {
     accessReducers: (state, action) => {
@@ -36,9 +37,17 @@ export const accessSlice = createSlice({
           return state;
       }
     },
+    set_id_server: (state, action) => {
+      return (
+        {
+          ...state,
+          id_server : action.payload
+        }
+      )
+    },
   },
 });
 
-export const { accessReducers } = accessSlice.actions;
+export const { accessReducers, set_id_server } = accessSlice.actions;
 
 export default accessSlice.reducer;

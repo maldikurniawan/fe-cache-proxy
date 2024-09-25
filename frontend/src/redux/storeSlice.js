@@ -36,9 +36,17 @@ export const storeSlice = createSlice({
                     return state;
             }
         },
+        set_id_server: (state, action) => {
+            return (
+                {
+                    ...state,
+                    id_server: action.payload
+                }
+            )
+        },
     },
 });
 
-export const { storeReducers } = storeSlice.actions;
+export const { storeReducers, set_id_server } = storeSlice.actions;
 
 export default storeSlice.reducer;

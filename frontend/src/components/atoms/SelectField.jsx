@@ -11,7 +11,7 @@ const SelectField = ({ label, name, options, value, onChange, onBlur, error }) =
                 onBlur={onBlur}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#0F172A] focus:border-[#0F172A] sm:text-sm"
             >
-                <option value="">Pilih {label}</option>
+                <option value="" hidden>Pilih {label}</option>
                 {options.map((option) => (
                     <option key={option.value} value={option.value}>
                         {option.label}

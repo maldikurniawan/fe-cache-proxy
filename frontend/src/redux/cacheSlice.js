@@ -36,9 +36,17 @@ export const cacheSlice = createSlice({
                     return state;
             }
         },
+        set_id_server: (state, action) => {
+            return (
+                {
+                    ...state,
+                    id_server: action.payload
+                }
+            )
+        },
     },
 });
 
-export const { cacheReducers } = cacheSlice.actions;
+export const { cacheReducers, set_id_server } = cacheSlice.actions;
 
 export default cacheSlice.reducer;

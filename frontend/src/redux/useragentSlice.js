@@ -36,9 +36,17 @@ export const useragentSlice = createSlice({
           return state;
       }
     },
+    set_id_server: (state, action) => {
+      return (
+        {
+          ...state,
+          id_server: action.payload
+        }
+      )
+    },
   },
 });
 
-export const { useragentReducers } = useragentSlice.actions;
+export const { useragentReducers, set_id_server } = useragentSlice.actions;
 
 export default useragentSlice.reducer;

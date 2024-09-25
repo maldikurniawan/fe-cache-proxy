@@ -237,7 +237,7 @@ const AccessLog = () => {
                   <td className="p-2 whitespace-nowrap">
                     {item.host}
                   </td>
-                  <td className="p-2 whitespace-nowrap">
+                  <td className="p-2 text-center whitespace-nowrap">
                     {item.server}
                   </td>
                 </tr>
