@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 // Hooks
-import { useOnClickOutside } from "../../hooks/useOnClickOutside";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 // Components
 import { Disclosure, Popover, Transition } from "@headlessui/react";

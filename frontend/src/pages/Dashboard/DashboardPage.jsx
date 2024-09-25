@@ -66,8 +66,8 @@ const DashboardPage = () => {
   return (
     <div className="p-4">
       {loading ? (
-        <div className="flex justify-center items-center mt-10">
-          <ClipLoader color="#111827" loading={loading} size={400} />
+        <div className="flex justify-center items-center mt-16">
+          <ClipLoader color="#111827" loading={loading} size={300} />
         </div>
       ) : (
         <>

@@ -8,8 +8,10 @@ import { API_URL_access } from "@/constants";
 import { accessReducers } from "@/redux/accessSlice";
 import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 const AccessLog = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const tableHead = [
     { title: "No", field: "id" },
@@ -123,6 +125,12 @@ const AccessLog = () => {
         <h1 className="text-lg md:text-3xl font-bold transition-all">
           Monitoring Access Log
         </h1>
+        <button
+          className="text-xs md:text-sm whitespace-nowrap font-medium px-4 py-2 bg-[#0F172A] hover:bg-gray-800 active:bg-[#0F172A] text-white rounded-lg shadow hover:shadow-lg transition-all"
+          onClick={() => navigate("/access/server")}
+        >
+          Ganti Server
+        </button>
       </div>
       <br />
       <CardContainer>

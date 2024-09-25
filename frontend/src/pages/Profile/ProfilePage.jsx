@@ -260,7 +260,6 @@ const ProfilePage = () => {
                             />
                         </div>
                         <TextAreaField
-                            required
                             label="Alamat KTP"
                             name="alamat_ktp"
                             value={formik.values.alamat_ktp || ''} // Ensure value is always defined
@@ -269,7 +268,6 @@ const ProfilePage = () => {
                             error={formik.touched.alamat_ktp && formik.errors.alamat_ktp}
                         />
                         <TextAreaField
-                            required
                             label="Alamat Domisili"
                             name="alamat_domisili"
                             value={formik.values.alamat_domisili || ''} // Ensure value is always defined

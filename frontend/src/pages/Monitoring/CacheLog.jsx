@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getData } from "@/actions";
 import { API_URL_cache } from "@/constants";
 import { cacheReducers } from "@/redux/cacheSlice";
-// import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 const CacheLog = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const tableHead = [
     { title: "No", field: "idlog" },
@@ -95,6 +96,12 @@ const CacheLog = () => {
         <h1 className="text-lg md:text-3xl font-bold transition-all">
           Monitoring Cache Log
         </h1>
+        <button
+          className="text-xs md:text-sm whitespace-nowrap font-medium px-4 py-2 bg-[#0F172A] hover:bg-gray-800 active:bg-[#0F172A] text-white rounded-lg shadow hover:shadow-lg transition-all"
+          onClick={() => navigate("/cache/server")}
+        >
+          Ganti Server
+        </button>
       </div>
       <br />
       <CardContainer>
@@ -181,11 +188,6 @@ const CacheLog = () => {
                   <td className="p-2 text-center whitespace-nowrap">
                     {item.url}
                   </td>
-                  {/* <td className="p-2 text-center whitespace-nowrap">
-                    <Moment unix>
-                      {item.timestamp}
-                    </Moment>
-                  </td> */}
                 </tr>
               ))}
             </tbody>
