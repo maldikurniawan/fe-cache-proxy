@@ -108,6 +108,54 @@ export const postData = (reducers, data, url, type) => {
     });
 };
 
+export const postFilter = (url, reducers, type, id) => {
+  const { dispatch, redux } = reducers;
+  
+  dispatch(
+    redux({
+      type: type,
+      payload: {
+        loading: true,
+        data: false,
+      },
+    })
+  );
+
+  axios({
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("jwt_access")}`,
+    },
+    url: url,
+    timeout: 120000,
+    data: id,
+  })
+  .then((response) => {
+    dispatch(
+      redux({
+        type: type,
+        payload: {
+          loading: false,
+          data: response.data,
+          error: false,
+        },
+      })
+    );
+  })
+  .catch((error) => {
+    dispatch(
+      redux({
+        type: type,
+        payload: {
+          loading: false,
+          data: false,
+          error: error.message,
+        },
+      })
+    );
+  });
+};
+
 // Request put
 export const putData = (reducers, data, url, type) => {
   const { dispatch, redux } = reducers;

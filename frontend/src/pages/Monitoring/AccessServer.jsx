@@ -12,10 +12,9 @@ import { API_URL_getserver } from '@/constants';
 const AccessServer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { id_server } = useSelector((state) => state.access); // Ensure correct state access
+  const { id_server } = useSelector((state) => state.access);
   const [serverOptions, setServerOptions] = useState([]);
-
-  console.log(id_server);
+  console.log(id_server)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,13 +42,14 @@ const AccessServer = () => {
     initialValues: {
       server_id: '', // Set initial value directly
     },
-    validationSchema: Yup.object().shape({
+    validationSchema: Yup.object({
       server_id: Yup.string().required('Server ID is required'),
     }),
     onSubmit: (values) => {
       try {
-        // Use the imported action to update the server ID
+        // Dispatch the action to update the server ID in Redux state
         dispatch(set_id_server(values.server_id));
+        console.log('Updated Server ID:', values.server_id); // Log the new value
         navigate('/access');
       } catch (error) {
         console.error('Error updating server ID:', error);
@@ -76,7 +76,7 @@ const AccessServer = () => {
             name="server_id"
             options={serverOptions}
             value={formik.values.server_id}
-            onChange={formik.handleChange}
+            onChange={(e) => formik.setFieldValue('server_id', e.target.value)} // Ensure the value is correctly set
             onBlur={formik.handleBlur}
             error={formik.touched.server_id && formik.errors.server_id}
           />

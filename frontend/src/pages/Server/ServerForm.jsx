@@ -26,6 +26,7 @@ const ServerForm = () => {
             ip_address: state?.item?.ip_address,
             location: state?.item?.location,
             admin_contact: state?.item?.admin_contact,
+            system_operation: state?.item?.system_operation,
         },
         validationSchema: Yup.object().shape({
             server_name: Yup.string().required("Nama Server is required"),
@@ -107,6 +108,14 @@ const ServerForm = () => {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.admin_contact && formik.errors.admin_contact}
+                        />
+                        <InputField
+                            label="Sistem Operasi"
+                            name="system_operation"
+                            value={formik.values.system_operation || ''} // Ensure value is always defined
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.system_operation && formik.errors.system_operation}
                         />
                         <div className="mt-6 flex justify-end">
                             <button

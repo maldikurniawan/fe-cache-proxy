@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdDonutLarge } from "react-icons/md";
 import { FaChartLine } from "react-icons/fa";
-import { API_URL_access } from "@/constants";
+import { API_URL_access, API_URL_store } from "@/constants";
 import {
   DonutChart,
   LineChart,
@@ -10,11 +10,13 @@ import ClipLoader from "react-spinners/ClipLoader"; // Import spinner component
 
 const DashboardPage = () => {
   const [totalStatus, setTotalStatus] = useState([0, 0, 0, 0]);
+  const [totalAksi, setTotalAksi] = useState([0, 0, 0, 0]);
   const [monthlyLogCounts, setMonthlyLogCounts] = useState(new Array(12).fill(0)); // Initial state for monthly log counts
-  const [loading, setLoading] = useState(true); // State to manage loading
+  const [loadingAccess, setLoadingAccess] = useState(true); // State to manage access API loading
+  const [loadingStore, setLoadingStore] = useState(true); // State to manage store API loading
 
   useEffect(() => {
-    setLoading(true); // Set loading to true before fetching
+    setLoadingAccess(true); // Set loading to true before fetching
     fetch(API_URL_access)
       .then((response) => {
         if (!response.ok) {
@@ -55,19 +57,60 @@ const DashboardPage = () => {
         ]);
 
         setMonthlyLogCounts(monthlyCounts); // Set monthly log counts
-        setLoading(false); // Set loading to false after data is fetched
+        setLoadingAccess(false); // Set loading to false after data is fetched
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-        setLoading(false); // Ensure loading is false even if there is an error
+        setLoadingAccess(false); // Ensure loading is false even if there is an error
       });
   }, []);
 
+  useEffect(() => {
+    setLoadingAccess(false); // Ensure loading is false even if there is an error
+    fetch(API_URL_store)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const aksiCounts = {
+          "CREATE": 0,
+          "RELEASE": 0,
+          "SWAPOUT": 0,
+          "SWAPIN": 0
+        };
+
+        data.forEach((entry) => {
+          // Count based on status
+          if (aksiCounts.hasOwnProperty(entry.realese)) {
+            aksiCounts[entry.realese]++;
+          }
+        });
+
+        setTotalAksi([
+          aksiCounts["CREATE"],
+          aksiCounts["RELEASE"],
+          aksiCounts["SWAPOUT"],
+          aksiCounts["SWAPIN"]
+        ]);
+
+        setLoadingStore(false); // Set loading to false after data is fetched
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoadingStore(false); // Ensure loading is false even if there is an error
+      });
+  }, []);
+
+  const isLoading = loadingAccess || loadingStore; // Show loading if either is loading
+
   return (
     <div className="p-4">
-      {loading ? (
+      {isLoading ? (
         <div className="flex justify-center items-center mt-16">
-          <ClipLoader color="#111827" loading={loading} size={300} />
+          <ClipLoader color="#111827" loading={isLoading} size={300} />
         </div>
       ) : (
         <>
@@ -94,7 +137,7 @@ const DashboardPage = () => {
               <DonutChart
                 title={"Frekuensi Aksi Cache"}
                 icon={<MdDonutLarge />}
-                dataSeries={[10, 20, 10, 20]} // Example static data
+                dataSeries={totalAksi} // Example static data
                 dataLabels={["CREATE", "RELEASE", "SWAPOUT", "SWAPIN"]}
                 dataColor={["#22C55E", "#EF4444", "#3B82F6", "#EAB308"]}
               />

@@ -3,8 +3,8 @@ import { CardContainer, Pagination } from "@/components";
 import { icons } from "../../../public/assets/icons";
 import { SyncLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "@/actions";
-import { API_URL_access } from "@/constants";
+import { postFilter } from "@/actions";
+import { API_URL_accessfilter } from "@/constants";
 import { accessReducers } from "@/redux/accessSlice";
 import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
@@ -29,6 +29,7 @@ const AccessLog = () => {
     getAccessResult,
     getAccessLoading,
     getAccessError,
+    id_server,
   } = useSelector((state) => state.access);
   const [limit, setLimit] = useState(10);
   const [offset, setOffset] = useState(0);
@@ -59,16 +60,20 @@ const AccessLog = () => {
   };
 
   const get = useCallback(
-    async (params) => {
-      getData(
-        API_URL_access,
-        params,
+    async () => {
+      postFilter(
+        API_URL_accessfilter,
         { dispatch, redux: accessReducers },
-        "GET_ACCESS"
+        "GET_ACCESS",
+        {
+          server_id : id_server
+        }
       );
     },
     [dispatch]
   );
+
+  console.log(getAccessResult)
 
   const onSearch = (value) => {
     setSearch(value);
@@ -195,7 +200,7 @@ const AccessLog = () => {
               )}
 
               {/* Result = 0 */}
-              {getAccessResult && getAccessResult.results.length === 0 && (
+              {getAccessResult && getAccessResult.data.length === 0 && (
                 <tr>
                   <td className="text-center" colSpan={tableHead.length + 1}>
                     <div className="pt-20 pb-12 flex justify-center items-center text-xs text-slate-600">
@@ -205,7 +210,7 @@ const AccessLog = () => {
                 </tr>
               )}
 
-              {getAccessResult && getAccessResult.results.map((item, itemIdx) => (
+              {getAccessResult && getAccessResult.data.map((item, itemIdx) => (
                 <tr
                   key={itemIdx}
                   className="border-b border-gray-200 text-sm hover:bg-white/60 transition-all"

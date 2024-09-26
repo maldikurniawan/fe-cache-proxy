@@ -19,6 +19,7 @@ const ServerPage = () => {
         { title: "Ip Address", field: "ip_address" },
         { title: "Lokasi", field: "location" },
         { title: "Email Admin", field: "admin_contact" },
+        { title: "Sistem Operasi", field: "system_operation" },
         { title: "Created at", field: "created_at" },
         { title: "Action" },
     ];
@@ -245,6 +246,9 @@ const ServerPage = () => {
                                     </td>
                                     <td className="p-2 text-center whitespace-nowrap">
                                         {item.admin_contact}
+                                    </td>
+                                    <td className="p-2 text-center whitespace-nowrap">
+                                        {item.system_operation}
                                     </td>
                                     <td className="p-2 text-center whitespace-nowrap">
                                         {moment(item.created_at).format("D MMMM YYYY")}
