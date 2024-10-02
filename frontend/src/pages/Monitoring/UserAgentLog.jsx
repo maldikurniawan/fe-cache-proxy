@@ -17,7 +17,7 @@ const UserAgentLog = () => {
     { title: "No", field: "idlog" },
     { title: "Ip Address", field: "ip" },
     { title: "URL", field: "url" },
-    { title: "Tanggal Akses", field: "timestamp" },
+    { title: "Tanggal Akses", field: "date" },
   ];
   const {
     getUserAgentResult,
@@ -189,11 +189,9 @@ const UserAgentLog = () => {
                   <td className="p-2 text-center whitespace-nowrap">
                     {item.url}
                   </td>
-                  {/* <td className="p-2 text-center whitespace-nowrap">
-                    <Moment unix>
-                      {item.timestamp}
-                    </Moment>
-                  </td> */}
+                  <td className="p-2 text-center whitespace-nowrap">
+                    {item.date}
+                  </td>
                 </tr>
               ))}
             </tbody>

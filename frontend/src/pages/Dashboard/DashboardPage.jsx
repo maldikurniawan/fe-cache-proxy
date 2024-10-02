@@ -2,19 +2,18 @@ import React, { useEffect, useState } from "react";
 import { MdDonutLarge } from "react-icons/md";
 import { FaChartLine } from "react-icons/fa";
 import { API_URL_access, API_URL_store } from "@/constants";
-import {
-  DonutChart,
-  LineChart,
-} from "@/components";
+import { DonutChart, LineChart } from "@/components";
 import ClipLoader from "react-spinners/ClipLoader"; // Import spinner component
 
 const DashboardPage = () => {
   const [totalStatus, setTotalStatus] = useState([0, 0, 0, 0]);
   const [totalAksi, setTotalAksi] = useState([0, 0, 0, 0]);
-  const [monthlyLogCounts, setMonthlyLogCounts] = useState(new Array(12).fill(0)); // Initial state for monthly log counts
+  const [monthlyAccessCounts, setMonthlyAccessCounts] = useState(new Array(12).fill(0)); // For access API monthly log counts
+  const [monthlyStoreCounts, setMonthlyStoreCounts] = useState(new Array(12).fill(0)); // For store API monthly log counts
   const [loadingAccess, setLoadingAccess] = useState(true); // State to manage access API loading
   const [loadingStore, setLoadingStore] = useState(true); // State to manage store API loading
 
+  // Access Log
   useEffect(() => {
     setLoadingAccess(true); // Set loading to true before fetching
     fetch(API_URL_access)
@@ -56,7 +55,7 @@ const DashboardPage = () => {
           statusCounts["TCP_DENIED/403"]
         ]);
 
-        setMonthlyLogCounts(monthlyCounts); // Set monthly log counts
+        setMonthlyAccessCounts(monthlyCounts); // Set monthly log counts for access API
         setLoadingAccess(false); // Set loading to false after data is fetched
       })
       .catch((error) => {
@@ -65,8 +64,9 @@ const DashboardPage = () => {
       });
   }, []);
 
+  // Store Log
   useEffect(() => {
-    setLoadingAccess(false); // Ensure loading is false even if there is an error
+    setLoadingStore(true); // Set loading to true before fetching
     fetch(API_URL_store)
       .then((response) => {
         if (!response.ok) {
@@ -82,10 +82,20 @@ const DashboardPage = () => {
           "SWAPIN": 0
         };
 
+        const monthlyCounts = new Array(12).fill(0); // Initialize array for 12 months (Jan-Dec)
+
         data.forEach((entry) => {
           // Count based on status
           if (aksiCounts.hasOwnProperty(entry.realese)) {
             aksiCounts[entry.realese]++;
+          }
+
+          // Parse timestamp (Unix timestamp, multiply by 1000 to convert to milliseconds)
+          const entryDate = new Date(parseFloat(entry.last_modified) * 1000); // Convert timestamp to JS Date
+          const month = entryDate.getMonth(); // Get the month (0-11)
+
+          if (!isNaN(month)) {
+            monthlyCounts[month]++; // Increment the count for the respective month
           }
         });
 
@@ -96,6 +106,7 @@ const DashboardPage = () => {
           aksiCounts["SWAPIN"]
         ]);
 
+        setMonthlyStoreCounts(monthlyCounts); // Set monthly log counts for store API
         setLoadingStore(false); // Set loading to false after data is fetched
       })
       .catch((error) => {
@@ -152,12 +163,19 @@ const DashboardPage = () => {
             <LineChart
               title="Jumlah Log"
               icon={<FaChartLine />}
-              dataSeries={[{
-                name: 'Requests',
-                data: monthlyLogCounts, // Use dynamically calculated monthly data
-              }]}
+              dataSeries={[
+                {
+                  name: 'Access Logs',
+                  data: monthlyAccessCounts, // Access API monthly data
+                  color: "#3B82F6" // Set color for Access Logs line
+                },
+                {
+                  name: 'Store Logs',
+                  data: monthlyStoreCounts, // Store API monthly data
+                  color: "#EF4444" // Set color for Store Logs line
+                }
+              ]}
               dataLabels={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"]}
-              dataColor="#4361EE"
             />
           </div>
         </>
