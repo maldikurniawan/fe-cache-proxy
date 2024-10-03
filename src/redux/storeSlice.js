@@ -9,6 +9,7 @@ export const storeSlice = createSlice({
         addStoreResult: false,
         addStoreLoading: false,
         deleteStoreResult: false,
+        id_server : 1,
     },
     reducers: {
         storeReducers: (state, action) => {

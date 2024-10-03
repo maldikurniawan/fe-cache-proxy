@@ -9,6 +9,7 @@ export const useragentSlice = createSlice({
     addUserAgentResult: false,
     addUserAgentLoading: false,
     deleteUserAgentResult: false,
+    id_server : 1,
   },
   reducers: {
     useragentReducers: (state, action) => {

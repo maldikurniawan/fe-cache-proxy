@@ -3,44 +3,71 @@ import { CardContainer, Pagination } from "@/components";
 import { icons } from "../../../public/assets/icons";
 import { SyncLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "@/actions";
-import { API_URL_useragent } from "@/constants";
-import { useragentReducers } from "@/redux/useragentSlice";
-// import Moment from "react-moment";
+import { postFilter, getData } from "@/actions";
+import { API_URL_storefilter, API_URL_store } from "@/constants";
+import { storeReducers } from "@/redux/storeSlice";
+import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
-const UserAgentLog = () => {
+const StoreLog = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const tableHead = [
-    { title: "No", field: "idlog" },
-    { title: "Ip Address", field: "ip" },
+    { title: "No", field: "id" },
+    { title: "Waktu", field: "timestamp" },
+    { title: "Aksi", field: "realese" },
+    { title: "Dir Number", field: "flag" },
+    { title: "File Number", field: "object_number" },
+    { title: "Hash", field: "hash" },
+    { title: "Sizes", field: "size" },
+    { title: "Expires", field: "timestamp_expire" },
     { title: "URL", field: "url" },
-    { title: "Tanggal Akses", field: "date" },
+    { title: "Lastmod", field: "last_modified" },
+    { title: "Status", field: "http" },
+    { title: "Type", field: "mime_type" },
+    { title: "Method", field: "methode" },
+    { title: "Server", field: "server" },
   ];
   const {
-    getUserAgentResult,
-    getUserAgentLoading,
-    getUserAgentError,
-  } = useSelector((state) => state.useragent);
+    getStoreResult,
+    getStoreLoading,
+    getStoreError,
+    id_server,
+  } = useSelector((state) => state.store);
   const [limit, setLimit] = useState(10);
   const [offset, setOffset] = useState(0);
   const [search, setSearch] = useState("");
   const [sortColumn, setSortColumn] = useState("");
   const [sortOrder, setSortOrder] = useState("");
 
+  // Regular Api
   const get = useCallback(
     async (params) => {
       getData(
-        API_URL_useragent,
+        API_URL_store,
         params,
-        { dispatch, redux: useragentReducers },
-        "GET_USERAGENT"
+        { dispatch, redux: storeReducers },
+        "GET_STORE"
       );
     },
     [dispatch]
   );
+
+  // Api Filter
+  // const get = useCallback(
+  //   async () => {
+  //     postFilter(
+  //       API_URL_storefilter,
+  //       { dispatch, redux: storeReducers },
+  //       "GET_STORE",
+  //       {
+  //         server_id: id_server
+  //       }
+  //     );
+  //   },
+  //   [dispatch]
+  // );
 
   const onSearch = (value) => {
     setSearch(value);
@@ -95,11 +122,11 @@ const UserAgentLog = () => {
     <Fragment>
       <div className="flex justify-between items-center">
         <h1 className="text-lg md:text-3xl font-bold transition-all">
-          Monitoring User Agent Log
+          Monitoring Store Log
         </h1>
         <button
           className="text-xs md:text-sm whitespace-nowrap font-medium px-4 py-2 bg-[#0F172A] hover:bg-gray-800 active:bg-[#0F172A] text-white rounded-lg shadow hover:shadow-lg transition-all"
-          onClick={() => navigate("/useragent/server")}
+          onClick={() => navigate("/store/server")}
         >
           Ganti Server
         </button>
@@ -142,7 +169,7 @@ const UserAgentLog = () => {
             </thead>
             <tbody>
               {/* Loading */}
-              {getUserAgentLoading && (
+              {getStoreLoading && (
                 <tr>
                   <td
                     className="text-center py-12"
@@ -156,18 +183,18 @@ const UserAgentLog = () => {
               )}
 
               {/* Error */}
-              {getUserAgentError && (
+              {getStoreError && (
                 <tr>
                   <td className="text-center" colSpan={tableHead.length + 1}>
                     <div className="pt-20 pb-12 flex justify-center items-center text-xs text-red-500">
-                      {getUserAgentError}
+                      {getStoreError}
                     </div>
                   </td>
                 </tr>
               )}
 
               {/* Result = 0 */}
-              {getUserAgentResult && getUserAgentResult.results.length === 0 && (
+              {getStoreResult && getStoreResult.results.length === 0 && (
                 <tr>
                   <td className="text-center" colSpan={tableHead.length + 1}>
                     <div className="pt-20 pb-12 flex justify-center items-center text-xs text-slate-600">
@@ -177,7 +204,7 @@ const UserAgentLog = () => {
                 </tr>
               )}
 
-              {getUserAgentResult && getUserAgentResult.results.map((item, itemIdx) => (
+              {getStoreResult && getStoreResult.results.map((item, itemIdx) => (
                 <tr
                   key={itemIdx}
                   className="border-b border-gray-200 text-sm hover:bg-white/60 transition-all"
@@ -185,12 +212,50 @@ const UserAgentLog = () => {
                   <td className="p-2 text-center whitespace-nowrap">
                     {itemIdx + offset + 1}
                   </td>
-                  <td className="p-2 text-center">{item.ip}</td>
-                  <td className="p-2 text-center whitespace-nowrap">
+                  <td className="p-2 whitespace-nowrap">
+                    <Moment unix>
+                      {item.timestamp}
+                    </Moment>
+                  </td>
+                  <td className="p-2 whitespace-nowrap text-center">
+                    {item.realese}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.flag}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.object_number}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.hash}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.size}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    <Moment unix>
+                      {item.timestamp_expire}
+                    </Moment>
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
                     {item.url}
                   </td>
+                  <td className="p-2 whitespace-nowrap">
+                    <Moment unix>
+                      {item.last_modified}
+                    </Moment>
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.http}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.mime_type}
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
+                    {item.methode}
+                  </td>
                   <td className="p-2 text-center whitespace-nowrap">
-                    {item.date}
+                    {item.server}
                   </td>
                 </tr>
               ))}
@@ -199,7 +264,7 @@ const UserAgentLog = () => {
         </div>
         <Pagination
           handlePageClick={handlePageClick}
-          pageCount={getUserAgentResult.count > 0 ? getUserAgentResult.count : 0}
+          pageCount={getStoreResult.count > 0 ? getStoreResult.count : 0}
           limit={limit}
           setLimit={handleSelect}
         />
@@ -208,4 +273,4 @@ const UserAgentLog = () => {
   );
 };
 
-export default UserAgentLog;
+export default StoreLog;

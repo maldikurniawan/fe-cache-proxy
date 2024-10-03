@@ -3,77 +3,45 @@ import { CardContainer, Pagination } from "@/components";
 import { icons } from "../../../public/assets/icons";
 import { SyncLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
-import { postFilter } from "@/actions";
-import { API_URL_accessfilter } from "@/constants";
-import { accessReducers } from "@/redux/accessSlice";
-import Moment from "react-moment";
+import { getData } from "@/actions";
+import { API_URL_useragent } from "@/constants";
+import { useragentReducers } from "@/redux/useragentSlice";
+// import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
-const AccessLog = () => {
+const UserAgentLog = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const tableHead = [
-    { title: "No", field: "id" },
-    { title: "Tanggal", field: "timestamp" },
-    { title: "Durasi", field: "elapsed_time" },
-    { title: "Client Address", field: "client_address" },
-    { title: "Result Codes", field: "http_status" },
-    { title: "Bytes", field: "bytes" },
-    { title: "Request Method ", field: "request_method" },
-    { title: "URL", field: "request_url" },
-    { title: "Hierarchy Code", field: "host" },
+    { title: "No", field: "idlog" },
+    { title: "Ip Address", field: "ip" },
+    { title: "Tanggal Akses", field: "date" },
+    { title: "User Agent", field: "device" },
     { title: "Server", field: "server" },
   ];
   const {
-    getAccessResult,
-    getAccessLoading,
-    getAccessError,
-    id_server,
-  } = useSelector((state) => state.access);
+    getUserAgentResult,
+    getUserAgentLoading,
+    getUserAgentError,
+  } = useSelector((state) => state.useragent);
   const [limit, setLimit] = useState(10);
   const [offset, setOffset] = useState(0);
   const [search, setSearch] = useState("");
   const [sortColumn, setSortColumn] = useState("");
   const [sortOrder, setSortOrder] = useState("");
 
-  // Format Durasi
-  const formatDuration = (seconds) => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-
-    return [
-      hours.toString().padStart(2, '0'),
-      minutes.toString().padStart(2, '0'),
-      secs.toString().padStart(2, '0'),
-    ].join(':');
-  };
-
-  // Format Bytes
-  const formatBytes = (bytes) => {
-    if (bytes === 0) return '0 Byte';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  };
-
   const get = useCallback(
-    async () => {
-      postFilter(
-        API_URL_accessfilter,
-        { dispatch, redux: accessReducers },
-        "GET_ACCESS",
-        {
-          server_id : id_server
-        }
+    async (params) => {
+      getData(
+        API_URL_useragent,
+        params,
+        { dispatch, redux: useragentReducers },
+        "GET_USERAGENT"
       );
     },
     [dispatch]
   );
-
-  console.log(getAccessResult)
 
   const onSearch = (value) => {
     setSearch(value);
@@ -128,11 +96,11 @@ const AccessLog = () => {
     <Fragment>
       <div className="flex justify-between items-center">
         <h1 className="text-lg md:text-3xl font-bold transition-all">
-          Monitoring Access Log
+          Monitoring User Agent Log
         </h1>
         <button
           className="text-xs md:text-sm whitespace-nowrap font-medium px-4 py-2 bg-[#0F172A] hover:bg-gray-800 active:bg-[#0F172A] text-white rounded-lg shadow hover:shadow-lg transition-all"
-          onClick={() => navigate("/access/server")}
+          onClick={() => navigate("/useragent/server")}
         >
           Ganti Server
         </button>
@@ -175,7 +143,7 @@ const AccessLog = () => {
             </thead>
             <tbody>
               {/* Loading */}
-              {getAccessLoading && (
+              {getUserAgentLoading && (
                 <tr>
                   <td
                     className="text-center py-12"
@@ -189,18 +157,18 @@ const AccessLog = () => {
               )}
 
               {/* Error */}
-              {getAccessError && (
+              {getUserAgentError && (
                 <tr>
                   <td className="text-center" colSpan={tableHead.length + 1}>
                     <div className="pt-20 pb-12 flex justify-center items-center text-xs text-red-500">
-                      {getAccessError}
+                      {getUserAgentError}
                     </div>
                   </td>
                 </tr>
               )}
 
               {/* Result = 0 */}
-              {getAccessResult && getAccessResult.data.length === 0 && (
+              {getUserAgentResult && getUserAgentResult.results.length === 0 && (
                 <tr>
                   <td className="text-center" colSpan={tableHead.length + 1}>
                     <div className="pt-20 pb-12 flex justify-center items-center text-xs text-slate-600">
@@ -210,7 +178,7 @@ const AccessLog = () => {
                 </tr>
               )}
 
-              {getAccessResult && getAccessResult.data.map((item, itemIdx) => (
+              {getUserAgentResult && getUserAgentResult.results.map((item, itemIdx) => (
                 <tr
                   key={itemIdx}
                   className="border-b border-gray-200 text-sm hover:bg-white/60 transition-all"
@@ -218,29 +186,12 @@ const AccessLog = () => {
                   <td className="p-2 text-center whitespace-nowrap">
                     {itemIdx + offset + 1}
                   </td>
-                  <td className="p-2 whitespace-nowrap">
-                    <Moment unix>{item.timestamp}</Moment>
+                  <td className="p-2 text-center">{item.ip}</td>
+                  <td className="p-2 text-center whitespace-nowrap">
+                    {item.date}
                   </td>
                   <td className="p-2 whitespace-nowrap">
-                    {formatDuration(item.elapsed_time)}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {item.client_address}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {item.http_status}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {formatBytes(item.bytes)}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {item.request_method}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {item.request_url}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {item.host}
+                    {item.device}
                   </td>
                   <td className="p-2 text-center whitespace-nowrap">
                     {item.server}
@@ -252,7 +203,7 @@ const AccessLog = () => {
         </div>
         <Pagination
           handlePageClick={handlePageClick}
-          pageCount={getAccessResult.count > 0 ? getAccessResult.count : 0}
+          pageCount={getUserAgentResult.count > 0 ? getUserAgentResult.count : 0}
           limit={limit}
           setLimit={handleSelect}
         />
@@ -261,4 +212,4 @@ const AccessLog = () => {
   );
 };
 
-export default AccessLog;
+export default UserAgentLog;
