@@ -3,8 +3,8 @@ import { CardContainer, Pagination } from "@/components";
 import { icons } from "../../../public/assets/icons";
 import { SyncLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
-import { postFilter } from "@/actions";
-import { API_URL_accessfilter } from "@/constants";
+import { postFilter, getData } from "@/actions";
+import { API_URL_accessfilter, API_URL_access } from "@/constants";
 import { accessReducers } from "@/redux/accessSlice";
 import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
@@ -59,19 +59,33 @@ const AccessLog = () => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
+  // Regular Api
   const get = useCallback(
-    async () => {
-      postFilter(
-        API_URL_accessfilter,
+    async (params) => {
+      getData(
+        API_URL_access,
+        params,
         { dispatch, redux: accessReducers },
-        "GET_ACCESS",
-        {
-          server_id : id_server
-        }
+        "GET_ACCESS"
       );
     },
     [dispatch]
   );
+
+  // Api Filter
+  // const get = useCallback(
+  //   async () => {
+  //     postFilter(
+  //       API_URL_accessfilter,
+  //       { dispatch, redux: accessReducers },
+  //       "GET_ACCESS",
+  //       {
+  //         server_id: id_server
+  //       }
+  //     );
+  //   },
+  //   [dispatch]
+  // );
 
   console.log(getAccessResult)
 

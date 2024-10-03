@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdDonutLarge } from "react-icons/md";
 import { FaChartLine } from "react-icons/fa";
-import { API_URL_access, API_URL_store } from "@/constants";
+import { API_URL_access, API_URL_store, API_URL_useragent } from "@/constants";
 import { DonutChart, LineChart } from "@/components";
 import ClipLoader from "react-spinners/ClipLoader"; // Import spinner component
 
@@ -10,8 +10,10 @@ const DashboardPage = () => {
   const [totalAksi, setTotalAksi] = useState([0, 0, 0, 0]);
   const [monthlyAccessCounts, setMonthlyAccessCounts] = useState(new Array(12).fill(0)); // For access API monthly log counts
   const [monthlyStoreCounts, setMonthlyStoreCounts] = useState(new Array(12).fill(0)); // For store API monthly log counts
+  const [monthlyUserAgentCounts, setMonthlyUserAgentCounts] = useState(new Array(12).fill(0));
   const [loadingAccess, setLoadingAccess] = useState(true); // State to manage access API loading
   const [loadingStore, setLoadingStore] = useState(true); // State to manage store API loading
+  const [loadingUserAgent, setLoadingUserAgent] = useState(true);
 
   // Access Log
   useEffect(() => {
@@ -91,7 +93,7 @@ const DashboardPage = () => {
           }
 
           // Parse timestamp (Unix timestamp, multiply by 1000 to convert to milliseconds)
-          const entryDate = new Date(parseFloat(entry.last_modified) * 1000); // Convert timestamp to JS Date
+          const entryDate = new Date(parseFloat(entry.timestamp) * 1000); // Convert timestamp to JS Date
           const month = entryDate.getMonth(); // Get the month (0-11)
 
           if (!isNaN(month)) {
@@ -115,7 +117,63 @@ const DashboardPage = () => {
       });
   }, []);
 
-  const isLoading = loadingAccess || loadingStore; // Show loading if either is loading
+  // User Agent Log
+  useEffect(() => {
+    setLoadingUserAgent(true); // Set loading to true before fetching
+
+    fetch(API_URL_useragent)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+
+        const monthlyCounts = new Array(12).fill(0); // Initialize array for 12 months (Jan-Dec)
+
+        const monthMapping = {
+          Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
+          Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'
+        };
+
+        data.forEach((entry) => {
+          // Assuming entry.date is in the format "[15/Aug/2024:15:11:33+0700]"
+          const dateStr = entry.date.slice(1, -1); // Remove square brackets
+
+          // Use regex to extract parts of the date
+          const dateRegex = /(\d{2})\/([A-Za-z]{3})\/(\d{4}):(\d{2}):(\d{2}):(\d{2})([+-]\d{4})/;
+          const match = dateRegex.exec(dateStr);
+
+          if (match) {
+            const [_, day, month, year, hours, minutes, seconds, timezone] = match;
+
+            // Get the numerical month value from the monthMapping
+            const monthNumber = monthMapping[month];
+
+            // Create a formatted date string like "2024-08-15T15:11:33+0700"
+            const formattedDateStr = `${year}-${monthNumber}-${day}T${hours}:${minutes}:${seconds}${timezone}`;
+
+            // Parse the formatted date string into a Date object
+            const entryDate = new Date(formattedDateStr);
+
+            if (!isNaN(entryDate.getTime())) {
+              const monthIndex = entryDate.getMonth(); // Get the month (0-11)
+              monthlyCounts[monthIndex]++;
+            }
+          }
+        });
+
+        setMonthlyUserAgentCounts(monthlyCounts); // Set monthly log counts for user agent API
+        setLoadingUserAgent(false); // Set loading to false after data is fetched
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoadingUserAgent(false); // Ensure loading is false even if there is an error
+      });
+  }, []);
+
+  const isLoading = loadingAccess || loadingStore || loadingUserAgent; // Show loading if either is loading
 
   return (
     <div className="p-4">
@@ -173,7 +231,12 @@ const DashboardPage = () => {
                   name: 'Store Logs',
                   data: monthlyStoreCounts, // Store API monthly data
                   color: "#EF4444" // Set color for Store Logs line
-                }
+                },
+                {
+                  name: 'User Agent Logs',
+                  data: monthlyUserAgentCounts, // Store API monthly data
+                  color: "#22C55E" // Set color for Store Logs line
+                },
               ]}
               dataLabels={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"]}
             />
