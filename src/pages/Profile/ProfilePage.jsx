@@ -13,6 +13,7 @@ import {
 
 const ProfilePage = () => {
     const [initialValues, setInitialValues] = useState({
+        nama_lengkap: '',
         username: '',
         email: '',
         password: '',
@@ -25,7 +26,6 @@ const ProfilePage = () => {
         npwp: '',
         alamat_ktp: '',
         alamat_domisili: '',
-        nama_lengkap: '',
     });
     const [currentPassword, setCurrentPassword] = useState('');
     const [loading, setLoading] = useState(true);
@@ -35,39 +35,26 @@ const ProfilePage = () => {
         axios
             .get(`${API_URL_updatesuperuser}${userId}/`)
             .then((response) => {
-                const {
-                    username,
-                    email,
-                    password,
-                    no_identitas,
-                    jenis_kelamin,
-                    no_telp,
-                    tempat_lahir,
-                    tanggal_lahir,
-                    agama,
-                    npwp,
-                    alamat_ktp,
-                    alamat_domisili,
-                    nama_lengkap,
-                } = response.data;
+                const { user, user_data } = response.data;
 
                 // Set the initial values after fetching user data
                 setInitialValues({
-                    username: username || '',
-                    email: email || '',
+                    nama_lengkap: user_data.nama_lengkap || '',
+                    username: user.username || '',
+                    email: user.email || '',
                     password: '', // Keep password blank for security
-                    no_identitas: no_identitas || '',
-                    jenis_kelamin: jenis_kelamin || '',
-                    no_telp: no_telp || '',
-                    tempat_lahir: tempat_lahir || '',
-                    tanggal_lahir: tanggal_lahir || '',
-                    agama: agama || '',
-                    npwp: npwp || '',
-                    alamat_ktp: alamat_ktp || '',
-                    alamat_domisili: alamat_domisili || '',
-                    nama_lengkap: nama_lengkap || '',
+                    no_identitas: user_data.no_ktp || '',
+                    jenis_kelamin: user_data.jenis_kelamin || '', // Use first value from array
+                    no_telp: user_data.no_telp || '',
+                    tempat_lahir: user_data.tempat_lahir || '',
+                    tanggal_lahir: user_data.tanggal_lahir || '',
+                    agama: user_data.agama || '',
+                    npwp: user_data.npwp || '',
+                    alamat_ktp: user_data.alamat_ktp || '',
+                    alamat_domisili: user_data.alamat_domisili || '',
                 });
-                setCurrentPassword(password);
+
+                setCurrentPassword(''); // Set current password (could be fetched too if necessary)
                 setLoading(false); // Data has been fetched
             })
             .catch((error) => {

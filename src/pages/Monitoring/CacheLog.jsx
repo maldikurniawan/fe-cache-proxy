@@ -1,50 +1,38 @@
-import React, { useState, Fragment, useCallback, useEffect } from "react";
+import React, { useState, Fragment } from "react";
 import { CardContainer, Pagination } from "@/components";
 import { icons } from "../../../public/assets/icons";
-import { SyncLoader } from "react-spinners";
-import { useDispatch, useSelector } from "react-redux";
-import { getData } from "@/actions";
-import { API_URL_cache } from "@/constants";
-import { cacheReducers } from "@/redux/cacheSlice";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import cacheLog from "@/atoms/CacheLog.json"; // Import your JSON data
 
 const CacheLog = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const tableHead = [
-    { title: "No", field: "idlog" },
-    { title: "Ip Address", field: "ip" },
-    { title: "URL", field: "url" },
-    { title: "Tanggal Akses", field: "timestamp" },
+    { title: "No", field: "id" },
+    { title: "Timestamp", field: "timestamp" },
+    { title: "Message", field: "message" },
+    { title: "Server", field: "server" },
   ];
-  const {
-    getCacheResult,
-    getCacheLoading,
-    getCacheError,
-  } = useSelector((state) => state.cache);
+
   const [limit, setLimit] = useState(10);
   const [offset, setOffset] = useState(0);
   const [search, setSearch] = useState("");
   const [sortColumn, setSortColumn] = useState("");
   const [sortOrder, setSortOrder] = useState("");
 
-  const get = useCallback(
-    async (params) => {
-      getData(
-        API_URL_cache,
-        params,
-        { dispatch, redux: cacheReducers },
-        "GET_CACHE"
-      );
-    },
-    [dispatch]
-  );
+  // Filtering and sorting logic
+  const filteredData = cacheLog
+    .filter(item => item.message.includes(search)) // Filter by message content
+    .sort((a, b) => {
+      if (sortColumn) {
+        const order = sortOrder === "asc" ? 1 : -1;
+        return a[sortColumn] > b[sortColumn] ? order : -order;
+      }
+      return 0;
+    });
 
   const onSearch = (value) => {
     setSearch(value);
-    const params = `?limit=${limit}&offset=${""}&ordering=${""}&search=${value}`;
-    get(params);
   };
 
   const handleSort = (column) => {
@@ -56,39 +44,21 @@ const CacheLog = () => {
     }
   };
 
-  // Sort icons
   const renderSortIcon = (field) => {
     if (field === sortColumn) {
-      return sortOrder === "asc" ? (
-        <BiSortUp />
-      ) : (
-        <BiSortDown />
-      );
+      return sortOrder === "asc" ? <BiSortUp /> : <BiSortDown />;
     }
     return <BiSortUp className="text-gray-300" />;
   };
 
   const handlePageClick = (e) => {
-    const offset = e.selected * limit;
-    const params = `?limit=${limit}&offset=${offset}&ordering=${sortOrder === "desc" ? "-" : ""}${sortColumn}&search=${search}`;
-    get(params);
-    setOffset(offset);
+    const newOffset = e.selected * limit;
+    setOffset(newOffset);
   };
 
-  const handleSelect = (limit) => {
-    const params = `?limit=${limit}&offset=${offset}&ordering=${sortOrder === "desc" ? "-" : ""}${sortColumn}&search=${search}`;
-    get(params);
-    setLimit(limit);
+  const handleSelect = (newLimit) => {
+    setLimit(newLimit);
   };
-
-  const fetchData = useCallback(() => {
-    const params = `?limit=${limit}&offset=${""}&ordering=${sortOrder === "desc" ? "-" : ""}${sortColumn}&search=${""}`;
-    get(params);
-  }, [get, sortColumn, sortOrder]);
-
-  useEffect(() => {
-    fetchData();
-  }, [sortColumn, sortOrder]);
 
   return (
     <Fragment>
@@ -140,62 +110,30 @@ const CacheLog = () => {
               </tr>
             </thead>
             <tbody>
-              {/* Loading */}
-              {getCacheLoading && (
-                <tr>
-                  <td
-                    className="text-center py-12"
-                    colSpan={tableHead.length + 1}
+              {/* Render filtered data */}
+              {filteredData
+                .slice(offset, offset + limit)
+                .map((item, itemIdx) => (
+                  <tr
+                    key={item.id}
+                    className="border-b border-gray-200 text-sm hover:bg-white/60 transition-all"
                   >
-                    <div className="pt-10 pb-6 flex justify-center items-center">
-                      <SyncLoader color="#111827" />
-                    </div>
-                  </td>
-                </tr>
-              )}
-
-              {/* Error */}
-              {getCacheError && (
-                <tr>
-                  <td className="text-center" colSpan={tableHead.length + 1}>
-                    <div className="pt-20 pb-12 flex justify-center items-center text-xs text-red-500">
-                      {getCacheError}
-                    </div>
-                  </td>
-                </tr>
-              )}
-
-              {/* Result = 0 */}
-              {getCacheResult && getCacheResult.results.length === 0 && (
-                <tr>
-                  <td className="text-center" colSpan={tableHead.length + 1}>
-                    <div className="pt-20 pb-12 flex justify-center items-center text-xs text-slate-600">
-                      No Data
-                    </div>
-                  </td>
-                </tr>
-              )}
-
-              {getCacheResult && getCacheResult.results.map((item, itemIdx) => (
-                <tr
-                  key={itemIdx}
-                  className="border-b border-gray-200 text-sm hover:bg-white/60 transition-all"
-                >
-                  <td className="p-2 text-center whitespace-nowrap">
-                    {itemIdx + offset + 1}
-                  </td>
-                  <td className="p-2 text-center">{item.ip}</td>
-                  <td className="p-2 text-center whitespace-nowrap">
-                    {item.url}
-                  </td>
-                </tr>
-              ))}
+                    <td className="p-2 text-center whitespace-nowrap">
+                      {itemIdx + offset + 1}
+                    </td>
+                    <td className="p-2 text-center">{item.timestamp}</td>
+                    <td className="p-2 text-center whitespace-nowrap">
+                      {item.message}
+                    </td>
+                    <td className="p-2 text-center">{item.server}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
         <Pagination
           handlePageClick={handlePageClick}
-          pageCount={getCacheResult.count > 0 ? getCacheResult.count : 0}
+          pageCount={Math.ceil(filteredData.length / limit)}
           limit={limit}
           setLimit={handleSelect}
         />

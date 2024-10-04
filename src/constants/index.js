@@ -3,7 +3,7 @@ const api = "/api";
 
 export const baseurl = `${host}${api}`;
 export const API_URL_login = `${baseurl}/auth/`;
-export const API_URL_updatesuperuser = `${baseurl}/update_data_super_user_id/`;
+export const API_URL_updatesuperuser = `${baseurl}/update_data_user_id/`;
 
 // Access
 export const API_URL_access = `${baseurl}/acceslogview/`;

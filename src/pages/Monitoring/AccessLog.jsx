@@ -87,7 +87,7 @@ const AccessLog = () => {
   //   [dispatch]
   // );
 
-  console.log(getAccessResult)
+  // console.log(getAccessResult)
 
   const onSearch = (value) => {
     setSearch(value);

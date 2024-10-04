@@ -1,3 +1,4 @@
+// StoreServer.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -5,16 +6,14 @@ import * as Yup from 'yup';
 import { IoMdReturnLeft } from 'react-icons/io';
 import { CardContainer, SelectField } from '@/components';
 import { useDispatch, useSelector } from 'react-redux';
-import { putData } from '@/actions';
-import { serverReducers } from '@/redux/serverSlice';
-import { API_URL_getserver, API_URL_edelserver } from '@/constants';
+import { set_id_server } from '@/redux/storeSlice'; // Correctly import the action
+import { API_URL_getserver } from '@/constants';
 
 const StoreServer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {id_server} = useSelector((state)=>state.store);
+  const { id_server } = useSelector((state) => state.store);
   const [serverOptions, setServerOptions] = useState([]);
-
   console.log(id_server)
 
   useEffect(() => {
@@ -41,22 +40,19 @@ const StoreServer = () => {
 
   const formik = useFormik({
     initialValues: {
-      server_id: '', // Set initial value directly, no dependency on state
+      server_id: '', // Set initial value directly
     },
-    validationSchema: Yup.object().shape({
+    validationSchema: Yup.object({
       server_id: Yup.string().required('Server ID is required'),
     }),
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       try {
-        await putData(
-          { dispatch, redux: serverReducers },
-          values,
-          API_URL_edelserver,
-          'UPDATE_SERVER'
-        );
+        // Dispatch the action to update the server ID in Redux state
+        dispatch(set_id_server(values.server_id));
+        console.log('Updated Server ID:', values.server_id); // Log the new value
         navigate('/store');
       } catch (error) {
-        console.error('Error in form submission:', error);
+        console.error('Error updating server ID:', error);
       }
     },
   });
@@ -80,7 +76,7 @@ const StoreServer = () => {
             name="server_id"
             options={serverOptions}
             value={formik.values.server_id}
-            onChange={formik.handleChange}
+            onChange={(e) => formik.setFieldValue('server_id', e.target.value)} // Ensure the value is correctly set
             onBlur={formik.handleBlur}
             error={formik.touched.server_id && formik.errors.server_id}
           />
