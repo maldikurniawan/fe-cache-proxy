@@ -69,6 +69,22 @@ const StoreLog = () => {
   //   [dispatch]
   // );
 
+  const formatSize = (size) => {
+    if (!size) return "N/A"; // handle missing or invalid size
+    const [currentSize, totalSize] = size.split("/").map(Number);
+
+    const convertBytes = (bytes) => {
+      if (bytes < 1024) return `${bytes} B`;
+      const kb = bytes / 1024;
+      if (kb < 1024) return `${kb.toFixed(2)} KB`;
+      const mb = kb / 1024;
+      if (mb < 1024) return `${mb.toFixed(2)} MB`;
+      return `${(mb / 1024).toFixed(2)} GB`;
+    };
+
+    return `${convertBytes(currentSize)} / ${convertBytes(totalSize)}`;
+  };
+
   const onSearch = (value) => {
     setSearch(value);
     const params = `?limit=${limit}&offset=${""}&ordering=${""}&search=${value}`;
@@ -230,7 +246,7 @@ const StoreLog = () => {
                     {item.hash}
                   </td>
                   <td className="p-2 whitespace-nowrap">
-                    {item.size}
+                    {formatSize(item.size)}
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     <Moment unix>

@@ -122,7 +122,7 @@ const ServerForm = () => {
                                 type="submit"
                                 className="w-full bg-[#0F172A] text-white py-2 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#0F172A] focus:ring-opacity-50"
                             >
-                                Submit
+                                Simpan
                             </button>
                         </div>
                     </form>

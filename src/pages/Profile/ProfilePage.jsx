@@ -268,7 +268,7 @@ const ProfilePage = () => {
                             type="submit"
                             className="w-full bg-[#0F172A] text-white py-2 rounded-md hover:bg-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#0F172A] focus:ring-opacity-50"
                         >
-                            Save Changes
+                            Simpan
                         </button>
                     </div>
                 </form>
