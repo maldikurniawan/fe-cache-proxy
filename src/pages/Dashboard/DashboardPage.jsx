@@ -19,30 +19,38 @@ const DashboardPage = () => {
   const [monthlyAccessCounts, setMonthlyAccessCounts] = useState(new Array(12).fill(0));
   const [monthlyStoreCounts, setMonthlyStoreCounts] = useState(new Array(12).fill(0));
   const [monthlyUserAgentCounts, setMonthlyUserAgentCounts] = useState(new Array(12).fill(0));
-  const [monthlyBandwidthCounts, setMonthlyBandwidthCounts] = useState(new Array(12).fill(0)); // Correctly initialize as an array
+  const [monthlyBandwidthCounts, setMonthlyBandwidthCounts] = useState(new Array(12).fill(0));
+  const [averageBandwidthCounts, setAverageBandwidthCounts] = useState(new Array(12).fill(0));
   const [loading, setLoading] = useState(true);
+
+  // Helper function to format bytes into a readable string
+  const formatBytes = (bytes) => {
+    if (bytes === 0) return '0 Byte';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
 
   // Process log data for access and store APIs
   const processLogData = (data, type) => {
-    const counts = { status: [0, 0, 0, 0], monthly: new Array(12).fill(0), totalBytes: new Array(12).fill(0) }; // Add monthly bytes tracking
+    const counts = { status: [0, 0, 0, 0], monthly: new Array(12).fill(0), totalBytes: new Array(12).fill(0) };
     const statusKeys = type === "access"
       ? ["TCP_HIT/200", "TCP_MISS/200", "TCP_TUNNEL/200", "TCP_DENIED/403"]
       : ["CREATE", "RELEASE", "SWAPOUT", "SWAPIN"];
 
     data.forEach(entry => {
-      // Handle access logs
       if (type === "access") {
         if (statusKeys.includes(entry.http_status)) {
           counts.status[statusKeys.indexOf(entry.http_status)]++;
         }
-        const bytes = parseInt(entry.bytes, 10) || 0; // Ensure bytes are parsed
+        const bytes = parseInt(entry.bytes, 10) || 0;
         const month = new Date(parseFloat(entry.timestamp) * 1000).getMonth();
         if (!isNaN(month)) {
           counts.monthly[month]++;
-          counts.totalBytes[month] += bytes; // Accumulate bytes per month
-          // console.log(`Processing bytes for month ${month}: ${bytes}`);
+          counts.totalBytes[month] += bytes;
         }
-      } else { // Process store logs
+      } else {
         if (statusKeys.includes(entry.realese)) {
           counts.status[statusKeys.indexOf(entry.realese)]++;
         }
@@ -50,7 +58,7 @@ const DashboardPage = () => {
         if (!isNaN(month)) counts.monthly[month]++;
       }
     });
-    return { status: counts.status, monthly: counts.monthly, totalBytes: counts.totalBytes }; // Return the totalBytes
+    return { status: counts.status, monthly: counts.monthly, totalBytes: counts.totalBytes };
   };
 
   // Process user agent log data
@@ -66,6 +74,29 @@ const DashboardPage = () => {
     return monthlyCounts;
   };
 
+  const calculateAverageBandwidth = (monthlyCounts) => {
+    const daysInMonth = [
+      31, // Jan
+      28, // Feb (not accounting for leap years)
+      31, // Mar
+      30, // Apr
+      31, // May
+      30, // Jun
+      31, // Jul
+      31, // Aug
+      30, // Sep
+      31, // Oct
+      30, // Nov
+      31, // Dec
+    ];
+
+    const averageCounts = monthlyCounts.map((totalBytes, month) => {
+      return totalBytes / daysInMonth[month]; // Calculate average for each month
+    });
+
+    return averageCounts;
+  };
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -75,12 +106,16 @@ const DashboardPage = () => {
 
         setTotalStatus(accessData.status);
         setMonthlyAccessCounts(accessData.monthly);
-        setMonthlyBandwidthCounts(accessData.totalBytes); // Set totalBytes for bandwidth
+        setMonthlyBandwidthCounts(accessData.totalBytes);
 
         setTotalAksi(storeData.status);
         setMonthlyStoreCounts(storeData.monthly);
 
         setMonthlyUserAgentCounts(userAgentData);
+
+        // Calculate average bandwidth counts
+        const averages = calculateAverageBandwidth(accessData.totalBytes);
+        setAverageBandwidthCounts(averages);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -120,20 +155,21 @@ const DashboardPage = () => {
             </div>
           </div>
           <LineChart
-            title="Jumlah Bandwidth (Bytes)"
-            icon={<FaChartLine />}
-            dataSeries={[ // Ensure this is correctly set up
-              { name: "Bandwidth", data: monthlyBandwidthCounts, color: "#3B82F6" },
-            ]}
-            dataLabels={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"]}
-          />
-          <LineChart
             title="Jumlah Log"
             icon={<FaChartLine />}
             dataSeries={[
               { name: "Access Logs", data: monthlyAccessCounts, color: "#3B82F6" },
               { name: "Store Logs", data: monthlyStoreCounts, color: "#EF4444" },
               { name: "User Agent Logs", data: monthlyUserAgentCounts, color: "#22C55E" },
+              {
+                name: "Rata-rata Bandwidth",
+                data: averageBandwidthCounts.map((bytes) => {
+                  const formattedBytes = formatBytes(bytes);
+                  console.log(`Bytes: ${bytes}, Formatted: ${formattedBytes}`); // Log the raw bytes and formatted output
+                  return formattedBytes;
+                }),
+                color: "#3B82F6",
+              },
             ]}
             dataLabels={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"]}
           />
