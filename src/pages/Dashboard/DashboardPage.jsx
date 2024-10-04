@@ -13,6 +13,14 @@ const fetchData = async (url, processData) => {
   return processData(data);
 };
 
+// Function to format bytes into a human-readable format
+const formatBytes = (bytes) => {
+  if (bytes === 0) return "0 Bytes";
+  const size = ["Bytes", "KB", "MB", "GB", "TB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(1024));
+  return parseFloat((bytes / Math.pow(1024, i)).toFixed(2)) + " " + size[i];
+};
+
 const DashboardPage = () => {
   const [totalStatus, setTotalStatus] = useState([0, 0, 0, 0]);
   const [totalAksi, setTotalAksi] = useState([0, 0, 0, 0]);
@@ -20,17 +28,7 @@ const DashboardPage = () => {
   const [monthlyStoreCounts, setMonthlyStoreCounts] = useState(new Array(12).fill(0));
   const [monthlyUserAgentCounts, setMonthlyUserAgentCounts] = useState(new Array(12).fill(0));
   const [monthlyBandwidthCounts, setMonthlyBandwidthCounts] = useState(new Array(12).fill(0));
-  const [averageBandwidthCounts, setAverageBandwidthCounts] = useState(new Array(12).fill(0));
   const [loading, setLoading] = useState(true);
-
-  // Helper function to format bytes into a readable string
-  const formatBytes = (bytes) => {
-    if (bytes === 0) return '0 Byte';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  };
 
   // Process log data for access and store APIs
   const processLogData = (data, type) => {
@@ -61,7 +59,6 @@ const DashboardPage = () => {
     return { status: counts.status, monthly: counts.monthly, totalBytes: counts.totalBytes };
   };
 
-  // Process user agent log data
   const processUserAgentData = (data) => {
     const monthlyCounts = new Array(12).fill(0);
     const monthMapping = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
@@ -74,29 +71,6 @@ const DashboardPage = () => {
     return monthlyCounts;
   };
 
-  const calculateAverageBandwidth = (monthlyCounts) => {
-    const daysInMonth = [
-      31, // Jan
-      28, // Feb (not accounting for leap years)
-      31, // Mar
-      30, // Apr
-      31, // May
-      30, // Jun
-      31, // Jul
-      31, // Aug
-      30, // Sep
-      31, // Oct
-      30, // Nov
-      31, // Dec
-    ];
-
-    const averageCounts = monthlyCounts.map((totalBytes, month) => {
-      return totalBytes / daysInMonth[month]; // Calculate average for each month
-    });
-
-    return averageCounts;
-  };
-
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -106,16 +80,14 @@ const DashboardPage = () => {
 
         setTotalStatus(accessData.status);
         setMonthlyAccessCounts(accessData.monthly);
-        setMonthlyBandwidthCounts(accessData.totalBytes);
+        setMonthlyBandwidthCounts(accessData.totalBytes); // Set totalBytes for bandwidth
 
         setTotalAksi(storeData.status);
         setMonthlyStoreCounts(storeData.monthly);
 
         setMonthlyUserAgentCounts(userAgentData);
 
-        // Calculate average bandwidth counts
-        const averages = calculateAverageBandwidth(accessData.totalBytes);
-        setAverageBandwidthCounts(averages);
+        console.log("Jumlah Bandwidth:", accessData.totalBytes.map(formatBytes));
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -161,15 +133,7 @@ const DashboardPage = () => {
               { name: "Access Logs", data: monthlyAccessCounts, color: "#3B82F6" },
               { name: "Store Logs", data: monthlyStoreCounts, color: "#EF4444" },
               { name: "User Agent Logs", data: monthlyUserAgentCounts, color: "#22C55E" },
-              {
-                name: "Rata-rata Bandwidth",
-                data: averageBandwidthCounts.map((bytes) => {
-                  const formattedBytes = formatBytes(bytes);
-                  console.log(`Bytes: ${bytes}, Formatted: ${formattedBytes}`); // Log the raw bytes and formatted output
-                  return formattedBytes;
-                }),
-                color: "#3B82F6",
-              },
+              { name: "Bandwidth", data: monthlyBandwidthCounts.map(formatBytes), color: "#A855F7" },
             ]}
             dataLabels={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"]}
           />
