@@ -44,7 +44,7 @@ const ProfilePage = () => {
                     email: user.email || '',
                     password: '', // Keep password blank for security
                     no_identitas: user_data.no_ktp || '',
-                    jenis_kelamin: user_data.jenis_kelamin || '', // Use first value from array
+                    jenis_kelamin: user_data.jenis_kelamin[0][0] || '', // Use first value from array
                     no_telp: user_data.no_telp || '',
                     tempat_lahir: user_data.tempat_lahir || '',
                     tanggal_lahir: user_data.tanggal_lahir || '',

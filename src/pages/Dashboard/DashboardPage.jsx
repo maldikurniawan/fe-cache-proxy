@@ -19,23 +19,38 @@ const DashboardPage = () => {
   const [monthlyAccessCounts, setMonthlyAccessCounts] = useState(new Array(12).fill(0));
   const [monthlyStoreCounts, setMonthlyStoreCounts] = useState(new Array(12).fill(0));
   const [monthlyUserAgentCounts, setMonthlyUserAgentCounts] = useState(new Array(12).fill(0));
+  const [monthlyBandwidthCounts, setMonthlyBandwidthCounts] = useState(new Array(12).fill(0)); // Correctly initialize as an array
   const [loading, setLoading] = useState(true);
 
   // Process log data for access and store APIs
   const processLogData = (data, type) => {
-    const counts = { status: [0, 0, 0, 0], monthly: new Array(12).fill(0) };
+    const counts = { status: [0, 0, 0, 0], monthly: new Array(12).fill(0), totalBytes: new Array(12).fill(0) }; // Add monthly bytes tracking
     const statusKeys = type === "access"
       ? ["TCP_HIT/200", "TCP_MISS/200", "TCP_TUNNEL/200", "TCP_DENIED/403"]
       : ["CREATE", "RELEASE", "SWAPOUT", "SWAPIN"];
 
     data.forEach(entry => {
-      if (statusKeys.includes(entry[type === "access" ? "http_status" : "realese"])) {
-        counts.status[statusKeys.indexOf(entry[type === "access" ? "http_status" : "realese"])]++;
+      // Handle access logs
+      if (type === "access") {
+        if (statusKeys.includes(entry.http_status)) {
+          counts.status[statusKeys.indexOf(entry.http_status)]++;
+        }
+        const bytes = parseInt(entry.bytes, 10) || 0; // Ensure bytes are parsed
+        const month = new Date(parseFloat(entry.timestamp) * 1000).getMonth();
+        if (!isNaN(month)) {
+          counts.monthly[month]++;
+          counts.totalBytes[month] += bytes; // Accumulate bytes per month
+          // console.log(`Processing bytes for month ${month}: ${bytes}`);
+        }
+      } else { // Process store logs
+        if (statusKeys.includes(entry.realese)) {
+          counts.status[statusKeys.indexOf(entry.realese)]++;
+        }
+        const month = new Date(parseFloat(entry.timestamp) * 1000).getMonth();
+        if (!isNaN(month)) counts.monthly[month]++;
       }
-      const month = new Date(parseFloat(entry.timestamp) * 1000).getMonth();
-      if (!isNaN(month)) counts.monthly[month]++;
     });
-    return counts;
+    return { status: counts.status, monthly: counts.monthly, totalBytes: counts.totalBytes }; // Return the totalBytes
   };
 
   // Process user agent log data
@@ -60,6 +75,7 @@ const DashboardPage = () => {
 
         setTotalStatus(accessData.status);
         setMonthlyAccessCounts(accessData.monthly);
+        setMonthlyBandwidthCounts(accessData.totalBytes); // Set totalBytes for bandwidth
 
         setTotalAksi(storeData.status);
         setMonthlyStoreCounts(storeData.monthly);
@@ -103,6 +119,14 @@ const DashboardPage = () => {
               />
             </div>
           </div>
+          <LineChart
+            title="Jumlah Bandwidth (Bytes)"
+            icon={<FaChartLine />}
+            dataSeries={[ // Ensure this is correctly set up
+              { name: "Bandwidth", data: monthlyBandwidthCounts, color: "#3B82F6" },
+            ]}
+            dataLabels={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"]}
+          />
           <LineChart
             title="Jumlah Log"
             icon={<FaChartLine />}
