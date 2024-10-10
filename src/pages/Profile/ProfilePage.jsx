@@ -17,7 +17,7 @@ const ProfilePage = () => {
         username: '',
         email: '',
         password: '',
-        no_identitas: '',
+        no_ktp: '',
         jenis_kelamin: '',
         no_telp: '',
         tempat_lahir: '',
@@ -43,8 +43,8 @@ const ProfilePage = () => {
                     username: user.username || '',
                     email: user.email || '',
                     password: '', // Keep password blank for security
-                    no_identitas: user_data.no_ktp || '',
-                    jenis_kelamin: user_data.jenis_kelamin[0][0] || '', // Use first value from array
+                    no_ktp: user_data.no_ktp || '',
+                    jenis_kelamin: user_data.jenis_kelamin || '', // Use first value from array
                     no_telp: user_data.no_telp || '',
                     tempat_lahir: user_data.tempat_lahir || '',
                     tanggal_lahir: user_data.tanggal_lahir || '',
@@ -71,7 +71,7 @@ const ProfilePage = () => {
             username: Yup.string().required('Username is required'),
             email: Yup.string().email('Invalid email format').required('Email is required'),
             password: Yup.string().min(8, 'Password must be at least 8 characters'),
-            no_identitas: Yup.string().required('No Identitas is required'),
+            no_ktp: Yup.string().required('No Identitas is required'),
             jenis_kelamin: Yup.string().required('Jenis Kelamin is required'),
             no_telp: Yup.string().required('No Telp is required'),
             tempat_lahir: Yup.string().required('Tempat Lahir is required'),
@@ -169,11 +169,11 @@ const ProfilePage = () => {
                             <InputField
                                 required
                                 label="No Identitas (KTP)"
-                                name="no_identitas"
-                                value={formik.values.no_identitas || ''} // Ensure value is always defined
+                                name="no_ktp"
+                                value={formik.values.no_ktp || ''} // Ensure value is always defined
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                error={formik.touched.no_identitas && formik.errors.no_identitas}
+                                error={formik.touched.no_ktp && formik.errors.no_ktp}
                             />
                             <SelectField
                                 required
