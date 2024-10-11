@@ -108,7 +108,7 @@ export const postData = (reducers, data, url, type) => {
     });
 };
 
-export const postFilter = (url, reducers, type, id) => {
+export const postFilter = (url,reducers, type, id, params ) => {
   const { dispatch, redux } = reducers;
   
   dispatch(
@@ -126,7 +126,7 @@ export const postFilter = (url, reducers, type, id) => {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("jwt_access")}`,
     },
-    url: url,
+    url: url + params,
     timeout: 120000,
     data: id,
   })

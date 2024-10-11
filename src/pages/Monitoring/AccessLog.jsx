@@ -3,8 +3,8 @@ import { CardContainer, Pagination } from "@/components";
 import { icons } from "../../../public/assets/icons";
 import { SyncLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
-import { postFilter, getData } from "@/actions";
-import { API_URL_accessfilter, API_URL_access } from "@/constants";
+import { postFilter } from "@/actions";
+import { API_URL_accessfilter } from "@/constants";
 import { accessReducers } from "@/redux/accessSlice";
 import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
@@ -17,13 +17,12 @@ const AccessLog = () => {
     { title: "No", field: "id" },
     { title: "Tanggal", field: "timestamp" },
     { title: "Durasi", field: "elapsed_time" },
-    { title: "Client Address", field: "client_address" },
+    { title: "IP Address", field: "client_address" },
     { title: "Result Codes", field: "http_status" },
     { title: "Bytes", field: "bytes" },
-    { title: "Request Method ", field: "request_method" },
+    { title: "Request Method", field: "request_method" },
     { title: "URL", field: "request_url" },
     { title: "Hierarchy Code", field: "host" },
-    { title: "Server", field: "server" },
   ];
   const {
     getAccessResult,
@@ -59,33 +58,21 @@ const AccessLog = () => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
-  // Regular Api
+  // Api Filter
   const get = useCallback(
     async (params) => {
-      getData(
-        API_URL_access,
-        params,
+      await postFilter(
+        API_URL_accessfilter,
         { dispatch, redux: accessReducers },
-        "GET_ACCESS"
+        "GET_ACCESS",
+        {
+          server_id: id_server, // Sertakan server_id di sini
+        },
+        params,
       );
     },
-    [dispatch]
+    [dispatch, id_server]
   );
-
-  // Api Filter
-  // const get = useCallback(
-  //   async () => {
-  //     postFilter(
-  //       API_URL_accessfilter,
-  //       { dispatch, redux: accessReducers },
-  //       "GET_ACCESS",
-  //       {
-  //         server_id: id_server
-  //       }
-  //     );
-  //   },
-  //   [dispatch]
-  // );
 
   // console.log(getAccessResult)
 
@@ -214,7 +201,7 @@ const AccessLog = () => {
               )}
 
               {/* Result = 0 */}
-              {getAccessResult && getAccessResult.results.length === 0 && (
+              {getAccessResult && getAccessResult.results.data.length === 0 && (
                 <tr>
                   <td className="text-center" colSpan={tableHead.length + 1}>
                     <div className="pt-20 pb-12 flex justify-center items-center text-xs text-slate-600">
@@ -224,7 +211,7 @@ const AccessLog = () => {
                 </tr>
               )}
 
-              {getAccessResult && getAccessResult.results.map((item, itemIdx) => (
+              {getAccessResult && getAccessResult.results.data.map((item, itemIdx) => (
                 <tr
                   key={itemIdx}
                   className="border-b border-gray-200 text-sm hover:bg-white/60 transition-all"
@@ -255,9 +242,6 @@ const AccessLog = () => {
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {item.host}
-                  </td>
-                  <td className="p-2 text-center whitespace-nowrap">
-                    {item.server}
                   </td>
                 </tr>
               ))}

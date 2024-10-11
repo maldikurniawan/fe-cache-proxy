@@ -3,8 +3,8 @@ import { CardContainer, Pagination } from "@/components";
 import { icons } from "../../../public/assets/icons";
 import { SyncLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
-import { postFilter, getData } from "@/actions";
-import { API_URL_storefilter, API_URL_store } from "@/constants";
+import { postFilter } from "@/actions";
+import { API_URL_storefilter } from "@/constants";
 import { storeReducers } from "@/redux/storeSlice";
 import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
@@ -17,8 +17,8 @@ const StoreLog = () => {
     { title: "No", field: "id" },
     { title: "Waktu", field: "timestamp" },
     { title: "Aksi", field: "realese" },
-    { title: "Dir Number", field: "flag" },
-    { title: "File Number", field: "object_number" },
+    { title: "Nomor Dir", field: "flag" },
+    { title: "Nomor File", field: "object_number" },
     { title: "Hash", field: "hash" },
     { title: "Sizes", field: "size" },
     { title: "Expires", field: "timestamp_expire" },
@@ -26,8 +26,7 @@ const StoreLog = () => {
     { title: "Lastmod", field: "last_modified" },
     { title: "Status", field: "http" },
     { title: "Type", field: "mime_type" },
-    { title: "Method", field: "methode" },
-    { title: "Server", field: "server" },
+    { title: "Metode", field: "methode" },
   ];
   const {
     getStoreResult,
@@ -41,33 +40,23 @@ const StoreLog = () => {
   const [sortColumn, setSortColumn] = useState("");
   const [sortOrder, setSortOrder] = useState("");
 
-  // Regular Api
+  // Api Filter
   const get = useCallback(
     async (params) => {
-      getData(
-        API_URL_store,
-        params,
+      await postFilter(
+        API_URL_storefilter,
         { dispatch, redux: storeReducers },
-        "GET_STORE"
+        "GET_STORE",
+        {
+          server_id: id_server, // Sertakan server_id di sini
+        },
+        params,
       );
     },
-    [dispatch]
+    [dispatch, id_server]
   );
 
-  // Api Filter
-  // const get = useCallback(
-  //   async () => {
-  //     postFilter(
-  //       API_URL_storefilter,
-  //       { dispatch, redux: storeReducers },
-  //       "GET_STORE",
-  //       {
-  //         server_id: id_server
-  //       }
-  //     );
-  //   },
-  //   [dispatch]
-  // );
+  // console.log(getStoreResult)
 
   const formatSize = (size) => {
     if (!size) return "N/A"; // handle missing or invalid size
@@ -210,7 +199,7 @@ const StoreLog = () => {
               )}
 
               {/* Result = 0 */}
-              {getStoreResult && getStoreResult.results.length === 0 && (
+              {getStoreResult && getStoreResult.results.data.length === 0 && (
                 <tr>
                   <td className="text-center" colSpan={tableHead.length + 1}>
                     <div className="pt-20 pb-12 flex justify-center items-center text-xs text-slate-600">
@@ -220,7 +209,7 @@ const StoreLog = () => {
                 </tr>
               )}
 
-              {getStoreResult && getStoreResult.results.map((item, itemIdx) => (
+              {getStoreResult && getStoreResult.results.data.map((item, itemIdx) => (
                 <tr
                   key={itemIdx}
                   className="border-b border-gray-200 text-sm hover:bg-white/60 transition-all"
@@ -269,9 +258,6 @@ const StoreLog = () => {
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {item.methode}
-                  </td>
-                  <td className="p-2 text-center whitespace-nowrap">
-                    {item.server}
                   </td>
                 </tr>
               ))}

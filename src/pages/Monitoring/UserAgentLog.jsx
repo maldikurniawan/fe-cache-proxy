@@ -3,10 +3,9 @@ import { CardContainer, Pagination } from "@/components";
 import { icons } from "../../../public/assets/icons";
 import { SyncLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "@/actions";
-import { API_URL_useragent } from "@/constants";
+import { postFilter } from "@/actions";
+import { API_URL_useragentfilter } from "@/constants";
 import { useragentReducers } from "@/redux/useragentSlice";
-// import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
@@ -14,16 +13,16 @@ const UserAgentLog = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const tableHead = [
-    { title: "No", field: "idlog" },
+    { title: "No", field: "id" },
     { title: "Ip Address", field: "ip" },
     { title: "Tanggal Akses", field: "date" },
     { title: "User Agent", field: "device" },
-    { title: "Server", field: "server" },
   ];
   const {
     getUserAgentResult,
     getUserAgentLoading,
     getUserAgentError,
+    id_server,
   } = useSelector((state) => state.useragent);
   const [limit, setLimit] = useState(10);
   const [offset, setOffset] = useState(0);
@@ -33,15 +32,20 @@ const UserAgentLog = () => {
 
   const get = useCallback(
     async (params) => {
-      getData(
-        API_URL_useragent,
-        params,
+      await postFilter(
+        API_URL_useragentfilter,
         { dispatch, redux: useragentReducers },
-        "GET_USERAGENT"
+        "GET_USERAGENT",
+        {
+          server_id: id_server, // Sertakan server_id di sini
+        },
+        params,
       );
     },
-    [dispatch]
+    [dispatch, id_server]
   );
+
+  // console.log(getUserAgentResult)
 
   const onSearch = (value) => {
     setSearch(value);
@@ -168,7 +172,7 @@ const UserAgentLog = () => {
               )}
 
               {/* Result = 0 */}
-              {getUserAgentResult && getUserAgentResult.results.length === 0 && (
+              {getUserAgentResult && getUserAgentResult.results.data.length === 0 && (
                 <tr>
                   <td className="text-center" colSpan={tableHead.length + 1}>
                     <div className="pt-20 pb-12 flex justify-center items-center text-xs text-slate-600">
@@ -178,7 +182,7 @@ const UserAgentLog = () => {
                 </tr>
               )}
 
-              {getUserAgentResult && getUserAgentResult.results.map((item, itemIdx) => (
+              {getUserAgentResult && getUserAgentResult.results.data.map((item, itemIdx) => (
                 <tr
                   key={itemIdx}
                   className="border-b border-gray-200 text-sm hover:bg-white/60 transition-all"
@@ -192,9 +196,6 @@ const UserAgentLog = () => {
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {item.device}
-                  </td>
-                  <td className="p-2 text-center whitespace-nowrap">
-                    {item.server}
                   </td>
                 </tr>
               ))}

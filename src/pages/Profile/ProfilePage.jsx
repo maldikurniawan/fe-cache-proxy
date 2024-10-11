@@ -10,6 +10,7 @@ import {
     SelectField,
     TextAreaField,
 } from '@/components';
+import { SyncLoader } from 'react-spinners';
 
 const ProfilePage = () => {
     const [initialValues, setInitialValues] = useState({
@@ -116,7 +117,11 @@ const ProfilePage = () => {
 
     // Render loading state or form
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <SyncLoader color={"#111827"} loading={loading} />
+            </div>
+        );
     }
 
     return (

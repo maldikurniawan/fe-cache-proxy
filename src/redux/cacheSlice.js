@@ -9,6 +9,7 @@ export const cacheSlice = createSlice({
         addCacheResult: false,
         addCacheLoading: false,
         deleteCacheResult: false,
+        id_server : 1,
     },
     reducers: {
         cacheReducers: (state, action) => {
