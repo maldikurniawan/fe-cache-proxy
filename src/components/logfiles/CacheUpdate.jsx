@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-const AgentUpdate = () => {
+const CacheUpdate = () => {
     const [logData, setLogData] = useState([]);
 
     useEffect(() => {
-        const socket = new WebSocket('ws://127.0.0.1:8000/ws/update-user-agent-log/');
+        const socket = new WebSocket('ws://127.0.0.1:8000/ws/update-cache-log/');
 
         socket.onopen = () => {
             console.log('WebSocket connection established');
@@ -27,4 +27,4 @@ const AgentUpdate = () => {
     }, []);
 };
 
-export default AgentUpdate;
+export default CacheUpdate;

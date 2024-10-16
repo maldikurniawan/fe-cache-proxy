@@ -3,7 +3,7 @@ import { MdDonutLarge } from "react-icons/md";
 import { FaChartLine } from "react-icons/fa";
 import { API_URL_access, API_URL_store, API_URL_useragent } from "@/constants";
 import { DonutChart, LineChart } from "@/components";
-import ClipLoader from "react-spinners/ClipLoader";
+import { HashLoader } from "react-spinners";
 
 // Helper function to handle API fetch and data processing
 const fetchData = async (url, processData) => {
@@ -101,15 +101,15 @@ const DashboardPage = () => {
   return (
     <div className="p-4">
       {loading ? (
-        <div className="flex justify-center items-center mt-16">
-          <ClipLoader color="#111827" loading={loading} size={300} />
+        <div className="flex justify-center items-center mt-44">
+          <HashLoader color="#111827" loading={loading} />
         </div>
       ) : (
         <>
           <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-4 mb-4">
             <div className="cursor-pointer lg:col-span-2 md:col-span-1">
               <DonutChart
-                title="Status Cache"
+                title="Kode Status Cache"
                 icon={<MdDonutLarge />}
                 dataSeries={totalStatus}
                 dataLabels={["TCP_HIT", "TCP_MISS", "TCP_TUNNEL", "TCP_DENIED"]}

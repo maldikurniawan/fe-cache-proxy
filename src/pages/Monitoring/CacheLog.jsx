@@ -1,5 +1,5 @@
 import React, { useState, Fragment, useCallback, useEffect } from "react";
-import { CardContainer, Pagination } from "@/components";
+import { CardContainer, Pagination, CacheUpdate } from "@/components";
 import { icons } from "../../../public/assets/icons";
 import { SyncLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
@@ -96,6 +96,7 @@ const CacheLog = () => {
 
   return (
     <Fragment>
+      <CacheUpdate />
       <div className="flex justify-between items-center">
         <h1 className="text-lg md:text-3xl font-bold transition-all">
           Monitoring Cache Log

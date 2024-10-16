@@ -68,8 +68,8 @@ const Login = () => {
     }, []);
 
     return (
-        <div className='grid grid-cols-1 sm:grid-cols-2 h-screen w-full'>
-            <div className="flex flex-wrap justify-center bg-[#0F172A]">
+        <div className='grid grid-cols-1 sm:grid-cols-2 h-screen w-full max-[450px]:overflow-hidden'>
+            <div className="flex flex-wrap justify-center bg-[#0F172A] pattern">
                 <div
                     className="flex flex-col items-center justify-center"
                 >
@@ -82,7 +82,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            <div className='bg-white flex flex-col justify-center'>
+            <div className='bg-[#F1F5F9] flex flex-col justify-center'>
                 <form onKeyPress={(e) => e.key === "Enter" && doSubmit()} className='max-w-[400px] w-full mx-auto rounded-lg bg-white p-8 px-8'>
                     <div className='text-4xl dark:text-white font-bold'>Masuk</div>
                     <div className='text-sm text-gray-400 font-bold mt-3 mb-6'>Mohon isi data di bawah ini</div>

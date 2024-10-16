@@ -9,8 +9,9 @@ import InputField from "./atoms/InputField";
 import SelectField from "./atoms/SelectField";
 import TextAreaField from "./atoms/TextAreaField";
 import AccessUpdate from "./logfiles/AccessUpdate";
-import AgentUpdate from "./logfiles/AgentUpdate";
 import StoreUpdate from "./logfiles/StoreUpdate";
+import AgentUpdate from "./logfiles/AgentUpdate";
+import CacheUpdate from "./logfiles/CacheUpdate";
 
 export {
   Sidebar,
@@ -24,6 +25,7 @@ export {
   SelectField,
   TextAreaField,
   AccessUpdate,
-  AgentUpdate,
   StoreUpdate,
+  AgentUpdate,
+  CacheUpdate,
 };

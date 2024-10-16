@@ -108,9 +108,9 @@ export const postData = (reducers, data, url, type) => {
     });
 };
 
-export const postFilter = (url,reducers, type, id, params ) => {
+export const postFilter = (url, reducers, type, id, params) => {
   const { dispatch, redux } = reducers;
-  
+
   dispatch(
     redux({
       type: type,
@@ -130,30 +130,30 @@ export const postFilter = (url,reducers, type, id, params ) => {
     timeout: 120000,
     data: id,
   })
-  .then((response) => {
-    dispatch(
-      redux({
-        type: type,
-        payload: {
-          loading: false,
-          data: response.data,
-          error: false,
-        },
-      })
-    );
-  })
-  .catch((error) => {
-    dispatch(
-      redux({
-        type: type,
-        payload: {
-          loading: false,
-          data: false,
-          error: error.message,
-        },
-      })
-    );
-  });
+    .then((response) => {
+      dispatch(
+        redux({
+          type: type,
+          payload: {
+            loading: false,
+            data: response.data,
+            error: false,
+          },
+        })
+      );
+    })
+    .catch((error) => {
+      dispatch(
+        redux({
+          type: type,
+          payload: {
+            loading: false,
+            data: false,
+            error: error.message,
+          },
+        })
+      );
+    });
 };
 
 // Request put
