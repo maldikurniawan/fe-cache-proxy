@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react';
+// src/components/StoreUpdate.jsx
+import React, { useEffect, useRef } from 'react';
 
 const StoreUpdate = () => {
-    const [logData, setLogData] = useState([]);
 
     useEffect(() => {
-        const socket = new WebSocket('ws://127.0.0.1:8000/ws/update-store-log/');
-
-        socket.onopen = () => {
-            console.log('WebSocket connection established');
+        const fetchAndUpdateCache = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/storelogupdate/', { method: 'GET' });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                console.log(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         };
 
-        socket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            // Update logData state with received data
-            setLogData(prevData => [...prevData, data]);
-        };
+        // Fetch data immediately and then every 60 seconds
+        fetchAndUpdateCache();
+        const intervalId = setInterval(fetchAndUpdateCache, 60 * 1000);
 
-        socket.onclose = (event) => {
-            console.log('WebSocket connection closed:', event);
-        };
-
-        // Cleanup on component unmount
-        return () => {
-            socket.close();
-        };
+        // Cleanup interval on component unmount
+        return () => clearInterval(intervalId);
     }, []);
+
 };
 
 export default StoreUpdate;

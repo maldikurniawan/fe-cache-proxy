@@ -17,7 +17,7 @@ const AccessUpdate = () => {
             }
         };
 
-        // Fetch data immediately and then every 10 seconds
+        // Fetch data immediately and then every 60 seconds
         fetchAndUpdateCache();
         const intervalId = setInterval(fetchAndUpdateCache, 60 * 1000);
 
