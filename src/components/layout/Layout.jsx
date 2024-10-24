@@ -19,6 +19,7 @@ const Layout = () => {
     "Apa itu bandwidth?",
     "Apa itu aksi cache?",
   ];
+  
   const flow = {
     start: {
       message: "Halo, saya ChatBot Riku! Selamat datang di FAQ!",

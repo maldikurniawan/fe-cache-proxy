@@ -134,6 +134,7 @@ const ServerPage = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [addServerResult]);
+    
     useEffect(() => {
         if (deleteServerResult) {
             fetchData();
