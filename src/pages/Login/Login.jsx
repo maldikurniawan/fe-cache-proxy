@@ -46,6 +46,7 @@ const Login = () => {
                     localStorage.setItem("jwt_access", res.data.jwt_access);
                     localStorage.setItem("key", res.data.key);
                     localStorage.setItem("user_id", res.data.user_id);
+                    localStorage.setItem("username", res.data.username);
                     navigate("/");
                 }
             })

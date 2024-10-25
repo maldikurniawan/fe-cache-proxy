@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Header = ({ sideOpen, setSideOpen }) => {
   const navigate = useNavigate();
+  const username = localStorage.getItem('username');
   const handleLogout = () => {
     localStorage.removeItem("jwt_access");
     localStorage.removeItem("jwt_refresh");
@@ -40,8 +41,8 @@ const Header = ({ sideOpen, setSideOpen }) => {
           >
             <Popover.Panel className="absolute w-max min-w-[170px] flex flex-col right-3 top-14 rounded-lg shadow-lg bg-[#0F172A] pt-3 pb-1 px-1 text-white">
               <div className="px-2 pb-2">
-                <div className="text-xs font-medium">
-                  M. Aldi Kurniawan
+                <div className="text-xs font-medium capitalize">
+                  {username}
                 </div>
                 <div className="text-[10px]">Admin</div>
               </div>

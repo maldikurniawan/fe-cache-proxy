@@ -1,4 +1,3 @@
-// SocketPage.jsx
 import React, { useEffect, useState } from 'react';
 
 const SocketPage = () => {
@@ -6,8 +5,12 @@ const SocketPage = () => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
 
+    const username = localStorage.getItem('username') || 'Anonymous'; // Default to 'Anonymous' if not found
+
     useEffect(() => {
-        // Ganti dengan URL WebSocket yang sesuai
+        const savedMessages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+        setMessages(savedMessages);
+
         const newSocket = new WebSocket('ws://localhost:8000/ws/chat/');
 
         newSocket.onopen = () => {
@@ -16,8 +19,12 @@ const SocketPage = () => {
 
         newSocket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            console.log('Received message:', data.message); // Tambahkan ini
-            setMessages((prevMessages) => [...prevMessages, data.message]);
+            console.log('Received message:', data); // Check the structure of the received data
+            setMessages((prevMessages) => {
+                const updatedMessages = [...prevMessages, data];
+                localStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
+                return updatedMessages;
+            });
         };
 
         newSocket.onclose = () => {
@@ -33,26 +40,52 @@ const SocketPage = () => {
 
     const sendMessage = () => {
         if (socket && message) {
-            socket.send(JSON.stringify({ message }));
+            console.log('Sending message as:', username); // Debugging: Cek nilai username saat mengirim
+            const messageData = { username, message };
+            socket.send(JSON.stringify(messageData));
             setMessage('');
         }
     };
 
+    const clearChatHistory = () => {
+        localStorage.removeItem('chatMessages');
+        setMessages([]);
+    };
+
     return (
-        <div>
-            <h1>Chat</h1>
-            <div>
-                {messages.map((msg, index) => (
-                    <div key={index}>{msg}</div>
-                ))}
+        <div className="flex flex-col items-center p-4 h-screen">
+            <h1 className="text-2xl font-bold mb-4">Chat Room</h1>
+            <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-md mb-4">
+                <div className="overflow-y-auto h-64">
+                    {messages.map((msg, index) => (
+                        <div key={index} className="flex items-start p-2 border-b last:border-b-0">
+                            <div>
+                                <div className="font-bold capitalize">{msg.username || 'Anonymous'}</div>
+                                <div>{msg.message}</div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
-            <input
-                type="text"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Type a message..."
-            />
-            <button onClick={sendMessage}>Send</button>
+            <div className="flex w-full max-w-md">
+                <input
+                    type="text"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Type a message..."
+                    className="border border-gray-300 p-2 rounded-l-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <button
+                    onClick={sendMessage}
+                    className="bg-blue-500 text-white rounded-r-lg px-4 hover:bg-blue-600">
+                    Send
+                </button>
+            </div>
+            <button
+                onClick={clearChatHistory}
+                className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                Clear History
+            </button>
         </div>
     );
 };
