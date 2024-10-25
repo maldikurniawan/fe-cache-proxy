@@ -16,6 +16,7 @@ import {
   UserAgentServer,
   CacheLog,
   CacheServer,
+  SocketPage,
 } from "@/pages";
 
 export default function App() {
@@ -50,6 +51,9 @@ export default function App() {
               <Route path="/server" element={<ServerPage />} />
               <Route path="/server/form" element={<ServerForm />} />
               <Route path="/server/form/:id" element={<ServerForm />} />
+
+              {/* Socket */}
+              <Route path="/socket" element={<SocketPage />} />
             </Route>
           </Route>
         </Routes>

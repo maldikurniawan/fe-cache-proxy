@@ -12,6 +12,7 @@ import UserAgentServer from "./Monitoring/UserAgentServer";
 import ProfilePage from "./Profile/ProfilePage";
 import ServerForm from "./Server/ServerForm";
 import ServerPage from "./Server/ServerPage";
+import SocketPage from "./Socket/SocketPage";
 
 export {
     DashboardPage,
@@ -28,4 +29,5 @@ export {
     ProfilePage,
     ServerForm,
     ServerPage,
+    SocketPage,
 };
