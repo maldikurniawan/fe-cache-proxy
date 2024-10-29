@@ -223,7 +223,7 @@ const StoreLog = () => {
                       {item.timestamp}
                     </Moment>
                   </td>
-                  <td className="p-2 whitespace-nowrap text-center">
+                  <td className="p-2 whitespace-nowrap">
                     {item.realese}
                   </td>
                   <td className="p-2 whitespace-nowrap">

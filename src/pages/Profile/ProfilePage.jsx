@@ -40,19 +40,19 @@ const ProfilePage = () => {
 
                 // Set the initial values after fetching user data
                 setInitialValues({
-                    nama_lengkap: user_data.nama_lengkap || '',
-                    username: user.username || '',
-                    email: user.email || '',
+                    nama_lengkap: user_data.nama_lengkap,
+                    username: user.username,
+                    email: user.email,
                     password: '', // Keep password blank for security
-                    no_ktp: user_data.no_ktp || '',
-                    jenis_kelamin: user_data.jenis_kelamin || '', // Use first value from array
-                    no_telp: user_data.no_telp || '',
-                    tempat_lahir: user_data.tempat_lahir || '',
-                    tanggal_lahir: user_data.tanggal_lahir || '',
-                    agama: user_data.agama || '',
-                    npwp: user_data.npwp || '',
-                    alamat_ktp: user_data.alamat_ktp || '',
-                    alamat_domisili: user_data.alamat_domisili || '',
+                    no_ktp: user_data.no_ktp,
+                    jenis_kelamin: user_data.jenis_kelamin, // Use first value from array
+                    no_telp: user_data.no_telp,
+                    tempat_lahir: user_data.tempat_lahir,
+                    tanggal_lahir: user_data.tanggal_lahir,
+                    agama: user_data.agama,
+                    npwp: user_data.npwp,
+                    alamat_ktp: user_data.alamat_ktp,
+                    alamat_domisili: user_data.alamat_domisili,
                 });
 
                 setCurrentPassword(''); // Set current password (could be fetched too if necessary)
@@ -134,7 +134,7 @@ const ProfilePage = () => {
                             required
                             label="Nama Lengkap"
                             name="nama_lengkap"
-                            value={formik.values.nama_lengkap || ''} // Ensure value is always defined
+                            value={formik.values.nama_lengkap}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.nama_lengkap && formik.errors.nama_lengkap}
@@ -144,7 +144,7 @@ const ProfilePage = () => {
                                 required
                                 label="Username"
                                 name="username"
-                                value={formik.values.username || ''} // Ensure value is always defined
+                                value={formik.values.username}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.username && formik.errors.username}
@@ -154,7 +154,7 @@ const ProfilePage = () => {
                                 label="Email"
                                 name="email"
                                 type="email"
-                                value={formik.values.email || ''} // Ensure value is always defined
+                                value={formik.values.email}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.email && formik.errors.email}
@@ -164,7 +164,7 @@ const ProfilePage = () => {
                                 name="password"
                                 type="password"
                                 placeholder="Leave blank to keep unchanged"
-                                value={formik.values.password || ''} // Ensure value is always defined
+                                value={formik.values.password}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.password && formik.errors.password}
@@ -175,7 +175,7 @@ const ProfilePage = () => {
                                 required
                                 label="No Identitas (KTP)"
                                 name="no_ktp"
-                                value={formik.values.no_ktp || ''} // Ensure value is always defined
+                                value={formik.values.no_ktp}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.no_ktp && formik.errors.no_ktp}
@@ -188,7 +188,7 @@ const ProfilePage = () => {
                                     { value: 'Laki-laki', label: 'Laki-laki' },
                                     { value: 'Perempuan', label: 'Perempuan' },
                                 ]}
-                                value={formik.values.jenis_kelamin || ''} // Ensure value is always defined
+                                value={formik.values.jenis_kelamin}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.jenis_kelamin && formik.errors.jenis_kelamin}
@@ -199,7 +199,7 @@ const ProfilePage = () => {
                                 required
                                 label="No Telp"
                                 name="no_telp"
-                                value={formik.values.no_telp || ''} // Ensure value is always defined
+                                value={formik.values.no_telp}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.no_telp && formik.errors.no_telp}
@@ -208,7 +208,7 @@ const ProfilePage = () => {
                                 required
                                 label="Tempat Lahir"
                                 name="tempat_lahir"
-                                value={formik.values.tempat_lahir || ''} // Ensure value is always defined
+                                value={formik.values.tempat_lahir}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.tempat_lahir && formik.errors.tempat_lahir}
@@ -220,7 +220,7 @@ const ProfilePage = () => {
                                 label="Tanggal Lahir"
                                 name="tanggal_lahir"
                                 type="date"
-                                value={formik.values.tanggal_lahir || ''} // Ensure value is always defined
+                                value={formik.values.tanggal_lahir}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.tanggal_lahir && formik.errors.tanggal_lahir}
@@ -236,7 +236,7 @@ const ProfilePage = () => {
                                     { value: 'Buddha', label: 'Buddha' },
                                     { value: 'Konghucu', label: 'Konghucu' },
                                 ]}
-                                value={formik.values.agama || ''} // Ensure value is always defined
+                                value={formik.values.agama}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.agama && formik.errors.agama}
@@ -245,7 +245,7 @@ const ProfilePage = () => {
                                 required
                                 label="NPWP"
                                 name="npwp"
-                                value={formik.values.npwp || ''} // Ensure value is always defined
+                                value={formik.values.npwp}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.npwp && formik.errors.npwp}
@@ -254,7 +254,7 @@ const ProfilePage = () => {
                         <TextAreaField
                             label="Alamat KTP"
                             name="alamat_ktp"
-                            value={formik.values.alamat_ktp || ''} // Ensure value is always defined
+                            value={formik.values.alamat_ktp}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.alamat_ktp && formik.errors.alamat_ktp}
@@ -262,7 +262,7 @@ const ProfilePage = () => {
                         <TextAreaField
                             label="Alamat Domisili"
                             name="alamat_domisili"
-                            value={formik.values.alamat_domisili || ''} // Ensure value is always defined
+                            value={formik.values.alamat_domisili}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.alamat_domisili && formik.errors.alamat_domisili}

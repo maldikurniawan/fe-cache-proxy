@@ -76,7 +76,7 @@ const ServerForm = () => {
                             required
                             label="Nama Server"
                             name="server_name"
-                            value={formik.values.server_name || ''} // Ensure value is always defined
+                            value={formik.values.server_name}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.server_name && formik.errors.server_name}
@@ -85,7 +85,7 @@ const ServerForm = () => {
                             required
                             label="Ip Address"
                             name="ip_address"
-                            value={formik.values.ip_address || ''} // Ensure value is always defined
+                            value={formik.values.ip_address}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.ip_address && formik.errors.ip_address}
@@ -94,7 +94,7 @@ const ServerForm = () => {
                             required
                             label="Lokasi"
                             name="location"
-                            value={formik.values.location || ''} // Ensure value is always defined
+                            value={formik.values.location}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.location && formik.errors.location}
@@ -104,7 +104,7 @@ const ServerForm = () => {
                             type="email"
                             label="Email Admin"
                             name="admin_contact"
-                            value={formik.values.admin_contact || ''} // Ensure value is always defined
+                            value={formik.values.admin_contact}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.admin_contact && formik.errors.admin_contact}
@@ -112,7 +112,7 @@ const ServerForm = () => {
                         <InputField
                             label="Sistem Operasi"
                             name="system_operation"
-                            value={formik.values.system_operation || ''} // Ensure value is always defined
+                            value={formik.values.system_operation}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.system_operation && formik.errors.system_operation}

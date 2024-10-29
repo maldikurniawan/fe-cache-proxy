@@ -195,7 +195,7 @@ const UserAgentLog = () => {
                   <td className="p-2 text-center whitespace-nowrap">
                     {item.date}
                   </td>
-                  <td className="p-2 whitespace-nowrap">
+                  <td className="p-2">
                     {item.device}
                   </td>
                 </tr>

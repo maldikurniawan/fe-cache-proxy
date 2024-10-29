@@ -189,7 +189,7 @@ const CacheLog = () => {
                   <td className="p-2 text-center whitespace-nowrap">
                     {itemIdx + offset + 1}
                   </td>
-                  <td className="p-2 whitespace-nowrap">{item.message}</td>
+                  <td className="p-2">{item.message}</td>
                 </tr>
               ))}
             </tbody>

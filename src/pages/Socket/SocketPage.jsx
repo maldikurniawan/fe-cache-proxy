@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 const SocketPage = () => {
     const [socket, setSocket] = useState(null);
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const messagesEndRef = useRef(null); // Ref untuk scroll
 
     const username = localStorage.getItem('username') || 'Anonymous'; // Default to 'Anonymous' if not found
 
@@ -38,6 +39,11 @@ const SocketPage = () => {
         };
     }, []);
 
+    useEffect(() => {
+        // Scroll ke bawah setiap kali messages berubah
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+
     const sendMessage = () => {
         if (socket && message) {
             console.log('Sending message as:', username); // Debugging: Cek nilai username saat mengirim
@@ -53,7 +59,7 @@ const SocketPage = () => {
     };
 
     return (
-        <div className="flex flex-col items-center p-4 h-screen">
+        <div className="flex flex-col items-center p-4">
             <h1 className="text-2xl font-bold mb-4">Chat Room</h1>
             <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-md mb-4">
                 <div className="overflow-y-auto h-64">
@@ -65,6 +71,8 @@ const SocketPage = () => {
                             </div>
                         </div>
                     ))}
+                    {/* Ref untuk scroll ke bawah */}
+                    <div ref={messagesEndRef} />
                 </div>
             </div>
             <div className="flex w-full max-w-md">

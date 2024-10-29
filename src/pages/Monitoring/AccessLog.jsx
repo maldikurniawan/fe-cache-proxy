@@ -238,7 +238,7 @@ const AccessLog = () => {
                   <td className="p-2 whitespace-nowrap">
                     {item.request_method}
                   </td>
-                  <td className="p-2 whitespace-nowrap">
+                  <td className="p-2">
                     {item.request_url}
                   </td>
                   <td className="p-2 whitespace-nowrap">

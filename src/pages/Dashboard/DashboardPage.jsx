@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { MdDonutLarge } from "react-icons/md";
 import { FaChartLine } from "react-icons/fa";
 import { API_URL_access, API_URL_store, API_URL_useragent } from "@/constants";
-import { DonutChart, LineChart } from "@/components";
-import { HashLoader } from "react-spinners";
+import { DonutChart, LineChart, Loader } from "@/components";
+// import { HashLoader } from "react-spinners";
 
 // Helper function to handle API fetch and data processing
 const fetchData = async (url, processData) => {
@@ -102,7 +102,7 @@ const DashboardPage = () => {
     <div className="p-4">
       {loading ? (
         <div className="flex justify-center items-center mt-44">
-          <HashLoader color="#111827" loading={loading} />
+          <Loader loading={loading} />
         </div>
       ) : (
         <>

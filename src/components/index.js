@@ -7,6 +7,8 @@ import DonutChart from "./atoms/DonutChart";
 import LineChart from "./atoms/LineChart";
 import InputField from "./atoms/InputField";
 import SelectField from "./atoms/SelectField";
+import Loader from "./atoms/Loader";
+import Switch from "./atoms/Switch";
 import TextAreaField from "./atoms/TextAreaField";
 import AccessUpdate from "./logfiles/AccessUpdate";
 import StoreUpdate from "./logfiles/StoreUpdate";
@@ -23,6 +25,8 @@ export {
   LineChart,
   InputField,
   SelectField,
+  Loader,
+  Switch,
   TextAreaField,
   AccessUpdate,
   StoreUpdate,
