@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useFormik } from 'formik';
 import { API_URL_updatesuperuser } from '@/constants';
+import { ThemeContext } from "@/context/ThemeContext";
 import * as Yup from 'yup';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -13,6 +14,7 @@ import {
 import { SyncLoader } from 'react-spinners';
 
 const ProfilePage = () => {
+    const { colorMode } = useContext(ThemeContext);
     const [initialValues, setInitialValues] = useState({
         nama_lengkap: '',
         username: '',
@@ -119,7 +121,7 @@ const ProfilePage = () => {
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
-                <SyncLoader color={"#111827"} loading={loading} />
+                <SyncLoader color={colorMode === "dark" ? "#F3F4F6" : "#111827"} loading={loading} />
             </div>
         );
     }

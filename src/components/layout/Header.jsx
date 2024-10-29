@@ -24,7 +24,7 @@ const Header = ({ sideOpen, setSideOpen }) => {
 
   return (
     <Fragment>
-      <div className="w-full flex bg-white dark:bg-red-500 py-2 justify-between items-center px-3 drop-shadow-sm">
+      <div className="w-full flex bg-white dark:bg-[#1E293B] dark:text-white py-2 justify-between items-center px-3 drop-shadow-sm">
         <div
           onClick={() => setSideOpen(!sideOpen)}
           className={`p-1 rounded-lg bg-white text-slate-600 text-xl cursor-pointer hover:bg-slate-100 transition-all`}

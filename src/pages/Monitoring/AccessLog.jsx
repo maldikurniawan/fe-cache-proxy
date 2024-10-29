@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useCallback, useEffect } from "react";
+import React, { useState, Fragment, useCallback, useEffect, useContext } from "react";
 import { CardContainer, Pagination, AccessUpdate } from "@/components";
 import { icons } from "../../../public/assets/icons";
 import { SyncLoader } from "react-spinners";
@@ -9,6 +9,7 @@ import { accessReducers } from "@/redux/accessSlice";
 import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { ThemeContext } from "@/context/ThemeContext";
 
 const AccessLog = () => {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ const AccessLog = () => {
   const [search, setSearch] = useState("");
   const [sortColumn, setSortColumn] = useState("");
   const [sortOrder, setSortOrder] = useState("");
+  const { colorMode } = useContext(ThemeContext);
 
   // Format Durasi
   const formatDuration = (seconds) => {
@@ -129,7 +131,7 @@ const AccessLog = () => {
     <Fragment>
       <AccessUpdate />
       <div className="flex justify-between items-center">
-        <h1 className="text-lg md:text-3xl font-bold transition-all">
+        <h1 className="text-lg dark:text-white md:text-3xl font-bold transition-all">
           Monitoring Access Log
         </h1>
         <button
@@ -145,7 +147,7 @@ const AccessLog = () => {
           <div className="p-1 text-lg mr-3">{icons.fisearch}</div>
           <input
             type="text"
-            className="w-full"
+            className="w-full dark:bg-gray-800 dark:text-gray-100"
             placeholder="Search"
             onChange={(e) => onSearch(e.target.value)}
           />
@@ -184,7 +186,7 @@ const AccessLog = () => {
                     colSpan={tableHead.length + 1}
                   >
                     <div className="pt-10 pb-6 flex justify-center items-center">
-                      <SyncLoader color="#111827" />
+                      <SyncLoader color={colorMode === "dark" ? "#F3F4F6" : "#111827"} />
                     </div>
                   </td>
                 </tr>
@@ -215,7 +217,7 @@ const AccessLog = () => {
               {getAccessResult && getAccessResult.results.data.map((item, itemIdx) => (
                 <tr
                   key={itemIdx}
-                  className="border-b border-gray-200 text-sm hover:bg-white/60 transition-all"
+                  className="border-b border-gray-200 text-sm hover:bg-white/30 transition-all"
                 >
                   <td className="p-2 text-center whitespace-nowrap">
                     {itemIdx + offset + 1}

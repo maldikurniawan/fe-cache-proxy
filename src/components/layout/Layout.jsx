@@ -19,7 +19,7 @@ const Layout = () => {
     "Apa itu bandwidth?",
     "Apa itu aksi cache?",
   ];
-  
+
   const flow = {
     start: {
       message: "Halo, saya ChatBot Riku! Selamat datang di FAQ!",
@@ -80,7 +80,7 @@ const Layout = () => {
         <Sidebar sideOpen={sideOpen} setSideOpen={setSideOpen} />
         <div className="w-full h-screen overflow-clip flex flex-col">
           <Header sideOpen={sideOpen} setSideOpen={setSideOpen} />
-          <div className="bg-slate-100 h-full overflow-y-auto custom-scroll px-8 py-10">
+          <div className="bg-slate-100 dark:bg-[#334155] h-full overflow-y-auto custom-scroll px-8 py-10">
             <Outlet />
           </div>
         </div>

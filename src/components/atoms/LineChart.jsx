@@ -1,6 +1,8 @@
 import { Fragment } from 'react';
 import Chart from "react-apexcharts";
 import CardContainer from "./CardContainer"; // Adjust the import path as needed
+import { useContext } from 'react';
+import { ThemeContext } from "@/context/ThemeContext";
 
 const LineChart = ({
     title,
@@ -10,10 +12,12 @@ const LineChart = ({
     dataLabels,
     dataColor,
     directionColor,
-    isDark = false, // Default values
 }) => {
+    const { colorMode } = useContext(ThemeContext); // Get color mode from context
+    const isDark = colorMode === 'dark'; // Determine if dark mode is active
+
     const chartConfig = {
-        series: dataSeries, // Ensure the data format is appropriate for a line chart (array of objects with `name` and `data`)
+        series: dataSeries,
         options: {
             chart: {
                 height: 300,
@@ -22,7 +26,7 @@ const LineChart = ({
                     show: false,
                 },
             },
-            colors: [dataColor || '#4361EE'], // Use passed dataColor or default
+            colors: [dataColor || '#4361EE'],
             tooltip: {
                 marker: {
                     show: false,
@@ -35,27 +39,40 @@ const LineChart = ({
             },
             stroke: {
                 width: 2,
-                curve: 'smooth', // Makes the lines smoother
+                curve: 'smooth',
             },
             xaxis: {
-                categories: dataLabels, // Default to monthly categories
+                categories: dataLabels,
+                labels: {
+                    style: {
+                        colors: isDark ? '#cbd5e1' : '#1f2937', // Dark mode x-axis text color
+                    },
+                },
                 axisBorder: {
-                    color: isDark ? '#191e3a' : '#e0e6ed', // Adjust colors for dark/light mode
+                    color: isDark ? '#191e3a' : '#e0e6ed',
                 },
             },
             yaxis: {
                 labels: {
-                    offsetX: 0, // Remove RTL adjustments
+                    offsetX: 0,
+                    style: {
+                        colors: isDark ? '#cbd5e1' : '#1f2937', // Dark mode x-axis text color
+                    },
                 },
             },
             grid: {
-                borderColor: isDark ? '#191e3a' : '#e0e6ed',
+                borderColor: isDark ? '#374151' : '#e0e6ed',
                 xaxis: {
                     lines: {
                         show: false,
                     },
                 },
             },
+            legend: {
+				labels: {
+					colors: isDark ? '#cbd5e1' : '#1f2937', // Dark mode x-axis text color
+				},
+			},
         },
     };
 

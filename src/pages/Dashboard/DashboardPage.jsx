@@ -101,7 +101,7 @@ const DashboardPage = () => {
   return (
     <div className="p-4">
       {loading ? (
-        <div className="flex justify-center items-center mt-44">
+        <div className="flex justify-center items-center mt-36">
           <Loader loading={loading} />
         </div>
       ) : (

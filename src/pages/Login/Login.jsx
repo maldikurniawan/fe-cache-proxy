@@ -85,7 +85,7 @@ const Login = () => {
             </div>
             <div className='flex flex-col justify-center'>
                 <form onKeyPress={(e) => e.key === "Enter" && doSubmit()} className='max-w-[400px] w-full mx-auto rounded-lg bg-white p-8 px-8'>
-                    <div className='text-4xl dark:text-white font-bold'>Masuk</div>
+                    <div className='text-4xl font-bold'>Masuk</div>
                     <div className='text-sm text-gray-400 font-bold mt-3 mb-6'>Mohon isi data di bawah ini</div>
                     <div className="w-full max-w-lg">
                         <div className="w-full">
