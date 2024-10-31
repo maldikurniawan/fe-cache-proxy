@@ -1,16 +1,16 @@
 import React from 'react';
 
-const InputField = ({ label, name, type = 'text', value, placeholder, onChange, onBlur, error, required }) => {
+const FileInput = ({ label, name, onChange, onBlur, error, required }) => {
     return (
         <div>
-            <label className="block text-sm font-medium text-black dark:text-gray-100">
+            <label className="block text-sm font-medium text-black dark:text-gray-100" htmlFor={name}>
                 {label}{required && <span className="text-red-500">*</span>}
             </label>
             <input
-                type={type}
+                type="file"
+                id={name}
                 name={name}
-                value={value}
-                placeholder={placeholder}
+                accept=".jpg, .jpeg, .png"
                 onChange={onChange}
                 onBlur={onBlur}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-black dark:text-gray-100 rounded-md shadow-sm focus:outline-none focus:ring-[#0F172A] focus:border-[#0F172A] sm:text-sm"
@@ -20,4 +20,4 @@ const InputField = ({ label, name, type = 'text', value, placeholder, onChange, 
     );
 };
 
-export default InputField;
+export default FileInput;

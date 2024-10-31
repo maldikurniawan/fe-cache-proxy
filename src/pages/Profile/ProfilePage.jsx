@@ -10,6 +10,7 @@ import {
     InputField,
     SelectField,
     TextAreaField,
+    FileInput,
 } from '@/components';
 import { SyncLoader } from 'react-spinners';
 
@@ -34,6 +35,7 @@ const ProfilePage = () => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [loading, setLoading] = useState(true);
     const userId = localStorage.getItem('user_id');
+    const [profileImageUrl, setProfileImageUrl] = useState('');
 
     useEffect(() => {
         axios
@@ -59,6 +61,8 @@ const ProfilePage = () => {
                     foto_profile: null,
                 });
 
+
+                setProfileImageUrl(user_data.foto_profile); // Set the profile image URL
                 setCurrentPassword(''); // Set current password (could be fetched too if necessary)
                 setLoading(false); // Data has been fetched
             })
@@ -93,7 +97,13 @@ const ProfilePage = () => {
 
             const formData = new FormData();
             Object.keys(updatedValues).forEach(key => {
-                formData.append(key, updatedValues[key]);
+                if (key === 'foto_profile' && updatedValues[key]) {
+                    // Generate custom filename
+                    const customFilename = `profile_${updatedValues.username}_${Date.now()}.jpg`;
+                    formData.append(key, updatedValues[key], customFilename); // Append file with custom name
+                } else {
+                    formData.append(key, updatedValues[key]);
+                }
             });
 
             axios
@@ -281,16 +291,41 @@ const ProfilePage = () => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.alamat_domisili && formik.errors.alamat_domisili}
                         />
-                        <InputField
-                            label="Foto Profile"
-                            name="foto_profile"
-                            type="file"
-                            onChange={(event) => {
-                                formik.setFieldValue("foto_profile", event.currentTarget.files[0]);
-                            }}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.foto_profile && formik.errors.foto_profile}
-                        />
+                        <div>
+                            {profileImageUrl && (
+                                <div className='flex justify-center'>
+                                    <img
+                                        src={profileImageUrl}
+                                        alt="Profile"
+                                        className="mt-2 h-32 w-32 object-cover rounded-full"
+                                    />
+                                </div>
+                            )}
+                            <FileInput
+                                label="Foto Profile"
+                                name="foto_profile"
+                                onChange={(event) => {
+                                    const file = event.currentTarget.files[0];
+                                    formik.setFieldValue("foto_profile", file);
+
+                                    // Check if a file is selected and is of valid type
+                                    if (file) {
+                                        const reader = new FileReader();
+                                        reader.onloadend = () => {
+                                            // Update the profile image URL with the new file
+                                            setProfileImageUrl(reader.result);
+                                        };
+                                        reader.readAsDataURL(file); // Read the file as a data URL
+                                    } else {
+                                        // Reset to current image if no file is selected
+                                        setProfileImageUrl(user_data.foto_profile);
+                                    }
+                                }}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.foto_profile && formik.errors.foto_profile}
+                            />
+                        </div>
+
                     </div>
                     <div className='my-4 mt-8'>
                         <button
