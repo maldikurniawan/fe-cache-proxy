@@ -27,7 +27,7 @@ const Pagination = ({ handlePageClick, pageCount, limit, setLimit }) => {
         <ReactPaginate
           className="flex justify-center mt-4 sm:mt-0 sm:justify-end text-black dark:text-gray-100"
           pageLinkClassName="bg-white dark:bg-gray-800 text-xs text-black dark:text-gray-100 border border-gray-300 dark:border-gray-600 mx-1 w-7 h-7 flex rounded-md justify-center items-center outline-none"
-          activeLinkClassName="border border-gray-900 dark:border-gray-100 bg-gray-100 dark:bg-gray-700"
+          activeLinkClassName="border border-gray-900 dark:border-white bg-gray-100 dark:bg-gray-700"
           previousLinkClassName="bg-white dark:bg-gray-800 text-xs border border-gray-300 dark:border-gray-600 mr-1 w-7 h-7 flex rounded-md justify-center items-center"
           nextLinkClassName="bg-white dark:bg-gray-800 text-xs border border-gray-300 dark:border-gray-600 w-7 ml-1 h-7 flex rounded-md justify-center items-center"
           breakLinkClassName="bg-white dark:bg-gray-800 text-xs border border-gray-300 dark:border-gray-600 w-7 mx-1 h-7 flex rounded-md justify-center items-center"

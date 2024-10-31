@@ -29,6 +29,7 @@ const ProfilePage = () => {
         npwp: '',
         alamat_ktp: '',
         alamat_domisili: '',
+        foto_profile: null,
     });
     const [currentPassword, setCurrentPassword] = useState('');
     const [loading, setLoading] = useState(true);
@@ -45,9 +46,9 @@ const ProfilePage = () => {
                     nama_lengkap: user_data.nama_lengkap,
                     username: user.username,
                     email: user.email,
-                    password: '', // Keep password blank for security
+                    password: '',
                     no_ktp: user_data.no_ktp,
-                    jenis_kelamin: user_data.jenis_kelamin, // Use first value from array
+                    jenis_kelamin: user_data.jenis_kelamin,
                     no_telp: user_data.no_telp,
                     tempat_lahir: user_data.tempat_lahir,
                     tanggal_lahir: user_data.tanggal_lahir,
@@ -55,6 +56,7 @@ const ProfilePage = () => {
                     npwp: user_data.npwp,
                     alamat_ktp: user_data.alamat_ktp,
                     alamat_domisili: user_data.alamat_domisili,
+                    foto_profile: null,
                 });
 
                 setCurrentPassword(''); // Set current password (could be fetched too if necessary)
@@ -81,6 +83,7 @@ const ProfilePage = () => {
             tanggal_lahir: Yup.date().required('Tanggal Lahir is required'),
             agama: Yup.string().required('Agama is required'),
             npwp: Yup.string().required('NPWP is required'),
+            foto_profile: Yup.mixed().nullable(),
         }),
         onSubmit: (values, { setSubmitting }) => {
             const updatedValues = {
@@ -88,8 +91,17 @@ const ProfilePage = () => {
                 password: values.password ? values.password : currentPassword,
             };
 
+            const formData = new FormData();
+            Object.keys(updatedValues).forEach(key => {
+                formData.append(key, updatedValues[key]);
+            });
+
             axios
-                .put(`${API_URL_updatesuperuser}${userId}/`, updatedValues)
+                .put(`${API_URL_updatesuperuser}${userId}/`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
                 .then((response) => {
                     Swal.fire({
                         icon: "success",
@@ -268,6 +280,16 @@ const ProfilePage = () => {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.alamat_domisili && formik.errors.alamat_domisili}
+                        />
+                        <InputField
+                            label="Foto Profile"
+                            name="foto_profile"
+                            type="file"
+                            onChange={(event) => {
+                                formik.setFieldValue("foto_profile", event.currentTarget.files[0]);
+                            }}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.foto_profile && formik.errors.foto_profile}
                         />
                     </div>
                     <div className='my-4 mt-8'>

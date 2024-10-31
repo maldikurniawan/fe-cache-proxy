@@ -4,7 +4,6 @@ import { Popover, Transition } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThemeContext } from "@/context/ThemeContext";
 import { Switch } from "@/components"
-// import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 
 const Header = ({ sideOpen, setSideOpen }) => {
   const navigate = useNavigate();
