@@ -35,7 +35,7 @@ const Sidebar = ({ sideOpen, setSideOpen }) => {
       {/* Sidebar */}
       <div
         className={`${sideOpen ? "w-48 md:w-60 left-0" : "w-14 -left-96 md:left-0 md:block"
-          } z-10 fixed md:relative h-screen flex flex-col bg-[#0F172A] shadow-lg shadow-slate-400 md:shadow-none text-white transition-all md:rounded-none`}
+          } z-10 fixed md:relative h-screen flex flex-col bg-[#0F172A] md:shadow-none text-white transition-all md:rounded-none`}
       >
         {/* Logo */}
         <div className="w-full flex justify-center">

@@ -10,7 +10,7 @@ import {
     InputField,
     SelectField,
     TextAreaField,
-    FileInput,
+    ImageField,
 } from '@/components';
 import { SyncLoader } from 'react-spinners';
 
@@ -61,7 +61,6 @@ const ProfilePage = () => {
                     foto_profile: null,
                 });
 
-
                 setProfileImageUrl(user_data.foto_profile); // Set the profile image URL
                 setCurrentPassword(''); // Set current password (could be fetched too if necessary)
                 setLoading(false); // Data has been fetched
@@ -99,7 +98,7 @@ const ProfilePage = () => {
             Object.keys(updatedValues).forEach(key => {
                 if (key === 'foto_profile' && updatedValues[key]) {
                     // Generate custom filename
-                    const customFilename = `profile_${updatedValues.username}_${Date.now()}.jpg`;
+                    const customFilename = `foto_${updatedValues.username}.jpg`;
                     formData.append(key, updatedValues[key], customFilename); // Append file with custom name
                 } else {
                     formData.append(key, updatedValues[key]);
@@ -301,7 +300,7 @@ const ProfilePage = () => {
                                     />
                                 </div>
                             )}
-                            <FileInput
+                            <ImageField
                                 label="Foto Profile"
                                 name="foto_profile"
                                 onChange={(event) => {

@@ -1,25 +1,38 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { icons } from "../../../public/assets/icons";
 import { Popover, Transition } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThemeContext } from "@/context/ThemeContext";
+import { API_URL_updatesuperuser } from '@/constants';
+import axios from 'axios';
 import { Switch } from "@/components"
 
 const Header = ({ sideOpen, setSideOpen }) => {
+  const userId = localStorage.getItem('user_id');
   const navigate = useNavigate();
-  const username = localStorage.getItem('username');
   const handleLogout = () => {
     localStorage.removeItem("jwt_access");
     localStorage.removeItem("jwt_refresh");
     navigate("/login");
   };
-
   const { colorMode, setColorMode } = useContext(ThemeContext);
+  const [username, setUsername] = useState('');
+  const [profileImageUrl, setProfileImageUrl] = useState('');
 
   // Function to toggle color mode
   const toggleColorMode = () => {
     setColorMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
   };
+
+  useEffect(() => {
+    axios
+      .get(`${API_URL_updatesuperuser}${userId}/`)
+      .then((response) => {
+        const { user, user_data } = response.data;
+        setUsername(user.username);
+        setProfileImageUrl(user_data.foto_profile); // Set the profile image URL
+      })
+  }, [userId]);
 
   return (
     <Fragment>
@@ -39,7 +52,7 @@ const Header = ({ sideOpen, setSideOpen }) => {
               <div className="w-10 h-10 rounded-full cursor-pointer overflow-hidden">
                 <img
                   className="object-cover h-full w-full"
-                  src={"https://picsum.photos/200"}
+                  src={profileImageUrl ? profileImageUrl : 'assets/images/nophoto.png'}
                   alt="user"
                 />
               </div>
@@ -57,7 +70,7 @@ const Header = ({ sideOpen, setSideOpen }) => {
                   <div className="text-xs font-medium capitalize">
                     {username}
                   </div>
-                  <div className="text-[10px]">Admin</div>
+                  <div className="text-[10px]">User</div>
                 </div>
                 <div className="flex flex-col">
                   <Link

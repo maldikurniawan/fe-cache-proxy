@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FileInput = ({ label, name, onChange, onBlur, error, required }) => {
+const ImageField = ({ label, name, onChange, onBlur, error, required }) => {
     return (
         <div>
             <label className="block text-sm font-medium text-black dark:text-gray-100" htmlFor={name}>
@@ -20,4 +20,4 @@ const FileInput = ({ label, name, onChange, onBlur, error, required }) => {
     );
 };
 
-export default FileInput;
+export default ImageField;
