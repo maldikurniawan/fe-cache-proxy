@@ -97,9 +97,7 @@ const ProfilePage = () => {
             const formData = new FormData();
             Object.keys(updatedValues).forEach(key => {
                 if (key === 'foto_profile' && updatedValues[key]) {
-                    // Generate custom filename
-                    const customFilename = `foto_${updatedValues.username}.jpg`;
-                    formData.append(key, updatedValues[key], customFilename); // Append file with custom name
+                    formData.append(key, updatedValues[key]);
                 } else {
                     formData.append(key, updatedValues[key]);
                 }

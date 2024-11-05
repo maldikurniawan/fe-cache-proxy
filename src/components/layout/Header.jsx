@@ -70,7 +70,7 @@ const Header = ({ sideOpen, setSideOpen }) => {
                   <div className="text-xs font-medium capitalize">
                     {username}
                   </div>
-                  <div className="text-[10px]">User</div>
+                  <div className="text-[10px]">Admin</div>
                 </div>
                 <div className="flex flex-col">
                   <Link
