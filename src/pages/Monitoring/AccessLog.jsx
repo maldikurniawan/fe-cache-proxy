@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postFilter } from "@/actions";
 import { API_URL_accessfilter } from "@/constants";
 import { accessReducers } from "@/redux/accessSlice";
-import Moment from "react-moment";
+// import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "@/context/ThemeContext";
@@ -223,7 +223,7 @@ const AccessLog = () => {
                     {itemIdx + offset + 1}
                   </td>
                   <td className="p-2 whitespace-nowrap">
-                    <Moment unix>{item.timestamp}</Moment>
+                    {/* <Moment unix>{item.timestamp}</Moment> */}
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {formatDuration(item.elapsed_time)}

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postFilter } from "@/actions";
 import { API_URL_storefilter } from "@/constants";
 import { storeReducers } from "@/redux/storeSlice";
-import Moment from "react-moment";
+// import Moment from "react-moment";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "@/context/ThemeContext";
@@ -221,9 +221,9 @@ const StoreLog = () => {
                     {itemIdx + offset + 1}
                   </td>
                   <td className="p-2 whitespace-nowrap">
-                    <Moment unix>
+                    {/* <Moment unix>
                       {item.timestamp}
-                    </Moment>
+                    </Moment> */}
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {item.realese}
@@ -241,17 +241,17 @@ const StoreLog = () => {
                     {formatSize(item.size)}
                   </td>
                   <td className="p-2 whitespace-nowrap">
-                    <Moment unix>
+                    {/* <Moment unix>
                       {item.timestamp_expire}
-                    </Moment>
+                    </Moment> */}
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {item.url}
                   </td>
                   <td className="p-2 whitespace-nowrap">
-                    <Moment unix>
+                    {/* <Moment unix>
                       {item.last_modified}
-                    </Moment>
+                    </Moment> */}
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {item.http}
