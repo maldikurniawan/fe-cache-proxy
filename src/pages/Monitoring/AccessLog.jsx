@@ -223,7 +223,7 @@ const AccessLog = () => {
                     {itemIdx + offset + 1}
                   </td>
                   <td className="p-2 whitespace-nowrap">
-                    {moment.unix(item.timestamp).format("MM/DD/YYYY")}
+                    {moment.unix(item.timestamp).format("D MMMM YYYY")}
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {formatDuration(item.elapsed_time)}

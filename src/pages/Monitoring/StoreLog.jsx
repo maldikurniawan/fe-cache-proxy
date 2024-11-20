@@ -221,7 +221,7 @@ const StoreLog = () => {
                     {itemIdx + offset + 1}
                   </td>
                   <td className="p-2 whitespace-nowrap">
-                  {moment.unix(item.timestamp).format("MM/DD/YYYY")}
+                    {moment.unix(item.timestamp).format("D MMMM YYYY")}
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {item.realese}
@@ -239,13 +239,13 @@ const StoreLog = () => {
                     {formatSize(item.size)}
                   </td>
                   <td className="p-2 whitespace-nowrap">
-                    {moment.unix(item.timestamp_expire).format("MM/DD/YYYY")}
+                    {moment.unix(item.timestamp_expire).format("D MMMM YYYY")}
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {item.url}
                   </td>
                   <td className="p-2 whitespace-nowrap">
-                    {moment.unix(item.last_modified).format("MM/DD/YYYY")}
+                    {moment.unix(item.last_modified).format("D MMMM YYYY")}
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {item.http}
