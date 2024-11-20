@@ -22,9 +22,9 @@ const StoreLog = () => {
     { title: "Nomor File", field: "object_number" },
     { title: "Hash", field: "hash" },
     { title: "Sizes", field: "size" },
-    { title: "Expires", field: "timestamp_expire" },
     { title: "URL", field: "url" },
     { title: "Lastmod", field: "last_modified" },
+    { title: "Expires", field: "timestamp_expire" },
     { title: "Status", field: "http" },
     { title: "Type", field: "mime_type" },
     { title: "Metode", field: "methode" },
@@ -239,10 +239,10 @@ const StoreLog = () => {
                     {formatSize(item.size)}
                   </td>
                   <td className="p-2 whitespace-nowrap">
-                    {moment.unix(item.timestamp_expire).format("D MMMM YYYY")}
+                    {item.url}
                   </td>
                   <td className="p-2 whitespace-nowrap">
-                    {item.url}
+                    {moment.unix(item.timestamp_expire).format("D MMMM YYYY")}
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {moment.unix(item.last_modified).format("D MMMM YYYY")}
