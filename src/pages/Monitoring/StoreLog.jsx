@@ -220,42 +220,18 @@ const StoreLog = () => {
                   <td className="p-2 text-center whitespace-nowrap">
                     {itemIdx + offset + 1}
                   </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {moment.unix(item.timestamp).format("D MMMM YYYY")}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {item.realese}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {item.flag}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {item.object_number}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {item.hash}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {formatSize(item.size)}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {item.url}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {moment.unix(item.timestamp_expire).format("D MMMM YYYY")}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {moment.unix(item.last_modified).format("D MMMM YYYY")}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {item.http}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {item.mime_type}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {item.methode}
-                  </td>
+                  <td className="p-2 whitespace-nowrap">{moment.unix(item.timestamp).format("D MMMM YYYY")}</td>
+                  <td className="p-2 whitespace-nowrap">{item.realese}</td>
+                  <td className="p-2 whitespace-nowrap">{item.flag}</td>
+                  <td className="p-2 whitespace-nowrap">{item.object_number}</td>
+                  <td className="p-2 whitespace-nowrap">{item.hash}</td>
+                  <td className="p-2 whitespace-nowrap">{formatSize(item.size)}</td>
+                  <td className="p-2 whitespace-nowrap">{item.url}</td>
+                  <td className="p-2 whitespace-nowrap">{moment.unix(item.timestamp_expire).format("D MMMM YYYY")}</td>
+                  <td className="p-2 whitespace-nowrap">{moment.unix(item.last_modified).format("D MMMM YYYY")}</td>
+                  <td className="p-2 whitespace-nowrap">{item.http}</td>
+                  <td className="p-2 whitespace-nowrap">{item.mime_type}</td>
+                  <td className="p-2 whitespace-nowrap">{item.methode}</td>
                 </tr>
               ))}
             </tbody>
