@@ -68,7 +68,7 @@ const AccessLog = () => {
         { dispatch, redux: accessReducers },
         "GET_ACCESS",
         {
-          server_id: id_server, // Sertakan server_id di sini
+          server_id: id_server,
         },
         params,
       );

@@ -50,7 +50,7 @@ const StoreLog = () => {
         { dispatch, redux: storeReducers },
         "GET_STORE",
         {
-          server_id: id_server, // Sertakan server_id di sini
+          server_id: id_server,
         },
         params,
       );
@@ -61,7 +61,7 @@ const StoreLog = () => {
   // console.log(getStoreResult)
 
   const formatSize = (size) => {
-    if (!size) return "N/A"; // handle missing or invalid size
+    if (!size) return "N/A";
     const [currentSize, totalSize] = size.split("/").map(Number);
 
     const convertBytes = (bytes) => {

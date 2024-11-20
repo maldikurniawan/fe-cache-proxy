@@ -39,7 +39,7 @@ const UserAgentLog = () => {
         { dispatch, redux: useragentReducers },
         "GET_USERAGENT",
         {
-          server_id: id_server, // Sertakan server_id di sini
+          server_id: id_server,
         },
         params,
       );
