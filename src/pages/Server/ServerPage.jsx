@@ -9,7 +9,7 @@ import { serverReducers } from "@/redux/serverSlice";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "@/context/ThemeContext";
-// import moment from "moment";
+import moment from "moment";
 
 const ServerPage = () => {
     const navigate = useNavigate();
@@ -254,7 +254,7 @@ const ServerPage = () => {
                                         {item.system_operation}
                                     </td>
                                     <td className="p-2 text-center whitespace-nowrap">
-                                        {/* {moment(item.created_at).format("D MMMM YYYY")} */}
+                                        {moment(item.created_at).format("D MMMM YYYY")}
                                     </td>
                                     <td className="p-2 text-center whitespace-nowrap">
                                         {action.map((action, actionIdx) => (
