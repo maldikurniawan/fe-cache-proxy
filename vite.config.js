@@ -16,5 +16,6 @@ export default defineConfig({
     esbuildOptions: {
       plugins: [esbuildCommonjs(['react-moment'])],
     },
+    include: ['moment'],
   },
 })
