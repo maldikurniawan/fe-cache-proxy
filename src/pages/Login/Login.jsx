@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { API_URL_login } from "@/constants";
-import { BsChevronRight } from 'react-icons/bs'
+import { FaUnlock, FaUser } from "react-icons/fa";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"
 import { PulseLoader } from "react-spinners"
 import Swal from "sweetalert2";
@@ -69,71 +69,83 @@ const Login = () => {
     }, []);
 
     return (
-        <div className='grid grid-cols-1 sm:grid-cols-2 h-screen w-full max-[450px]:overflow-hidden'>
-            <div className="flex flex-wrap justify-center bg-[#0F172A] pattern">
-                <div
-                    className="flex flex-col items-center justify-center"
-                >
-                    <div className="overflow-hidden w-96">
-                        <img
-                            src="/assets/images/cache-proxy.png"
-                            alt="pengguna"
-                            className="h-full w-full object-contain"
-                        />
+        <div className='bg-gradient-to-b from-orange-100 via-pink-100 to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700'>
+            <div className="relative flex min-h-screen items-center justify-center bg-[url(/assets/images/map.png)] bg-cover bg-center bg-no-repeat px-6 py-10 dark:bg-[#060818] sm:px-16">
+                <img src="/assets/images/coming-soon-object1.png" alt="object1" className="absolute left-0 top-1/2 h-full max-h-[893px] -translate-y-1/2 dark:opacity-50" />
+                <img src="/assets/images/coming-soon-object3.png" alt="object3" className="absolute right-0 top-0 h-[300px] dark:opacity-50" />
+                <div className="relative flex w-full max-w-[1502px] flex-col justify-between overflow-hidden rounded-md bg-white/60 backdrop-blur-lg lg:dark:bg-gray-900 dark:bg-gray-800 lg:min-h-[758px] lg:flex-row lg:gap-10 xl:gap-0">
+                    <div className="relative hidden w-full items-center justify-center bg-gradient-to-br from-pink-600 to-blue-600 p-5 dark:from-gray-800 dark:to-gray-700 lg:inline-flex lg:max-w-[835px] xl:-ms-28 xl:skew-x-[14deg]">
+                        <div className="absolute inset-y-0 w-8 bg-gradient-to-r from-blue-600/10 via-transparent to-transparent -right-10 xl:w-16 xl:-right-20 dark:from-gray-600/10"></div>
+                        <div className="xl:-skew-x-[14deg]">
+                            <Link to="/" className="w-48 block lg:w-72 ms-10">
+                                <div className="text-xl dark:text-white font-bold whitespace-nowrap">Sistem Monitoring Cache Proxy</div>
+                            </Link>
+                            <div className="mt-24 hidden w-full max-w-[430px] lg:block">
+                                <img src="/assets/images/login.svg" alt="Cover" className="w-full dark:opacity-75" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="relative flex w-full flex-col items-center justify-center gap-6 px-4 py-16 lg:pb-56 lg:py-0 sm:px-6 lg:max-w-[667px]">
+                        <div className="w-full max-w-[440px]">
+                            <div className="mb-10 max-[1024px]:text-center">
+                                <h1 className="text-3xl mb-2 font-bold uppercase leading-snug text-blue-600 dark:text-blue-400 md:text-4xl lg:block hidden">Login</h1>
+                                <h1 className="text-lg mb-2 font-bold uppercase leading-snug text-blue-600 dark:text-blue-400 md:text-xl lg:hidden block">PT QUEEN NETWORK NUSANTARA</h1>
+                                <p className="text-base font-bold leading-normal text-gray-400 dark:text-gray-300">Masukan Username dan Password</p>
+                            </div>
+                            <form onKeyPress={(e) => e.key === "Enter" && doSubmit()} className="space-y-5 dark:text-white">
+                                <div>
+                                    <label htmlFor="Username" className='font-bold text-gray-700 dark:text-gray-300'>Username</label>
+                                    <div className="relative">
+                                        <input
+                                            required
+                                            type='username'
+                                            name="username"
+                                            onChange={(e) => setUsername(e.target.value)}
+                                            value={username}
+                                            placeholder="Enter Username"
+                                            className="w-full px-10 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 dark:border-gray-600"
+                                        />
+                                        <span className="absolute start-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+                                            <FaUser />
+                                        </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label htmlFor="Password" className='font-bold text-gray-700 dark:text-gray-300'>Password</label>
+                                    <div className="relative">
+                                        <input
+                                            required
+                                            type={visiblePassword ? "text" : "password"}
+                                            name="password"
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            value={password}
+                                            placeholder="Enter Password"
+                                            className="w-full px-10 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 dark:border-gray-600"
+                                        />
+                                        <span className="absolute start-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+                                            <FaUnlock />
+                                        </span>
+                                        <div
+                                            className="absolute text-gray-400 top-[8px] right-3 text-2xl cursor-pointer"
+                                            onClick={() => setVisiblePassword(!visiblePassword)}
+                                        >
+                                            {visiblePassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+                                        </div>
+                                    </div>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={(e) => doSubmit(e)}
+                                    disabled={loading ? true : false}
+                                    className="w-full border-0 uppercase bg-gradient-to-r from-pink-500 to-blue-500 text-white py-2 rounded-lg shadow-lg hover:bg-gradient-to-l transition-shadow dark:from-gray-700 dark:to-gray-600"
+                                >
+                                    {loading ? <PulseLoader color="#FFF" /> : "Login"}
+                                </button>
+                            </form>
+                            <p className="absolute bottom-2 left-48 hidden xl:block w-full text-center dark:text-white">© {new Date().getFullYear()}. QUEEN All Rights Reserved.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className='flex flex-col justify-center'>
-                <form onKeyPress={(e) => e.key === "Enter" && doSubmit()} className='max-w-[400px] w-full mx-auto rounded-lg bg-white p-8 px-8'>
-                    <div className='text-4xl font-bold'>Masuk</div>
-                    <div className='text-sm text-gray-400 font-bold mt-3 mb-6'>Mohon isi data di bawah ini</div>
-                    <div className="w-full max-w-lg">
-                        <div className="w-full">
-                            <div className="relative w-full min-w-[200px] h-10 mb-4">
-                                <div className="absolute inset-y-0 start-0 flex items-center ps-2 pointer-events-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                    </svg>
-                                </div>
-                                <input
-                                    type='username' name="username" onChange={(e) => setUsername(e.target.value)} value={username} className="peer w-full h-full bg-gray-100 focus:bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-gray-900 ps-10"
-                                    placeholder=" " required />
-                                <label
-                                    className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:before:ps-9 before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-blue-gray-200 peer-focus:before:!border-gray-900 after:border-blue-gray-200 peer-focus:after:!border-gray-900">Masukan Username
-                                </label>
-                            </div>
-                        </div>
-                        <div className="w-full">
-                            <div className="relative w-full min-w-[200px] h-10 mb-4">
-                                <div className="absolute inset-y-0 start-0 flex items-center ps-2 pointer-events-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
-                                    </svg>
-                                </div>
-                                <input
-                                    type={visiblePassword ? "text" : "password"} name="password" onChange={(e) => setPassword(e.target.value)} value={password} className="peer w-full h-full bg-gray-100 focus:bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-gray-900 ps-10"
-                                    placeholder=" " required />
-                                <label
-                                    className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:before:ps-9 before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-blue-gray-200 peer-focus:before:!border-gray-900 after:border-blue-gray-200 peer-focus:after:!border-gray-900">Masukan Password
-                                </label>
-                                <div
-                                    className="absolute text-gray-400 top-[8px] right-3 text-2xl cursor-pointer"
-                                    onClick={() => setVisiblePassword(!visiblePassword)}
-                                >
-                                    {visiblePassword ? <AiFillEyeInvisible /> : <AiFillEye />}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button
-                        className='flex items-center gap-2 my-5 py-3 px-10 bg-[#0F172A] shadow-lg text-white font-semibold rounded-lg'
-                        type="button"
-                        onClick={(e) => doSubmit(e)}
-                        disabled={loading ? true : false}
-                    >
-                        {loading ? <PulseLoader color="#FFF" size={11} /> : "Masuk"} <BsChevronRight />
-                    </button>
-                </form>
             </div>
         </div>
     )
