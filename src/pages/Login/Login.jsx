@@ -80,7 +80,7 @@ const Login = () => {
                         <div className="xl:-skew-x-[14deg]">
                             <div className="flex items-center gap-2 ms-10 text-4xl text-white font-bold uppercase leading-snug">
                                 <GiSpartanHelmet className="text-6xl"/>
-                                <span>PROCASMON</span>
+                                <span>CACHESIM</span>
                             </div>
                             <div className="mt-24 hidden w-full max-w-[430px] lg:block">
                                 <img src="/assets/images/login.svg" alt="Cover" className="w-full dark:opacity-75" />
