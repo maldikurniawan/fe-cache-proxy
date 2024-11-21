@@ -52,7 +52,7 @@ const Header = ({ sideOpen, setSideOpen }) => {
               <div className="w-10 h-10 rounded-full cursor-pointer overflow-hidden">
                 <img
                   className="object-cover h-full w-full"
-                  src={profileImageUrl ? profileImageUrl : 'assets/images/nophoto.png'}
+                  src={profileImageUrl ? profileImageUrl : 'https://picsum.photos/200'}
                   alt="user"
                 />
               </div>
